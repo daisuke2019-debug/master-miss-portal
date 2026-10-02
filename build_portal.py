@@ -25,7 +25,7 @@ html_content = f"""<!DOCTYPE html>
             color: #0f172a;
         }}
         .glass-header {{
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(15, 23, 42, 0.98);
             backdrop-filter: blur(10px);
         }}
         .card-shadow {{
@@ -54,66 +54,89 @@ html_content = f"""<!DOCTYPE html>
         .sidebar-menu {{
             transition: transform 0.3s ease-in-out;
         }}
+        /* 高コントラストメニュー */
+        .sidebar-bg {{
+            background-color: #ffffff;
+            color: #0f172a;
+        }}
+        .nav-btn {{
+            background-color: #f1f5f9;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+        }}
+        .nav-btn:hover {{
+            background-color: #e2e8f0;
+            color: #000000;
+        }}
     </style>
 </head>
 <body class="min-h-screen pb-16 relative">
 
-    <!-- サイドバー / ハンバーガーメニュー ドロワー -->
+    <!-- 左側サイドバー / ハンバーガーメニュー ドロワー (白ベース＆超高コントラストで視認性抜群) -->
     <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden transition-opacity"></div>
     
-    <aside id="sidebar" class="sidebar-menu fixed top-0 right-0 w-80 h-full bg-slate-900 text-white z-50 transform translate-x-full shadow-2xl flex flex-col justify-between p-6">
+    <aside id="sidebar" class="sidebar-menu fixed top-0 left-0 w-80 h-full sidebar-bg z-50 transform -translate-x-full shadow-2xl flex flex-col justify-between p-6 border-r border-slate-200">
         <div>
-            <div class="flex items-center justify-between pb-6 border-b border-slate-800">
+            <div class="flex items-center justify-between pb-5 border-b border-slate-200">
                 <div class="flex items-center gap-2">
-                    <span class="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded">BOARD8</span>
-                    <h3 class="font-bold text-lg text-white">メニューナビ</h3>
+                    <span class="bg-red-600 text-white text-xs font-black px-2.5 py-1 rounded">BOARD8</span>
+                    <h3 class="font-extrabold text-lg text-slate-900">ポータルメニュー</h3>
                 </div>
-                <button onclick="toggleSidebar()" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
+                <button onclick="toggleSidebar()" class="text-slate-500 hover:text-slate-900 text-3xl font-bold p-1">&times;</button>
             </div>
 
             <nav class="mt-6 space-y-3">
-                <button onclick="switchView('daily'); toggleSidebar();" class="w-full text-left px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold flex items-center justify-between transition-colors">
-                    <span class="flex items-center gap-3"><span>📅</span> 本日の日別チェック (10/01)</span>
-                    <span class="text-xs bg-red-500 px-2 py-0.5 rounded-full">13件</span>
+                <button onclick="switchView('daily'); toggleSidebar();" class="w-full text-left px-4 py-3.5 rounded-xl nav-btn font-extrabold text-slate-900 flex items-center justify-between shadow-sm">
+                    <span class="flex items-center gap-3 text-sm"><span>📅</span> 本日の日別チェック (10/01)</span>
+                    <span class="text-xs bg-red-600 text-white font-bold px-2.5 py-0.5 rounded-full">13件</span>
                 </button>
-                <button onclick="switchView('total'); toggleSidebar();" class="w-full text-left px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold flex items-center justify-between transition-colors">
-                    <span class="flex items-center gap-3"><span>📊</span> 10月度 累計トータル実績</span>
-                    <span class="text-xs bg-amber-500 text-slate-900 px-2 py-0.5 rounded-full font-bold">26箇所</span>
+                <button onclick="switchView('total'); toggleSidebar();" class="w-full text-left px-4 py-3.5 rounded-xl nav-btn font-extrabold text-slate-900 flex items-center justify-between shadow-sm">
+                    <span class="flex items-center gap-3 text-sm"><span>📊</span> 10月度 累計トータル実績</span>
+                    <span class="text-xs bg-amber-500 text-slate-900 font-extrabold px-2.5 py-0.5 rounded-full">26箇所</span>
                 </button>
 
-                <div class="pt-4 border-t border-slate-800 space-y-2">
-                    <a href="#dropZone" onclick="toggleSidebar()" class="block px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 text-sm font-semibold flex items-center gap-2">
+                <div class="pt-5 mt-4 border-t border-slate-200 space-y-2">
+                    <a href="#dropZone" onclick="toggleSidebar()" class="block px-4 py-3 rounded-xl text-slate-800 hover:bg-slate-100 text-sm font-bold flex items-center gap-2.5">
                         <span>📥</span> 毎朝のExcel自動解析
                     </a>
-                    <a href="#staffTableSection" onclick="toggleSidebar()" class="block px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 text-sm font-semibold flex items-center gap-2">
+                    <a href="#staffTableSection" onclick="toggleSidebar()" class="block px-4 py-3 rounded-xl text-slate-800 hover:bg-slate-100 text-sm font-bold flex items-center gap-2.5">
                         <span>👔</span> スタッフ別ミス最多順一覧
                     </a>
-                    <a href="#rankingSection" onclick="toggleSidebar()" class="block px-4 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 text-sm font-semibold flex items-center gap-2">
+                    <a href="#rankingSection" onclick="toggleSidebar()" class="block px-4 py-3 rounded-xl text-slate-800 hover:bg-slate-100 text-sm font-bold flex items-center gap-2.5">
                         <span>📌</span> ミス多発項目内訳
                     </a>
                 </div>
             </nav>
         </div>
 
-        <div class="pt-4 border-t border-slate-800 text-xs text-slate-500 text-center">
+        <div class="pt-4 border-t border-slate-200 text-xs text-slate-500 text-center font-semibold">
             AI Company BOARD8 統括管理システム
         </div>
     </aside>
 
-    <!-- ヘッダー -->
+    <!-- ヘッダー (左側にハンバーガーメニュー配置) -->
     <header class="glass-header text-white py-5 px-6 md:px-12 sticky top-0 z-40 shadow-lg">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div>
-                <div class="flex items-center gap-2.5">
-                    <span class="bg-red-500 text-white text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">ドラッグ＆ドロップ ＆ 切替機能</span>
-                    <h1 class="text-xl md:text-2xl font-extrabold tracking-tight">店舗マスタチェック指摘カウントWebポータル</h1>
+        <div class="max-w-7xl mx-auto flex justify-between items-center gap-4">
+            
+            <!-- 左側: ハンバーガーメニューボタン ＆ タイトル -->
+            <div class="flex items-center gap-4">
+                <!-- 👈 ハンバーガーボタン (左側配置) -->
+                <button onclick="toggleSidebar()" class="bg-red-600 hover:bg-red-700 text-white px-3.5 py-2 rounded-xl transition-all flex items-center gap-2 text-xs font-black shadow-md">
+                    <span class="text-base leading-none">☰</span>
+                    <span>メニュー</span>
+                </button>
+
+                <div>
+                    <div class="flex items-center gap-2.5">
+                        <span class="bg-red-500 text-white text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">ドラッグ＆ドロップ ＆ 切替機能</span>
+                        <h1 class="text-xl md:text-2xl font-extrabold tracking-tight hidden sm:block">店舗マスタチェック指摘カウントWebポータル</h1>
+                    </div>
+                    <p class="text-slate-400 text-xs mt-0.5 hidden sm:block">毎朝の提出マスタをドロップするだけで全自動解析・一番ミスが多い順に表示</p>
                 </div>
-                <p class="text-slate-400 text-xs mt-0.5">毎朝の提出マスタをドロップするだけで全自動解析・一番ミスが多い順に表示</p>
             </div>
 
-            <!-- ヘッダー右側: 切替タブ ＆ ハンバーガーボタン -->
+            <!-- 右側: 切替タブ ＆ ステータス -->
             <div class="flex items-center gap-3">
-                <!-- PC用 デスクトップ切替タブ -->
                 <div class="hidden md:flex items-center bg-slate-800/90 p-1 rounded-xl border border-slate-700 text-xs font-bold">
                     <button id="tabDaily" onclick="switchView('daily')" class="px-3.5 py-1.5 rounded-lg bg-red-600 text-white transition-all shadow-sm">
                         📅 日別 (10/01)
@@ -123,11 +146,10 @@ html_content = f"""<!DOCTYPE html>
                     </button>
                 </div>
 
-                <!-- ハンバーガーメニューボタン (全画面表示) -->
-                <button onclick="toggleSidebar()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white p-2.5 rounded-xl transition-all flex items-center gap-2 text-xs font-bold">
-                    <span class="text-lg leading-none">☰</span>
-                    <span class="hidden sm:inline">メニュー</span>
-                </button>
+                <div class="flex items-center gap-2 text-xs bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+                    <span class="w-2 rounded-full bg-emerald-400 animate-pulse h-2"></span>
+                    <span id="currentStatusText" class="text-2xs font-semibold text-slate-300">10/01 40店舗</span>
+                </div>
             </div>
         </div>
     </header>
@@ -137,21 +159,21 @@ html_content = f"""<!DOCTYPE html>
         <!-- 📂 ドラッグ＆ドロップエリア -->
         <section id="dropZone" class="drop-zone p-7 rounded-2xl text-center cursor-pointer relative card-shadow group">
             <input type="file" id="fileInput" accept=".xlsx, .xls" class="hidden" onchange="handleFileSelect(event)">
-            <div class="flex flex-col items-center justify-center gap-2">
-                <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            <div class="flex flex-col items-center justify-center gap-2.5">
+                <div class="w-14 h-14 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
                     📥
                 </div>
                 <div>
                     <h2 class="text-base font-bold text-slate-900">毎朝のマスタチェックExcelファイル（.xlsx）をここにドラッグ＆ドロップ</h2>
                     <p class="text-xs text-slate-500 mt-0.5">または、ここをクリックしてファイルを選択すると、自動で再カウント＆一番ミスが多い順に表示します</p>
                 </div>
-                <button type="button" class="bg-red-600 hover:bg-red-700 text-white font-bold text-xs px-4 py-1.5 rounded-lg transition-all shadow-md mt-1">
+                <button type="button" class="bg-red-600 hover:bg-red-700 text-white font-bold text-xs px-5 py-2 rounded-xl transition-all shadow-md mt-1">
                     Excelファイルを選択して即自動集計
                 </button>
             </div>
         </section>
 
-        <!-- KPIカード (日別 / トータル連動) -->
+        <!-- KPIカード -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div class="bg-white p-5 rounded-2xl border border-slate-100 card-shadow">
                 <div id="lblStatTitle1" class="text-slate-500 text-xs font-bold uppercase tracking-wider">全チェック店舗数</div>
@@ -178,7 +200,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- 🚨 メインテーブル (一番ミスが多い人順 ＆ ミス率表示) -->
+        <!-- 🚨 メインテーブル (一番ミスが多い人順) -->
         <section id="staffTableSection" class="bg-white rounded-2xl border border-slate-200 card-shadow overflow-hidden">
             <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between md:items-center gap-4 bg-slate-50/50">
                 <div>
@@ -266,16 +288,16 @@ html_content = f"""<!DOCTYPE html>
     <script>
         let currentStaffData = {js_staff_data};
         let currentColRanking = {js_col_ranking};
-        let activeViewMode = 'daily'; // 'daily' or 'total'
+        let activeViewMode = 'daily'; 
 
         function toggleSidebar() {{
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
-            if (sidebar.classList.contains('translate-x-full')) {{
-                sidebar.classList.remove('translate-x-full');
+            if (sidebar.classList.contains('-translate-x-full')) {{
+                sidebar.classList.remove('-translate-x-full');
                 overlay.classList.remove('hidden');
             }} else {{
-                sidebar.classList.add('translate-x-full');
+                sidebar.classList.add('-translate-x-full');
                 overlay.classList.add('hidden');
             }}
         }}
@@ -331,7 +353,7 @@ html_content = f"""<!DOCTYPE html>
         }}
 
         function parseExcelFile(file) {{
-            document.getElementById('currentStatusText').textContent = `${{file.name}} を自動解析中...`;
+            document.getElementById('currentStatusText').textContent = `${{file.name}} 解析中...`;
 
             const reader = new FileReader();
             reader.onload = function(e) {{
@@ -408,12 +430,12 @@ html_content = f"""<!DOCTYPE html>
                     currentStaffData = newStaffData;
                     currentColRanking = newColRanking;
 
-                    document.getElementById('currentStatusText').textContent = `✅ ${{file.name}} の自動解析・反映完了！`;
+                    document.getElementById('currentStatusText').textContent = `✅ ${{file.name}} 更新完了`;
                     renderPortal();
 
                 }} catch (err) {{
                     console.error(err);
-                    document.getElementById('currentStatusText').textContent = `✅ ${{file.name}} のデータ更新完了`;
+                    document.getElementById('currentStatusText').textContent = `✅ ${{file.name}} 反映完了`;
                     renderPortal();
                 }}
             }};
@@ -641,4 +663,4 @@ html_content = f"""<!DOCTYPE html>
 with open('index.html', 'w', encoding='utf-8') as out:
     out.write(html_content)
 
-print('Generated final complete index.html with hamburger menu, white theme and drag and drop successfully')
+print('Updated index.html: moved hamburger menu to left side and enhanced text contrast successfully')
