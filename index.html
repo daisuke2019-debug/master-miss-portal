@@ -6,101 +6,104 @@
   <title>マスタミス自動カウント＆ピンポイント指摘Webポータル | AI Company</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     :root {
-      --bg-main: #0b0f19;
-      --bg-card: #151c2c;
-      --bg-card-hover: #1e283d;
-      --border-color: #2a364f;
+      --bg-main: #090d16;
+      --bg-card: #131927;
+      --bg-card-hover: #1c2538;
+      --border-color: #26334d;
       --text-primary: #f8fafc;
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
       --accent-blue: #3b82f6;
-      --danger-bg: rgba(239, 68, 68, 0.15);
-      --danger-border: rgba(239, 68, 68, 0.4);
-      --danger-text: #ef4444;
-      --warning-bg: rgba(245, 158, 11, 0.15);
-      --warning-border: rgba(245, 158, 11, 0.4);
-      --warning-text: #f59e0b;
-      --success-bg: rgba(16, 185, 129, 0.15);
-      --success-border: rgba(16, 185, 129, 0.4);
-      --success-text: #10b981;
-      --radius-md: 12px;
+      --accent-glow: rgba(59, 130, 246, 0.25);
+      --danger-bg: rgba(239, 68, 68, 0.12);
+      --danger-border: rgba(239, 68, 68, 0.35);
+      --danger-text: #f87171;
+      --warning-bg: rgba(245, 158, 11, 0.12);
+      --warning-border: rgba(245, 158, 11, 0.35);
+      --warning-text: #fbbf24;
+      --success-bg: rgba(16, 185, 129, 0.12);
+      --success-border: rgba(16, 185, 129, 0.35);
+      --success-text: #34d399;
+      --radius-md: 14px;
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', 'Noto Sans JP', sans-serif; background: var(--bg-main); color: var(--text-primary); line-height: 1.5; padding: 24px 32px; }
+    body { font-family: 'Inter', 'Noto Sans JP', sans-serif; background: var(--bg-main); color: var(--text-primary); line-height: 1.6; padding: 28px 36px; -webkit-font-smoothing: antialiased; }
 
-    .app-container { max-width: 1450px; margin: 0 auto; }
+    .app-container { max-width: 1480px; margin: 0 auto; }
 
-    header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
-    .brand-badge { display: inline-block; font-size: 11px; font-weight: 700; color: var(--accent-blue); background: rgba(59, 130, 246, 0.1); padding: 4px 10px; border-radius: 20px; margin-bottom: 6px; }
-    h1 { font-size: 22px; font-weight: 700; }
+    header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--border-color); }
+    .brand-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; color: #60a5fa; background: rgba(59, 130, 246, 0.12); padding: 5px 12px; border-radius: 20px; margin-bottom: 8px; border: 1px solid rgba(59, 130, 246, 0.3); letter-spacing: 0.5px; }
+    h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
 
-    .drop-zone { background: var(--bg-card); border: 2px dashed var(--border-color); border-radius: var(--radius-md); padding: 18px; text-align: center; margin-bottom: 24px; transition: all 0.2s; position: relative; cursor: pointer; }
-    .drop-zone:hover, .drop-zone.drag-over { border-color: var(--accent-blue); background: rgba(59, 130, 246, 0.05); }
-    .drop-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-    .drop-hint { font-size: 12px; color: var(--text-secondary); }
+    .drop-zone { background: var(--bg-card); border: 2px dashed var(--border-color); border-radius: var(--radius-md); padding: 22px; text-align: center; margin-bottom: 24px; transition: all 0.25s ease; position: relative; cursor: pointer; box-shadow: var(--shadow-md); }
+    .drop-zone:hover, .drop-zone.drag-over { border-color: var(--accent-blue); background: rgba(59, 130, 246, 0.06); box-shadow: 0 0 20px var(--accent-glow); }
+    .drop-title { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+    .drop-hint { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
     .file-input { position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer; }
 
-    .date-filter-bar { display: flex; gap: 10px; margin-bottom: 20px; align-items: center; background: var(--bg-card); padding: 12px 16px; border-radius: var(--radius-md); border: 1px solid var(--border-color); }
-    .filter-label { font-size: 13px; font-weight: 700; color: var(--text-secondary); margin-right: 8px; }
-    .date-btn { background: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-    .date-btn:hover, .date-btn.active { background: var(--accent-blue); color: #fff; border-color: var(--accent-blue); }
+    .date-filter-bar { display: flex; gap: 12px; margin-bottom: 24px; align-items: center; background: var(--bg-card); padding: 14px 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--shadow-md); }
+    .filter-label { font-size: 13px; font-weight: 700; color: var(--text-secondary); margin-right: 4px; }
+    .date-btn { background: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-secondary); padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+    .date-btn:hover, .date-btn.active { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #fff; border-color: #3b82f6; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
 
-    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-    .kpi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 18px 20px; }
-    .kpi-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
-    .kpi-value { font-size: 28px; font-weight: 700; margin: 4px 0; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 24px; }
+    .kpi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px 22px; box-shadow: var(--shadow-md); }
+    .kpi-label { font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+    .kpi-value { font-size: 30px; font-weight: 800; margin: 6px 0 2px 0; }
     .text-danger { color: var(--danger-text); }
     .text-warning { color: var(--warning-text); }
 
-    .content-grid { display: grid; grid-template-columns: 1.6fr 1.4fr; gap: 20px; }
-    .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px; }
-    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .card h2 { font-size: 16px; font-weight: 700; }
+    .content-grid { display: grid; grid-template-columns: 1.6fr 1.4fr; gap: 24px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 22px; box-shadow: var(--shadow-md); }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .card h2 { font-size: 16px; font-weight: 800; }
 
     .table-responsive { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
-    th { background: rgba(255,255,255,0.03); color: var(--text-secondary); padding: 10px 12px; border-bottom: 1px solid var(--border-color); font-size: 12px; }
-    td { padding: 12px; border-bottom: 1px solid var(--border-color); }
+    th { background: rgba(255,255,255,0.03); color: var(--text-secondary); padding: 11px 14px; border-bottom: 1px solid var(--border-color); font-size: 12px; font-weight: 700; }
+    td { padding: 13px 14px; border-bottom: 1px solid var(--border-color); }
     tr:hover td { background: var(--bg-card-hover); }
 
-    .badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 800; }
     .badge-danger { background: var(--danger-bg); color: var(--danger-text); border: 1px solid var(--danger-border); }
     .badge-success { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
 
-    .btn-detail { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); color: var(--accent-blue); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .btn-detail { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); color: #60a5fa; padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
     .btn-detail:hover { background: var(--accent-blue); color: #fff; }
 
-    .miss-list { display: flex; flex-direction: column; gap: 10px; max-height: 540px; overflow-y: auto; }
-    .miss-item { background: rgba(239,68,68,0.08); border-left: 4px solid var(--danger-text); padding: 12px 14px; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
-    .miss-item:hover { background: rgba(239,68,68,0.15); }
-    .miss-shop { font-size: 14px; font-weight: 700; }
-    .miss-meta { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
-    .miss-date-tag { font-size: 11px; font-weight: 700; background: rgba(239,68,68,0.2); color: var(--danger-text); padding: 2px 8px; border-radius: 4px; }
+    .progress-wrap { width: 100%; background: rgba(255,255,255,0.08); height: 6px; border-radius: 3px; overflow: hidden; margin-top: 5px; }
+    .progress-inner { height: 100%; border-radius: 3px; }
 
-    .red-item-pill { display: inline-block; background: rgba(239,68,68,0.2); color: var(--danger-text); border: 1px solid rgba(239,68,68,0.4); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin: 2px 4px 2px 0; }
+    .miss-list { display: flex; flex-direction: column; gap: 12px; max-height: 560px; overflow-y: auto; padding-right: 4px; }
+    .miss-item { background: rgba(239,68,68,0.07); border-left: 4px solid var(--danger-text); padding: 14px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; border-top: 1px solid rgba(239,68,68,0.15); border-right: 1px solid rgba(239,68,68,0.15); border-bottom: 1px solid rgba(239,68,68,0.15); }
+    .miss-item:hover { background: rgba(239,68,68,0.15); transform: translateX(2px); }
+    .miss-shop { font-size: 15px; font-weight: 800; color: #fff; }
+    .miss-meta { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+    .miss-date-tag { font-size: 11px; font-weight: 800; background: rgba(239,68,68,0.25); color: var(--danger-text); padding: 3px 10px; border-radius: 4px; border: 1px solid rgba(239,68,68,0.4); }
+    .red-item-pill { display: inline-block; background: rgba(239,68,68,0.2); color: #fca5a5; border: 1px solid rgba(239,68,68,0.4); padding: 3px 9px; border-radius: 4px; font-size: 11px; font-weight: 700; margin: 3px 4px 3px 0; }
 
-    /* モーダル */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(6px); display: none; justify-content: center; align-items: center; z-index: 1000; }
     .modal-overlay.active { display: flex; }
-    .modal-content { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); width: 90%; max-width: 900px; max-height: 85vh; overflow-y: auto; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
-    .modal-title { font-size: 18px; font-weight: 700; color: var(--text-primary); }
-    .modal-close { background: none; border: none; color: var(--text-secondary); font-size: 24px; cursor: pointer; }
+    .modal-content { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); width: 90%; max-width: 920px; max-height: 85vh; overflow-y: auto; padding: 28px; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 18px; border-bottom: 1px solid var(--border-color); margin-bottom: 22px; }
+    .modal-title { font-size: 19px; font-weight: 800; color: var(--text-primary); }
+    .modal-close { background: none; border: none; color: var(--text-secondary); font-size: 26px; cursor: pointer; }
 
-    .detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
-    .detail-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; font-size: 12px; }
-    .detail-box-label { font-size: 11px; color: var(--text-secondary); font-weight: 600; margin-bottom: 4px; }
-    .detail-box-val { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+    .detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
+    .detail-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 14px; border-radius: 10px; font-size: 12px; }
+    .detail-box-label { font-size: 11px; color: var(--text-secondary); font-weight: 700; margin-bottom: 4px; }
+    .detail-box-val { font-size: 14px; font-weight: 800; color: var(--text-primary); }
 
-    .detail-table { width: 100%; margin-top: 16px; border-collapse: collapse; }
-    .detail-table th { background: rgba(255,255,255,0.05); font-size: 11px; }
-    .detail-table td { font-size: 12px; padding: 10px; }
+    .detail-table { width: 100%; margin-top: 18px; border-collapse: collapse; }
+    .detail-table th { background: rgba(255,255,255,0.05); font-size: 11px; padding: 10px; }
+    .detail-table td { font-size: 12px; padding: 11px; }
   </style>
 </head>
 <body>
@@ -108,20 +111,18 @@
 <div class="app-container">
   <header>
     <div>
-      <span class="brand-badge">AI COMPANY HIGH-PRECISION PORTAL</span>
+      <span class="brand-badge">👑 AI COMPANY HIGH-PRECISION PORTAL</span>
       <h1>🎯 全157列 赤マーカー全判定・ピンポイント指摘 Webポータル</h1>
       <p class="subtitle">A列だけでなく全列の赤マーカー箇所（SRP判定・FFF8・Galaxyコンテスト等）を完全特定しピンポイント指摘</p>
     </div>
   </header>
 
-  <!-- ドロップエリア -->
   <div class="drop-zone" id="drop-zone">
     <div class="drop-title">📂 毎朝届いたExcelファイルをここにドラッグ＆ドロップ</div>
     <div class="drop-hint">全157列の赤マーカー箇所が1秒で全自動スキャンされ、ピンポイント指摘内訳が更新されます</div>
     <input type="file" id="file-input" accept=".xlsx, .xls" class="file-input">
   </div>
 
-  <!-- 日付切り替えフィルター -->
   <div class="date-filter-bar">
     <span class="filter-label">📅 表示対象日付:</span>
     <div id="date-buttons" style="display:flex; gap:8px;">
@@ -130,7 +131,6 @@
     </div>
   </div>
 
-  <!-- KPIカード -->
   <div class="kpi-grid">
     <div class="kpi-card">
       <div class="kpi-label">対象チェック店舗数</div>
@@ -146,13 +146,11 @@
     </div>
     <div class="kpi-card">
       <div class="kpi-label">最多赤セル発生スタッフ</div>
-      <div class="kpi-value" style="color:var(--accent-blue);" id="kpi-top">櫻井 蓮</div>
+      <div class="kpi-value" style="color:#60a5fa;" id="kpi-top">櫻井 蓮</div>
     </div>
   </div>
 
-  <!-- メインコンテンツ -->
   <div class="content-grid">
-    <!-- 左側: スタッフ別全列赤マーカー集計 -->
     <div class="card">
       <div class="card-header">
         <h2>👤 最終更新スタッフ別 全列赤マーカー指摘数</h2>
@@ -170,67 +168,52 @@
               <th width="100">詳細内訳</th>
             </tr>
           </thead>
-          <tbody id="staff-tbody">
-            <!-- 動的生成 -->
-          </tbody>
+          <tbody id="staff-tbody"></tbody>
         </table>
       </div>
     </div>
 
-    <!-- 右側: 全列赤マーカー指摘店舗ログ -->
     <div class="card">
       <div class="card-header">
         <h2>🔴 赤マーカー指摘項目 ピンポイント内訳</h2>
       </div>
-      <div class="miss-list" id="miss-list">
-        <!-- 動的生成 -->
-      </div>
+      <div class="miss-list" id="miss-list"></div>
     </div>
   </div>
 </div>
 
-<!-- モーダルダイアログ (詳細内訳表示用) -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal-content">
     <div class="modal-header">
       <div class="modal-title" id="modal-title">🔴 赤マーカーピンポイント指摘レポート</div>
       <button class="modal-close" id="modal-close">&times;</button>
     </div>
-    <div id="modal-body">
-      <!-- 動的挿入 -->
-    </div>
+    <div id="modal-body"></div>
   </div>
 </div>
 
 <script>
-// 全157列実スキャンに基づく10/1高精度データベース
 const initialDatabase = [
   { date: '10/1', shop: '藤崎', updater: '櫻井　蓮', sv: '担当', agency: 'ネット', red_count: 35, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'VOC F', 'VOC G', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認'] },
   { date: '10/1', shop: 'べふ', updater: '櫻井　蓮', sv: '担当', agency: 'ネット', red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'SRP判定', 'FFF8インセンティブ', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認'] },
   { date: '10/1', shop: 'ウエストコート姪浜', updater: '櫻井　蓮', sv: '担当', agency: 'ネット', red_count: 33, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'VOC F', 'VOC G', 'SRP判定', 'FFF8インセンティブ'] },
   { date: '10/1', shop: 'イオンマリナタウン', updater: '櫻井　蓮', sv: '担当', agency: 'ネット', red_count: 33, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'SRP判定', 'FFF8インセンティブ', 'FFF8インセンティブフリーコメント'] },
-  
   { date: '10/1', shop: '下郡', updater: '吉田　明香', sv: 'FSM', agency: 'ネット', red_count: 31, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認'] },
   { date: '10/1', shop: '大在', updater: '吉田　明香', sv: 'FSM', agency: 'ネット', red_count: 33, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'SRP判定', 'FFF8インセンティブ', 'Galaxyコンテスト確認'] },
   { date: '10/1', shop: '鶴崎', updater: '吉田　明香', sv: 'FSM', agency: 'コネシオ', red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認'] },
-
   { date: '10/1', shop: '高須', updater: '秦　貴凡', sv: '担当', agency: 'ネット', red_count: 33, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認'] },
   { date: '10/1', shop: '土佐山田', updater: '秦　貴凡', sv: '担当', agency: 'ネット', red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認', 'Galaxyコンテスト販売管理'] },
   { date: '10/1', shop: 'マルナカ南国', updater: '秦　貴凡', sv: '担当', agency: 'ネット', red_count: 28, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認'] },
   { date: '10/1', shop: 'あき', updater: '秦　貴凡', sv: '担当', agency: 'ネット', red_count: 27, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント'] },
-
   { date: '10/1', shop: 'はえばる', updater: '垂水　翔平', sv: '担当', agency: 'ネット', red_count: 36, items: ['店舗(A列)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'FFF8 MNPフリーコメント', 'Galaxyコンテスト確認'] },
   { date: '10/1', shop: '浦添内間', updater: '垂水　翔平', sv: '担当', agency: 'ネット', red_count: 32, items: ['S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'FFF8 MNPフリーコメント', 'Galaxyコンテスト確認'] },
-
   { date: '10/1', shop: '福山北', updater: '笹原　彩佳', sv: '担当', agency: 'ネット', red_count: 31, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8 MNPフリーコメント', 'Galaxyコンテスト確認'] },
   { date: '10/1', shop: 'フジグラン東広島', updater: '笹原　彩佳', sv: '担当', agency: 'ネット', red_count: 26, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8 MNPフリーコメント'] },
   { date: '10/1', shop: '東広島', updater: '笹原　彩佳', sv: '担当', agency: 'ネット', red_count: 25, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8 MNPフリーコメント'] },
-
   { date: '10/1', shop: 'イオンモール新居浜', updater: '下村　公人', sv: 'マネージャー', agency: 'ネット', red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8 MNPフリーコメント'] },
   { date: '10/1', shop: '高知北', updater: '下村　公人', sv: 'マネージャー', agency: 'ネット', red_count: 24, items: ['その他情報(フリーエリア)', 'FFF8 MNPフリーコメント'] },
   { date: '10/1', shop: '土佐道路', updater: '下村　公人', sv: 'マネージャー', agency: 'ネット', red_count: 25, items: ['その他情報(フリーエリア)', 'FFF8 MNPフリーコメント'] },
   { date: '10/1', shop: '新居浜川東', updater: '下村　公人', sv: 'マネージャー', agency: 'ネット', red_count: 23, items: ['その他情報(フリーエリア)', 'FFF8 MNPフリーコメント'] },
-
   { date: '10/1', shop: '佐世保大塔', updater: '山崎　紗季', sv: '担当', agency: 'その他', red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8 MNPフリーコメント'] },
   { date: '10/1', shop: '諫早バイパス', updater: '山崎　紗季', sv: '担当', agency: 'ネット', red_count: 26, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
   { date: '10/1', shop: '佐賀夢咲', updater: '山崎　紗季', sv: '担当', agency: 'ネット', red_count: 24, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
@@ -415,7 +398,7 @@ function openShopModal(item) {
       </div>
       <div class="detail-box">
         <div class="detail-box-label">最終更新スタッフ</div>
-        <div class="detail-box-val" style="color:var(--accent-blue);">${item.updater}</div>
+        <div class="detail-box-val" style="color:#60a5fa;">${item.updater}</div>
       </div>
       <div class="detail-box">
         <div class="detail-box-label">この店舗の赤セル検出数</div>
