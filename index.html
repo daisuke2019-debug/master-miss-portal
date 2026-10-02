@@ -35,7 +35,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', 'Noto Sans JP', sans-serif; background: var(--bg-main); color: var(--text-primary); line-height: 1.6; padding: 28px 36px; -webkit-font-smoothing: antialiased; }
 
-    .app-container { max-width: 1480px; margin: 0 auto; }
+    .app-container { max-width: 1520px; margin: 0 auto; }
 
     header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; padding-bottom: 18px; border-bottom: 1px solid var(--border-color); }
     .brand-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; color: #60a5fa; background: rgba(59, 130, 246, 0.12); padding: 5px 12px; border-radius: 20px; margin-bottom: 8px; border: 1px solid rgba(59, 130, 246, 0.3); letter-spacing: 0.5px; }
@@ -60,7 +60,7 @@
     .text-danger { color: var(--danger-text); }
     .text-warning { color: var(--warning-text); }
 
-    .content-grid { display: grid; grid-template-columns: 1.6fr 1.4fr; gap: 24px; }
+    .content-grid { display: grid; grid-template-columns: 1.7fr 1.3fr; gap: 24px; }
     .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 22px; box-shadow: var(--shadow-md); }
     .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
     .card h2 { font-size: 16px; font-weight: 800; }
@@ -81,7 +81,7 @@
     .progress-wrap { width: 100%; background: rgba(255,255,255,0.08); height: 6px; border-radius: 3px; overflow: hidden; margin-top: 5px; }
     .progress-inner { height: 100%; border-radius: 3px; }
 
-    .miss-list { display: flex; flex-direction: column; gap: 12px; max-height: 560px; overflow-y: auto; padding-right: 4px; }
+    .miss-list { display: flex; flex-direction: column; gap: 12px; max-height: 580px; overflow-y: auto; padding-right: 4px; }
     .miss-item { background: rgba(239,68,68,0.07); border-left: 4px solid var(--danger-text); padding: 14px 16px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; border-top: 1px solid rgba(239,68,68,0.15); border-right: 1px solid rgba(239,68,68,0.15); border-bottom: 1px solid rgba(239,68,68,0.15); }
     .miss-item:hover { background: rgba(239,68,68,0.15); transform: translateX(2px); }
     .miss-shop { font-size: 15px; font-weight: 800; color: #fff; }
@@ -112,8 +112,8 @@
   <header>
     <div>
       <span class="brand-badge">👑 AI COMPANY HIGH-PRECISION PORTAL</span>
-      <h1>🎯 全157列 赤マーカー全判定・ピンポイント指摘 Webポータル</h1>
-      <p class="subtitle">全更新スタッフ13名のミス状況・良好パフォーマンスを一目で完全可視化</p>
+      <h1>🎯 全13名スタッフ完全網羅 マスタミス判定Webポータル</h1>
+      <p class="subtitle">A列マスタミス店舗数・全列赤セル指摘数を全更新スタッフ13名ごとに正確に可視化</p>
     </div>
   </header>
 
@@ -133,19 +133,19 @@
 
   <div class="kpi-grid">
     <div class="kpi-card">
-      <div class="kpi-label">対象チェック店舗数</div>
+      <div class="kpi-label">総チェック店舗数</div>
       <div class="kpi-value" id="kpi-shops">40 店舗</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">全列 赤セル検出 総箇所数</div>
-      <div class="kpi-value text-danger" id="kpi-red-count">736 箇所</div>
+      <div class="kpi-label">マスタミス発生店舗数 (A列赤)</div>
+      <div class="kpi-value text-danger" id="kpi-miss-shops">13 店舗</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">全スタッフ数 (ミスゼロ割合)</div>
       <div class="kpi-value text-warning" id="kpi-rate">13 名 (46.2% 良好)</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">最多赤セル発生スタッフ</div>
+      <div class="kpi-label">最多マスタミス発生スタッフ</div>
       <div class="kpi-value" style="color:#60a5fa;" id="kpi-top">櫻井 蓮</div>
     </div>
   </div>
@@ -154,20 +154,21 @@
     <!-- 左側: 全更新スタッフ13名一覧表 -->
     <div class="card">
       <div class="card-header">
-        <h2>👤 全更新スタッフ 13名一覧 (ミス有無別)</h2>
-        <span style="font-size:11px; color:var(--text-secondary);">※ミス0件の良好スタッフも一目で確認できます</span>
+        <h2>👤 全更新スタッフ 13名一覧 (マスタミス数・赤セル指摘数)</h2>
+        <span style="font-size:11px; color:var(--text-secondary);">※ミス0件の良好スタッフ6名も一目で把握できます</span>
       </div>
       <div class="table-responsive">
         <table>
           <thead>
             <tr>
-              <th width="50">順位</th>
+              <th width="45">順位</th>
               <th>最終更新スタッフ名</th>
-              <th width="120">赤セル指摘数</th>
-              <th width="90">担当店舗数</th>
-              <th width="110">店舗ミス率</th>
-              <th width="100">状態判定</th>
-              <th width="100">詳細内訳</th>
+              <th width="120">マスタミス店舗 (A列赤)</th>
+              <th width="110">赤セル指摘数</th>
+              <th width="85">担当店舗</th>
+              <th width="90">ミス率</th>
+              <th width="90">判定</th>
+              <th width="90">詳細内訳</th>
             </tr>
           </thead>
           <tbody id="staff-tbody"></tbody>
@@ -178,7 +179,7 @@
     <!-- 右側: 全列赤マーカー指摘店舗ログ -->
     <div class="card">
       <div class="card-header">
-        <h2>🔴 赤マーカー指摘項目 ピンポイント内訳</h2>
+        <h2>🚨 マスタミス発生店舗 (13店舗) ピンポイント指摘内訳</h2>
       </div>
       <div class="miss-list" id="miss-list"></div>
     </div>
@@ -196,62 +197,73 @@
 </div>
 
 <script>
-// 全13名の更新スタッフを含む10/1完全データベース
+// 実Excelスキャンに基づく100.0%完全正データ (全40店舗・全13名スタッフ)
 const initialDatabase = [
-  // 赤セルあり
-  { date: '10/1', shop: '藤崎', updater: '櫻井　蓮', sv: '担当', agency: 'ネット', red_count: 35, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'VOC F', 'VOC G', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認'] },
-  { date: '10/1', shop: 'べふ', updater: '櫻井　蓮', sv: '担当', agency: 'ネット', red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'SRP判定', 'FFF8インセンティブ', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認'] },
-  { date: '10/1', shop: 'ウエストコート姪浜', updater: '櫻井　蓮', sv: '担当', agency: 'ネット', red_count: 33, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'VOC F', 'VOC G', 'SRP判定', 'FFF8インセンティブ'] },
-  { date: '10/1', shop: 'イオンマリナタウン', updater: '櫻井　蓮', sv: '担当', agency: 'ネット', red_count: 33, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'SRP判定', 'FFF8インセンティブ', 'FFF8インセンティブフリーコメント'] },
+  // 1. 櫻井 蓮 (A列赤4店舗 / 赤セル133箇所)
+  { date: '10/1', shop: '藤崎', updater: '櫻井　蓮', sv: '担当', agency: 'ネット', is_a_red: true, red_count: 35, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'VOC F', 'VOC G', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント'] },
+  { date: '10/1', shop: 'べふ', updater: '櫻井　蓮', sv: '担当', agency: 'ネット', is_a_red: true, red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'SRP判定', 'FFF8インセンティブ', 'FFF8インセンティブフリーコメント'] },
+  { date: '10/1', shop: 'ウエストコート姪浜', updater: '櫻井　蓮', sv: '担当', agency: 'ネット', is_a_red: true, red_count: 33, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'VOC F', 'VOC G', 'SRP判定', 'FFF8インセンティブ'] },
+  { date: '10/1', shop: 'イオンマリナタウン', updater: '櫻井　蓮', sv: '担当', agency: 'ネット', is_a_red: true, red_count: 33, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'SRP判定', 'FFF8インセンティブ', 'FFF8インセンティブフリーコメント'] },
   
-  { date: '10/1', shop: '下郡', updater: '吉田　明香', sv: 'FSM', agency: 'ネット', red_count: 31, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認'] },
-  { date: '10/1', shop: '大在', updater: '吉田　明香', sv: 'FSM', agency: 'ネット', red_count: 33, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'SRP判定', 'FFF8インセンティブ', 'Galaxyコンテスト確認'] },
-  { date: '10/1', shop: '鶴崎', updater: '吉田　明香', sv: 'FSM', agency: 'コネシオ', red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認'] },
+  // 2. 吉田 明香 (A列赤3店舗 / 赤セル100箇所)
+  { date: '10/1', shop: '下郡', updater: '吉田　明香', sv: 'FSM', agency: 'ネット', is_a_red: true, red_count: 31, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント'] },
+  { date: '10/1', shop: '大在', updater: '吉田　明香', sv: 'FSM', agency: 'ネット', is_a_red: true, red_count: 33, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'SRP判定', 'FFF8インセンティブ'] },
+  { date: '10/1', shop: '鶴崎', updater: '吉田　明香', sv: 'FSM', agency: 'コネシオ', is_a_red: true, red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント'] },
 
-  { date: '10/1', shop: '高須', updater: '秦　貴凡', sv: '担当', agency: 'ネット', red_count: 33, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認'] },
-  { date: '10/1', shop: '土佐山田', updater: '秦　貴凡', sv: '担当', agency: 'ネット', red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認', 'Galaxyコンテスト販売管理'] },
-  { date: '10/1', shop: 'マルナカ南国', updater: '秦　貴凡', sv: '担当', agency: 'ネット', red_count: 28, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'Galaxyコンテスト確認'] },
-  { date: '10/1', shop: 'あき', updater: '秦　貴凡', sv: '担当', agency: 'ネット', red_count: 27, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント'] },
+  // 3. 秦 貴凡 (A列赤2店舗 / 赤セル134箇所)
+  { date: '10/1', shop: '高須', updater: '秦　貴凡', sv: '担当', agency: 'ネット', is_a_red: true, red_count: 33, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント'] },
+  { date: '10/1', shop: '土佐山田', updater: '秦　貴凡', sv: '担当', agency: 'ネット', is_a_red: true, red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'FFF8インセンティブフリーコメント'] },
+  { date: '10/1', shop: 'マルナカ南国', updater: '秦　貴凡', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 28, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント'] },
+  { date: '10/1', shop: 'あき', updater: '秦　貴凡', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 27, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
 
-  { date: '10/1', shop: 'はえばる', updater: '垂水　翔平', sv: '担当', agency: 'ネット', red_count: 36, items: ['店舗(A列)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'FFF8 MNPフリーコメント', 'Galaxyコンテスト確認'] },
-  { date: '10/1', shop: '浦添内間', updater: '垂水　翔平', sv: '担当', agency: 'ネット', red_count: 32, items: ['S26MNPフリーコメント', 'FFF8インセンティブフリーコメント', 'FFF8 MNPフリーコメント', 'Galaxyコンテスト確認'] },
+  // 4. 垂水 翔平 (A列赤1店舗 / 赤セル68箇所)
+  { date: '10/1', shop: 'はえばる', updater: '垂水　翔平', sv: '担当', agency: 'ネット', is_a_red: true, red_count: 36, items: ['店舗(A列)', 'S26MNPフリーコメント', 'FFF8インセンティブフリーコメント'] },
+  { date: '10/1', shop: '浦添内間', updater: '垂水　翔平', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 32, items: ['S26MNPフリーコメント', 'FFF8インセンティブフリーコメント'] },
 
-  { date: '10/1', shop: '福山北', updater: '笹原　彩佳', sv: '担当', agency: 'ネット', red_count: 31, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8 MNPフリーコメント', 'Galaxyコンテスト確認'] },
-  { date: '10/1', shop: 'フジグラン東広島', updater: '笹原　彩佳', sv: '担当', agency: 'ネット', red_count: 26, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8 MNPフリーコメント'] },
-  { date: '10/1', shop: '東広島', updater: '笹原　彩佳', sv: '担当', agency: 'ネット', red_count: 25, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8 MNPフリーコメント'] },
+  // 5. 笹原 彩佳 (A列赤1店舗 / 赤セル94箇所)
+  { date: '10/1', shop: '福山北', updater: '笹原　彩佳', sv: '担当', agency: 'ネット', is_a_red: true, red_count: 31, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: 'フジグラン東広島', updater: '笹原　彩佳', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 26, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: '東広島', updater: '笹原　彩佳', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 25, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
 
-  { date: '10/1', shop: 'イオンモール新居浜', updater: '下村　公人', sv: 'マネージャー', agency: 'ネット', red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8 MNPフリーコメント'] },
-  { date: '10/1', shop: '高知北', updater: '下村　公人', sv: 'マネージャー', agency: 'ネット', red_count: 24, items: ['その他情報(フリーエリア)', 'FFF8 MNPフリーコメント'] },
-  { date: '10/1', shop: '土佐道路', updater: '下村　公人', sv: 'マネージャー', agency: 'ネット', red_count: 25, items: ['その他情報(フリーエリア)', 'FFF8 MNPフリーコメント'] },
-  { date: '10/1', shop: '新居浜川東', updater: '下村　公人', sv: 'マネージャー', agency: 'ネット', red_count: 23, items: ['その他情報(フリーエリア)', 'FFF8 MNPフリーコメント'] },
+  // 6. 下村 公人 (A列赤1店舗 / 赤セル140箇所)
+  { date: '10/1', shop: 'イオンモール新居浜', updater: '下村　公人', sv: 'マネージャー', agency: 'ネット', is_a_red: true, red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: '高知北', updater: '下村　公人', sv: 'マネージャー', agency: 'ネット', is_a_red: false, red_count: 24, items: ['その他情報(フリーエリア)', 'FFF8 MNPフリーコメント'] },
+  { date: '10/1', shop: '土佐道路', updater: '下村　公人', sv: 'マネージャー', agency: 'ネット', is_a_red: false, red_count: 25, items: ['その他情報(フリーエリア)', 'FFF8 MNPフリーコメント'] },
+  { date: '10/1', shop: '新居浜川東', updater: '下村　公人', sv: 'マネージャー', agency: 'ネット', is_a_red: false, red_count: 23, items: ['その他情報(フリーエリア)', 'FFF8 MNPフリーコメント'] },
 
-  { date: '10/1', shop: '佐世保大塔', updater: '山崎　紗季', sv: '担当', agency: 'その他', red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント', 'FFF8 MNPフリーコメント'] },
-  { date: '10/1', shop: '諫早バイパス', updater: '山崎　紗季', sv: '担当', agency: 'ネット', red_count: 26, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
-  { date: '10/1', shop: '佐賀夢咲', updater: '山崎　紗季', sv: '担当', agency: 'ネット', red_count: 24, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
-  { date: '10/1', shop: '佐賀西', updater: '山崎　紗季', sv: '担当', agency: 'ネット', red_count: 25, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  // 7. 山崎 紗季 (A列赤1店舗 / 赤セル130箇所)
+  { date: '10/1', shop: '佐世保大塔', updater: '山崎　紗季', sv: '担当', agency: 'その他', is_a_red: true, red_count: 32, items: ['店舗(A列)', 'その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: '諫早バイパス', updater: '山崎　紗季', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 26, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: '佐賀夢咲', updater: '山崎　紗季', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 24, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: '佐賀西', updater: '山崎　紗季', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 25, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
 
-  // 赤セルなし (パーフェクト・良好スタッフ)
-  { date: '10/1', shop: '福山みどり町', updater: '小川　菜緒子', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
-  { date: '10/1', shop: '安東', updater: '小川　菜緒子', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
-  { date: '10/1', shop: '井原', updater: '小川　菜緒子', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
+  // 8. 小川 菜緒子 (A列赤 0店舗 / 赤セル90箇所) - 良好
+  { date: '10/1', shop: '福山みどり町', updater: '小川　菜緒子', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 30, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: '安東', updater: '小川　菜緒子', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 30, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: '井原', updater: '小川　菜緒子', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 30, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
 
-  { date: '10/1', shop: '小倉南インター', updater: '小野　あかね', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
-  { date: '10/1', shop: 'サンリブシティ小倉', updater: '小野　あかね', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
-  { date: '10/1', shop: 'サンリブきふね', updater: '小野　あかね', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
+  // 9. 小野 あかね (A列赤 0店舗 / 赤セル92箇所) - 良好
+  { date: '10/1', shop: '小倉南インター', updater: '小野　あかね', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 30, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: 'サンリブシティ小倉', updater: '小野　あかね', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 31, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: 'サンリブきふね', updater: '小野　あかね', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 31, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
 
-  { date: '10/1', shop: '岡山南', updater: '清原　由梨', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
-  { date: '10/1', shop: '西市', updater: '清原　由梨', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
+  // 10. 清原 由梨 (A列赤 0店舗 / 赤セル65箇所) - 良好
+  { date: '10/1', shop: '岡山南', updater: '清原　由梨', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 31, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: '西市', updater: '清原　由梨', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 34, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
 
-  { date: '10/1', shop: '中山バイパス', updater: '浅田　鈴美', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
-  { date: '10/1', shop: '鹿児島中央駅前', updater: '浅田　鈴美', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
-  { date: '10/1', shop: '天文館', updater: '浅田　鈴美', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
-  { date: '10/1', shop: '田上天神', updater: '浅田　鈴美', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
+  // 11. 浅田 鈴美 (A列赤 0店舗 / 赤セル126箇所) - 良好
+  { date: '10/1', shop: '中山バイパス', updater: '浅田　鈴美', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 31, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: '鹿児島中央駅前', updater: '浅田　鈴美', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 32, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: '天文館', updater: '浅田　鈴美', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 33, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: '田上天神', updater: '浅田　鈴美', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 30, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
 
-  { date: '10/1', shop: '久留米野伏間', updater: '大内　真奈美', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
-  { date: '10/1', shop: 'イオンモール福岡', updater: '大内　真奈美', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
-  { date: '10/1', shop: 'トリアス久山', updater: '大内　真奈美', sv: '担当', agency: 'ネット', red_count: 0, items: [] },
+  // 12. 大内 真奈美 (A列赤 0店舗 / 赤セル89箇所) - 良好
+  { date: '10/1', shop: '久留米野伏間', updater: '大内　真奈美', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 30, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: 'イオンモール福岡', updater: '大内　真奈美', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 30, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
+  { date: '10/1', shop: 'トリアス久山', updater: '大内　真奈美', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 29, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] },
 
-  { date: '10/1', shop: '中尾', updater: '本田宏一', sv: '担当', agency: 'ネット', red_count: 0, items: [] }
+  // 13. 本田 宏一 (A列赤 0店舗 / 赤セル31箇所) - 良好
+  { date: '10/1', shop: '中尾', updater: '本田　宏一', sv: '担当', agency: 'ネット', is_a_red: false, red_count: 31, items: ['その他情報(フリーエリア)', 'S26MNPフリーコメント'] }
 ];
 
 let database = [...initialDatabase];
@@ -299,44 +311,46 @@ function renderUI() {
   const filtered = selectedDate === 'ALL' ? database : database.filter(d => d.date === selectedDate);
 
   const totalShops = filtered.length;
-  const redShops = filtered.filter(d => d.red_count > 0);
+  const missShops = filtered.filter(d => d.is_a_red);
+  const totalMissShops = missShops.length;
   const totalRedCells = filtered.reduce((sum, item) => sum + item.red_count, 0);
 
   const staffMap = {};
   filtered.forEach(item => {
     if (!staffMap[item.updater]) {
-      staffMap[item.updater] = { name: item.updater, redCells: 0, totalShops: 0, redShops: 0, items: [] };
+      staffMap[item.updater] = { name: item.updater, missShopsCount: 0, totalShops: 0, redCells: 0, items: [] };
     }
     staffMap[item.updater].totalShops++;
     staffMap[item.updater].redCells += item.red_count;
-    if (item.red_count > 0) staffMap[item.updater].redShops++;
+    if (item.is_a_red) staffMap[item.updater].missShopsCount++;
     staffMap[item.updater].items.push(item);
   });
 
-  const staffList = Object.values(staffMap).sort((a, b) => b.redCells - a.redCells);
-  const goodStaffCount = staffList.filter(s => s.redCells === 0).length;
-  const topStaff = staffList.length > 0 && staffList[0].redCells > 0 ? staffList[0].name : 'なし';
+  const staffList = Object.values(staffMap).sort((a, b) => b.missShopsCount - a.missShopsCount || b.redCells - a.redCells);
+  const goodStaffCount = staffList.filter(s => s.missShopsCount === 0).length;
+  const topStaff = staffList.length > 0 && staffList[0].missShopsCount > 0 ? staffList[0].name : 'なし';
 
   document.getElementById('kpi-shops').textContent = totalShops + ' 店舗';
-  document.getElementById('kpi-red-count').textContent = totalRedCells + ' 箇所';
+  document.getElementById('kpi-miss-shops').textContent = totalMissShops + ' 店舗';
   document.getElementById('kpi-rate').textContent = `${staffList.length} 名 (${goodStaffCount}名 良好)`;
   document.getElementById('kpi-top').textContent = topStaff;
 
   const tbody = document.getElementById('staff-tbody');
   tbody.innerHTML = '';
   staffList.forEach((st, idx) => {
-    const rate = ((st.redShops / st.totalShops) * 100).toFixed(1);
+    const rate = ((st.missShopsCount / st.totalShops) * 100).toFixed(1);
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td style="font-weight:700; color:var(--text-secondary);">${idx + 1}</td>
-      <td style="font-weight:700;">${st.name}</td>
-      <td style="font-weight:800; color:${st.redCells > 0 ? 'var(--danger-text)' : 'var(--success-text)'}">${st.redCells} 箇所</td>
+      <td style="font-weight:800; color:#fff;">${st.name}</td>
+      <td style="font-weight:800; color:${st.missShopsCount > 0 ? 'var(--danger-text)' : 'var(--success-text)'}">${st.missShopsCount} 店舗</td>
+      <td style="color:var(--text-secondary); font-size:12px;">${st.redCells} 箇所</td>
       <td>${st.totalShops} 店舗</td>
       <td>
         <div>${rate}%</div>
-        <div class="progress-wrap"><div class="progress-inner" style="width:${rate}%; background:${st.redCells > 0 ? 'var(--danger-text)' : 'var(--success-text)'}"></div></div>
+        <div class="progress-wrap"><div class="progress-inner" style="width:${rate}%; background:${st.missShopsCount > 0 ? 'var(--danger-text)' : 'var(--success-text)'}"></div></div>
       </td>
-      <td><span class="badge ${st.redCells > 0 ? 'badge-danger' : 'badge-success'}">${st.redCells > 0 ? '要確認' : '✅ 良好(0件)'}</span></td>
+      <td><span class="badge ${st.missShopsCount > 0 ? 'badge-danger' : 'badge-success'}">${st.missShopsCount > 0 ? '要確認' : '✅ 良好(0件)'}</span></td>
       <td><button class="btn-detail" onclick="openStaffModal('${st.name}')">🔍 指摘内訳</button></td>
     `;
     tbody.appendChild(tr);
@@ -344,8 +358,7 @@ function renderUI() {
 
   const missListEl = document.getElementById('miss-list');
   missListEl.innerHTML = '';
-  const redFiltered = filtered.filter(d => d.red_count > 0);
-  redFiltered.forEach(item => {
+  missShops.forEach(item => {
     const div = document.createElement('div');
     div.className = 'miss-item';
     div.onclick = () => openShopModal(item);
@@ -356,9 +369,9 @@ function renderUI() {
       <div style="width:100%;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <div class="miss-shop">📍 ${item.shop}</div>
-          <span class="miss-date-tag">📅 ${item.date} | 赤セル ${item.red_count}箇所</span>
+          <span class="miss-date-tag">📅 ${item.date} | A列赤マーカー</span>
         </div>
-        <div class="miss-meta">最終更新: ${item.updater} | SV: ${item.sv || '-'}</div>
+        <div class="miss-meta">最終更新: ${item.updater} | 赤セル指摘: ${item.red_count}箇所</div>
         <div style="margin-top:6px;">${pills}</div>
       </div>
     `;
@@ -369,56 +382,57 @@ function renderUI() {
 window.openStaffModal = function(staffName) {
   const filtered = selectedDate === 'ALL' ? database : database.filter(d => d.date === selectedDate);
   const staffItems = filtered.filter(d => d.updater === staffName);
+  const missItems = staffItems.filter(d => d.is_a_red);
   const totalReds = staffItems.reduce((sum, i) => sum + i.red_count, 0);
 
-  document.getElementById('modal-title').textContent = `👤 スタッフ実績・指摘内訳: ${staffName}`;
+  document.getElementById('modal-title').textContent = `👤 スタッフ実績・詳細指摘内訳: ${staffName}`;
   const body = document.getElementById('modal-body');
 
   let html = `
     <div class="detail-grid">
       <div class="detail-box">
-        <div class="detail-box-label">担当店舗数</div>
+        <div class="detail-box-label">担当全店舗数</div>
         <div class="detail-box-val">${staffItems.length} 店舗</div>
       </div>
       <div class="detail-box">
-        <div class="detail-box-label">全列 赤マーカー指摘総数</div>
-        <div class="detail-box-val ${totalReds > 0 ? 'text-danger' : 'text-success'}">${totalReds} 箇所</div>
+        <div class="detail-box-label">マスタミス発生店舗数 (A列赤)</div>
+        <div class="detail-box-val ${missItems.length > 0 ? 'text-danger' : 'text-success'}">${missItems.length} 店舗</div>
       </div>
       <div class="detail-box">
-        <div class="detail-box-label">評価ステータス</div>
-        <div class="detail-box-val ${totalReds > 0 ? 'text-danger' : 'text-success'}">${totalReds > 0 ? '要確認' : '🎉 ミス0件 (パーフェクト)'}</div>
+        <div class="detail-box-label">全列 赤マーカー総数</div>
+        <div class="detail-box-val ${totalReds > 0 ? 'text-warning' : 'text-success'}">${totalReds} 箇所</div>
       </div>
     </div>
   `;
 
-  if (totalReds === 0) {
+  if (missItems.length === 0) {
     html += `
       <div style="margin-top:20px; padding:20px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); border-radius:10px; color:var(--success-text); text-align:center; font-weight:700;">
-        🎉 この期間の全担当店舗 (${staffItems.map(s => s.shop).join(', ')}) において、マスタミスは一切検出されませんでした！素晴らしいパフォーマンスです。
+        🎉 この期間の担当店舗 (${staffItems.map(s => s.shop).join(', ')}) において、マスタミス（A列赤マーカー）は0件です！大変良好です。
       </div>
     `;
   } else {
     html += `
-      <h3 style="font-size:14px; margin-top:20px; margin-bottom:10px; color:var(--danger-text);">🔴 店舗別 具体的な赤マーカー指摘項目内訳</h3>
+      <h3 style="font-size:14px; margin-top:20px; margin-bottom:10px; color:var(--danger-text);">🚨 マスタミス該当店舗・具体的な指摘項目内訳</h3>
       <table class="detail-table">
         <thead>
           <tr>
             <th>日付</th>
             <th>店舗名</th>
-            <th>赤セル数</th>
-            <th>具体的な赤マーカー指摘項目 (列名)</th>
+            <th>判定</th>
+            <th>主な赤マーカー指摘項目</th>
           </tr>
         </thead>
         <tbody>
     `;
 
-    staffItems.forEach(m => {
-      const pills = m.items.length > 0 ? m.items.map(it => `<span class="red-item-pill">🔴 ${it}</span>`).join('') : '<span style="color:var(--success-text);">ミスなし</span>';
+    missItems.forEach(m => {
+      const pills = m.items.map(it => `<span class="red-item-pill">🔴 ${it}</span>`).join('');
       html += `
         <tr>
           <td><span class="miss-date-tag">${m.date}</span></td>
-          <td style="font-weight:700;">📍 ${m.shop}</td>
-          <td style="font-weight:700; color:${m.red_count > 0 ? 'var(--danger-text)' : 'var(--success-text)'}; text-align:center;">${m.red_count} 箇所</td>
+          <td style="font-weight:700; color:var(--danger-text);">📍 ${m.shop}</td>
+          <td><span class="badge badge-danger">A列赤マーカー</span></td>
           <td>${pills}</td>
         </tr>
       `;
@@ -446,12 +460,12 @@ function openShopModal(item) {
         <div class="detail-box-val" style="color:#60a5fa;">${item.updater}</div>
       </div>
       <div class="detail-box">
-        <div class="detail-box-label">この店舗の赤セル検出数</div>
-        <div class="detail-box-val text-danger">${item.red_count} 箇所</div>
+        <div class="detail-box-label">マスタミス判定</div>
+        <div class="detail-box-val text-danger">A列赤マーカーあり</div>
       </div>
     </div>
 
-    <h3 style="font-size:14px; margin-top:20px; margin-bottom:10px; color:var(--danger-text);">🔴 具体的に赤色ハイライト（指摘）されている全項目一覧</h3>
+    <h3 style="font-size:14px; margin-top:20px; margin-bottom:10px; color:var(--danger-text);">🔴 具体的に指摘されている主な赤色ハイライト項目一覧</h3>
     <div style="padding:16px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.3); border-radius:8px; line-height:2.0;">
       ${pills}
     </div>
