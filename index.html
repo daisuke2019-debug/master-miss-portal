@@ -51,7 +51,7 @@
             <div class="flex items-center gap-4 text-xs font-semibold bg-slate-800/90 text-slate-300 px-4 py-2.5 rounded-xl border border-slate-700">
                 <div class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span>2026/10/01 提出マスタ全40店舗集計完了</span>
+                    <span>2026/10/01 提出マスタ全40店舗 実測集計</span>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
 
     <main class="max-w-6xl mx-auto px-4 md:px-8 mt-8 space-y-8">
 
-        <!-- 📊 トップKPIサマリー (一目でわかる極上シンプル指標) -->
+        <!-- 📊 トップKPIサマリー -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="main-card p-6 rounded-2xl">
                 <div class="text-slate-400 text-xs font-bold uppercase tracking-wider">全チェック店舗数</div>
@@ -73,21 +73,21 @@
                 <div class="text-xs text-red-300/80 font-bold mt-2">最多指摘: 櫻井 蓮 (4回)</div>
             </div>
 
-            <div class="main-card p-6 rounded-2xl bg-gradient-to-br from-slate-800 to-emerald-950/40 border-emerald-500/30">
-                <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider">A列ノーミス評価スタッフ</div>
-                <div class="text-4xl font-black text-emerald-400 mt-2">6 <span class="text-sm font-normal text-slate-400">名 / 全13名</span></div>
-                <div class="text-xs text-emerald-300/80 font-bold mt-2">46.2% がパーフェクト</div>
+            <div class="main-card p-6 rounded-2xl bg-gradient-to-br from-slate-800 to-amber-950/40 border-amber-500/30">
+                <div class="text-amber-400 text-xs font-bold uppercase tracking-wider">A列以外の赤背景セル (内訳総数)</div>
+                <div class="text-4xl font-black text-amber-400 mt-2">26 <span class="text-sm font-normal text-slate-400">箇所</span></div>
+                <div class="text-xs text-amber-300/80 font-bold mt-2">具体項目数 (櫻井: 9箇所, 吉田: 6箇所...)</div>
             </div>
         </div>
 
-        <!-- 👔 メインテーブル: スタッフ別マスタミス指摘数 (最優先表示) -->
+        <!-- 👔 メインテーブル: スタッフ別マスタミス指摘数 ＆ A列以外内訳数 -->
         <section class="main-card rounded-2xl overflow-hidden">
             <div class="p-6 border-b border-slate-700/60 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-800/40">
                 <div>
                     <h2 class="text-xl font-extrabold text-white flex items-center gap-2">
-                        <span>👔</span> 最終更新スタッフ別 指摘数一覧 (指摘が多い順)
+                        <span>👔</span> 最終更新スタッフ別 指摘数 ＆ 内訳箇所数 (指摘が多い順)
                     </h2>
-                    <p class="text-xs text-slate-400 mt-1">A列の赤店舗マーカーをカウント。クリックで具体店舗・内訳を表示</p>
+                    <p class="text-xs text-slate-400 mt-1">A列指摘数と、A列以外の赤セル内訳箇所数を表示。クリックで該当項目名を確認</p>
                 </div>
             </div>
 
@@ -98,7 +98,7 @@
                             <th class="py-4 px-6">最終更新スタッフ</th>
                             <th class="py-4 px-4 text-center">担当店舗数</th>
                             <th class="py-4 px-4 text-center">A列 指摘数<br><span class="text-2xs font-normal text-red-400">(マスタミス回数)</span></th>
-                            <th class="py-4 px-4 text-center">全列指摘累計<br><span class="text-2xs font-normal text-amber-400">(内訳箇所数)</span></th>
+                            <th class="py-4 px-4 text-center">A列外 赤セル件数<br><span class="text-2xs font-normal text-amber-400">(内訳箇所数)</span></th>
                             <th class="py-4 px-6 text-center">評価ステータス</th>
                             <th class="py-4 px-6 text-right">アクション</th>
                         </tr>
@@ -110,14 +110,14 @@
             </div>
         </section>
 
-        <!-- 📌 ミス多発項目内訳 (どこでミスが多いか一目でわかる) -->
+        <!-- 📌 A列以外 赤セル多発項目内訳 -->
         <section class="main-card p-6 rounded-2xl">
             <div class="mb-4 pb-3 border-b border-slate-700/60 flex justify-between items-center">
                 <div>
                     <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                        <span>📌</span> ミス多発項目 内訳ランキング (全40店舗)
+                        <span>📌</span> A列以外 赤セル多発項目 ランキング (内訳箇所の特定)
                     </h2>
-                    <p class="text-xs text-slate-400 mt-1">どの項目で記入漏れ・エラーが多いかを可視化</p>
+                    <p class="text-xs text-slate-400 mt-1">具体的にどの項目で赤色マーカーの指摘が多いかを可視化</p>
                 </div>
             </div>
 
@@ -126,49 +126,121 @@
     <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
         <div class="flex items-center gap-3">
             <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">1</span>
-            <span class="font-bold text-slate-800 text-sm">S26MNP割引施策についてのフリーコメント (未入力/エラー)</span>
+            <span class="font-bold text-slate-800 text-sm">FFF8_インセンティブ施策認知確認</span>
         </div>
-        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">34 店舗</span>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">4 店舗</span>
     </div>
     
     <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
         <div class="flex items-center gap-3">
             <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">2</span>
-            <span class="font-bold text-slate-800 text-sm">その他　（フリーエリア） (未入力/エラー)</span>
+            <span class="font-bold text-slate-800 text-sm">FFF8_インセンティブ施策認知についてのフリーコメント</span>
         </div>
-        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">29 店舗</span>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">4 店舗</span>
     </div>
     
     <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
         <div class="flex items-center gap-3">
             <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">3</span>
-            <span class="font-bold text-slate-800 text-sm">FFF8_MNP割引施策についてのフリーコメント (未入力/エラー)</span>
+            <span class="font-bold text-slate-800 text-sm">店舗タイプ</span>
         </div>
-        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">24 店舗</span>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">3 店舗</span>
     </div>
     
     <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
         <div class="flex items-center gap-3">
             <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">4</span>
-            <span class="font-bold text-slate-800 text-sm">Galaxy_販売コンテスト認知確認 (未入力/エラー)</span>
+            <span class="font-bold text-slate-800 text-sm">Galaxy_販売コンテスト認知確認</span>
         </div>
-        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">17 店舗</span>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">2 店舗</span>
     </div>
     
     <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
         <div class="flex items-center gap-3">
             <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">5</span>
-            <span class="font-bold text-slate-800 text-sm">FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー)</span>
+            <span class="font-bold text-slate-800 text-sm">自社VOC F</span>
         </div>
-        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">16 店舗</span>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">2 店舗</span>
     </div>
     
     <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
         <div class="flex items-center gap-3">
             <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">6</span>
-            <span class="font-bold text-slate-800 text-sm">SRP認知確認 (ヒアリング不可)</span>
+            <span class="font-bold text-slate-800 text-sm">自社VOC G</span>
         </div>
-        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">8 店舗</span>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">2 店舗</span>
+    </div>
+    
+    <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
+        <div class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">7</span>
+            <span class="font-bold text-slate-800 text-sm">A57_バックシート</span>
+        </div>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">1 店舗</span>
+    </div>
+    
+    <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
+        <div class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">8</span>
+            <span class="font-bold text-slate-800 text-sm">Galaxy Ambassadorについて</span>
+        </div>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">1 店舗</span>
+    </div>
+    
+    <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
+        <div class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">9</span>
+            <span class="font-bold text-slate-800 text-sm">Galaxy_販売コンテスト星取表(実績管理表)</span>
+        </div>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">1 店舗</span>
+    </div>
+    
+    <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
+        <div class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">10</span>
+            <span class="font-bold text-slate-800 text-sm">S26_MNP POP</span>
+        </div>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">1 店舗</span>
+    </div>
+    
+    <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
+        <div class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">11</span>
+            <span class="font-bold text-slate-800 text-sm">SRP施策についてのフリーコメント</span>
+        </div>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">1 店舗</span>
+    </div>
+    
+    <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
+        <div class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">12</span>
+            <span class="font-bold text-slate-800 text-sm">FFF8_MNP割引施策についてのフリーコメント</span>
+        </div>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">1 店舗</span>
+    </div>
+    
+    <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
+        <div class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">13</span>
+            <span class="font-bold text-slate-800 text-sm">Z8シリーズ_MNP割引施策POPについて</span>
+        </div>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">1 店舗</span>
+    </div>
+    
+    <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
+        <div class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">14</span>
+            <span class="font-bold text-slate-800 text-sm">S26_MNP POP_展示関連について</span>
+        </div>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">1 店舗</span>
+    </div>
+    
+    <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
+        <div class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">15</span>
+            <span class="font-bold text-slate-800 text-sm">S26Ultra_Sペンツール</span>
+        </div>
+        <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">1 店舗</span>
     </div>
     
             </div>
@@ -176,7 +248,7 @@
 
     </main>
 
-    <!-- モーダルダイアログ (シンプル＆見やすいデザイン) -->
+    <!-- モーダルダイアログ -->
     <div id="detailModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="main-card rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden border border-slate-700">
             <div class="px-6 py-5 bg-slate-900 text-white flex justify-between items-center border-b border-slate-800">
@@ -196,16 +268,15 @@
     </div>
 
     <script>
-        const staffData = {"下村　公人": {"a_count": 1, "total_red_items": 140, "shops": [{"name": "高知北", "sv": "山本", "is_a_red": false, "red_count": 35, "items_detail": "その他　（フリーエリア） (未入力/エラー), SRP施策についてのフリーコメント (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー) （他30件）"}, {"name": "土佐道路", "sv": "大藤", "is_a_red": false, "red_count": 33, "items_detail": "SRP施策についてのフリーコメント (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他28件）"}, {"name": "新居浜川東", "sv": "真鍋", "is_a_red": false, "red_count": 34, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他29件）"}, {"name": "イオンモール新居浜", "sv": "松本", "is_a_red": true, "red_count": 38, "items_detail": "店舗 (イオンモール新居浜), SRP認知確認 (ヒアリング不可), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー) （他33件）"}]}, "吉田　明香": {"a_count": 3, "total_red_items": 100, "shops": [{"name": "下郡", "sv": "後藤", "is_a_red": true, "red_count": 33, "items_detail": "店舗 (下郡), その他　（フリーエリア） (未入力/エラー), SRP認知確認 (ヒアリング不可), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー) （他28件）"}, {"name": "大在", "sv": "ます", "is_a_red": true, "red_count": 33, "items_detail": "店舗 (大在), その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知確認 (○), FFF8_インセンティブ施策認知についてのフリーコメント (【認知】あり 【温度感】中 【スタッフ周...) （他28件）"}, {"name": "鶴崎", "sv": "野田", "is_a_red": true, "red_count": 34, "items_detail": "店舗 (鶴崎), その他　（フリーエリア） (未入力/エラー), SRP施策についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー) （他29件）"}]}, "笹原　彩佳": {"a_count": 1, "total_red_items": 94, "shops": [{"name": "フジグラン東広島", "sv": "塁川", "is_a_red": false, "red_count": 30, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー), Galaxy販売コンテストについてのフリーコメント (未入力/エラー) （他25件）"}, {"name": "東広島", "sv": "太田", "is_a_red": false, "red_count": 33, "items_detail": "その他　（フリーエリア） (未入力/エラー), SRP施策についてのフリーコメント (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー) （他28件）"}, {"name": "福山北", "sv": "渋谷", "is_a_red": true, "red_count": 31, "items_detail": "店舗 (福山北), その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー) （他26件）"}]}, "山崎　紗季": {"a_count": 1, "total_red_items": 130, "shops": [{"name": "諫早バイパス", "sv": "田中", "is_a_red": false, "red_count": 32, "items_detail": "S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他27件）"}, {"name": "佐世保大塔", "sv": "大隈", "is_a_red": true, "red_count": 33, "items_detail": "店舗 (佐世保大塔), その他　（フリーエリア） (未入力/エラー), SRP認知確認 (ヒアリング不可), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知確認 (ヒアリング不可) （他28件）"}, {"name": "佐賀夢咲", "sv": "三原", "is_a_red": false, "red_count": 32, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他27件）"}, {"name": "佐賀西", "sv": "ナカジマ", "is_a_red": false, "red_count": 33, "items_detail": "S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー), Galaxy販売コンテストについてのフリーコメント (未入力/エラー) （他28件）"}]}, "小川　菜緒子": {"a_count": 0, "total_red_items": 90, "shops": [{"name": "福山みどり町", "sv": "すが", "is_a_red": false, "red_count": 29, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー) （他24件）"}, {"name": "安東", "sv": "みわ", "is_a_red": false, "red_count": 32, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー) （他27件）"}, {"name": "井原", "sv": "ともたき", "is_a_red": false, "red_count": 29, "items_detail": "S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他24件）"}]}, "小野　あかね": {"a_count": 0, "total_red_items": 92, "shops": [{"name": "小倉南インター", "sv": "高野", "is_a_red": false, "red_count": 33, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他28件）"}, {"name": "サンリブシティ小倉", "sv": "宮崎", "is_a_red": false, "red_count": 26, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他21件）"}, {"name": "サンリブきふね", "sv": "越野", "is_a_red": false, "red_count": 33, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他28件）"}]}, "秦　貴凡": {"a_count": 2, "total_red_items": 134, "shops": [{"name": "あき", "sv": "竹田", "is_a_red": false, "red_count": 36, "items_detail": "その他　（フリーエリア） (未入力/エラー), SRP認知確認 (ヒアリング不可), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知確認 (ヒアリング不可), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー) （他31件）"}, {"name": "マルナカ南国", "sv": "加藤", "is_a_red": false, "red_count": 33, "items_detail": "その他　（フリーエリア） (未入力/エラー), SRP認知確認 (ヒアリング不可), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知確認 (ヒアリング不可), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー) （他28件）"}, {"name": "高須", "sv": "金岡", "is_a_red": true, "red_count": 33, "items_detail": "店舗 (高須), その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (ヒアリング不可) （他28件）"}, {"name": "土佐山田", "sv": "西村", "is_a_red": true, "red_count": 32, "items_detail": "店舗 (土佐山田), その他　（フリーエリア） (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (認知はあるが、Pixel優先であるため、...), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他27件）"}]}, "垂水　翔平": {"a_count": 1, "total_red_items": 68, "shops": [{"name": "はえばる", "sv": "宮城、井上、金城", "is_a_red": true, "red_count": 36, "items_detail": "店舗 (はえばる), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー) （他31件）"}, {"name": "浦添内間", "sv": "柿谷、砂川、美島", "is_a_red": false, "red_count": 32, "items_detail": "S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他27件）"}]}, "清原　由梨": {"a_count": 0, "total_red_items": 65, "shops": [{"name": "岡山南", "sv": "船越", "is_a_red": false, "red_count": 31, "items_detail": "その他　（フリーエリア） (未入力/エラー), SRP認知確認 (ヒアリング不可), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知確認 (ヒアリング不可), Galaxy_販売コンテスト認知確認 (未入力/エラー) （他26件）"}, {"name": "西市", "sv": "周藤", "is_a_red": false, "red_count": 34, "items_detail": "SRP施策についてのフリーコメント (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー) （他29件）"}]}, "浅田　鈴美": {"a_count": 0, "total_red_items": 126, "shops": [{"name": "中山バイパス", "sv": "末永", "is_a_red": false, "red_count": 31, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー) （他26件）"}, {"name": "鹿児島中央駅前", "sv": "永原", "is_a_red": false, "red_count": 32, "items_detail": "S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他27件）"}, {"name": "天文館", "sv": "米田", "is_a_red": false, "red_count": 33, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー) （他28件）"}, {"name": "田上天神", "sv": "小田原", "is_a_red": false, "red_count": 30, "items_detail": "S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他25件）"}]}, "大内　真奈美": {"a_count": 0, "total_red_items": 89, "shops": [{"name": "久留米野伏間", "sv": "金子、藤田", "is_a_red": false, "red_count": 30, "items_detail": "SRP施策についてのフリーコメント (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_インセンティブ施策認知についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー) （他25件）"}, {"name": "イオンモール福岡", "sv": "岡林", "is_a_red": false, "red_count": 30, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他25件）"}, {"name": "トリアス久山", "sv": "佐々木", "is_a_red": false, "red_count": 29, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他24件）"}]}, "本田　宏一": {"a_count": 0, "total_red_items": 31, "shops": [{"name": "中尾", "sv": "岸", "is_a_red": false, "red_count": 31, "items_detail": "その他　（フリーエリア） (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー), FFF8_MNP割引施策についてのフリーコメント (未入力/エラー), Galaxy_販売コンテスト認知確認 (未入力/エラー), Galaxy_販売コンテスト星取表(実績管理表) (未入力/エラー) （他26件）"}]}, "櫻井　蓮": {"a_count": 4, "total_red_items": 133, "shops": [{"name": "藤崎", "sv": "藤川", "is_a_red": true, "red_count": 35, "items_detail": "店舗 (藤崎), その他　（フリーエリア） (未入力/エラー), 自社VOC F (未入力/エラー), 自社VOC G (未入力/エラー), S26MNP割引施策についてのフリーコメント (未入力/エラー) （他30件）"}, {"name": "べふ", "sv": "ひろた", "is_a_red": true, "red_count": 32, "items_detail": "店舗 (べふ), その他　（フリーエリア） (未入力/エラー), SRP認知確認 (ヒアリング不可), FFF8_インセンティブ施策認知確認 (ヒアリング不可), FFF8_インセンティブ施策認知についてのフリーコメント (商談者不在のためヒアリングできず。) （他27件）"}, {"name": "ウエストコート姪浜", "sv": "別府", "is_a_red": true, "red_count": 33, "items_detail": "店舗 (ウエストコート姪浜), その他　（フリーエリア） (未入力/エラー), 自社VOC F (未入力/エラー), 自社VOC G (未入力/エラー), SRP認知確認 (ヒアリング不可) （他28件）"}, {"name": "イオンマリナタウン", "sv": "下田", "is_a_red": true, "red_count": 33, "items_detail": "店舗 (イオンマリナタウン), その他　（フリーエリア） (未入力/エラー), SRP認知確認 (ヒアリング不可), FFF8_インセンティブ施策認知確認 (ヒアリング不可), FFF8_インセンティブ施策認知についてのフリーコメント (商談者不在のためヒアリングできず。) （他28件）"}]}};
+        const staffData = {"下村　公人": {"a_count": 1, "non_a_red_total": 2, "shops": [{"name": "高知北", "sv": "山本", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "土佐道路", "sv": "大藤", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "新居浜川東", "sv": "真鍋", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "イオンモール新居浜", "sv": "松本", "is_a_red": true, "non_a_count": 2, "non_a_items": ["A57_バックシート", "Galaxy Ambassadorについて"]}]}, "吉田　明香": {"a_count": 3, "non_a_red_total": 6, "shops": [{"name": "下郡", "sv": "後藤", "is_a_red": true, "non_a_count": 3, "non_a_items": ["Galaxy_販売コンテスト認知確認", "Galaxy_販売コンテスト星取表(実績管理表)", "S26_MNP POP"]}, {"name": "大在", "sv": "ます", "is_a_red": true, "non_a_count": 2, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}, {"name": "鶴崎", "sv": "野田", "is_a_red": true, "non_a_count": 1, "non_a_items": ["SRP施策についてのフリーコメント"]}]}, "笹原　彩佳": {"a_count": 1, "non_a_red_total": 1, "shops": [{"name": "フジグラン東広島", "sv": "塁川", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "東広島", "sv": "太田", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "福山北", "sv": "渋谷", "is_a_red": true, "non_a_count": 1, "non_a_items": ["店舗タイプ"]}]}, "山崎　紗季": {"a_count": 1, "non_a_red_total": 3, "shops": [{"name": "諫早バイパス", "sv": "田中", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "佐世保大塔", "sv": "大隈", "is_a_red": true, "non_a_count": 3, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント", "店舗タイプ"]}, {"name": "佐賀夢咲", "sv": "三原", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "佐賀西", "sv": "ナカジマ", "is_a_red": false, "non_a_count": 0, "non_a_items": []}]}, "小川　菜緒子": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "福山みどり町", "sv": "すが", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "安東", "sv": "みわ", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "井原", "sv": "ともたき", "is_a_red": false, "non_a_count": 0, "non_a_items": []}]}, "小野　あかね": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "小倉南インター", "sv": "高野", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "サンリブシティ小倉", "sv": "宮崎", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "サンリブきふね", "sv": "越野", "is_a_red": false, "non_a_count": 0, "non_a_items": []}]}, "秦　貴凡": {"a_count": 2, "non_a_red_total": 2, "shops": [{"name": "あき", "sv": "竹田", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "マルナカ南国", "sv": "加藤", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "高須", "sv": "金岡", "is_a_red": true, "non_a_count": 1, "non_a_items": ["Galaxy_販売コンテスト認知確認"]}, {"name": "土佐山田", "sv": "西村", "is_a_red": true, "non_a_count": 1, "non_a_items": ["FFF8_MNP割引施策についてのフリーコメント"]}]}, "垂水　翔平": {"a_count": 1, "non_a_red_total": 3, "shops": [{"name": "はえばる", "sv": "宮城、井上、金城", "is_a_red": true, "non_a_count": 3, "non_a_items": ["Z8シリーズ_MNP割引施策POPについて", "S26_MNP POP_展示関連について", "店舗タイプ"]}, {"name": "浦添内間", "sv": "柿谷、砂川、美島", "is_a_red": false, "non_a_count": 0, "non_a_items": []}]}, "清原　由梨": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "岡山南", "sv": "船越", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "西市", "sv": "周藤", "is_a_red": false, "non_a_count": 0, "non_a_items": []}]}, "浅田　鈴美": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "中山バイパス", "sv": "末永", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "鹿児島中央駅前", "sv": "永原", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "天文館", "sv": "米田", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "田上天神", "sv": "小田原", "is_a_red": false, "non_a_count": 0, "non_a_items": []}]}, "大内　真奈美": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "久留米野伏間", "sv": "金子、藤田", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "イオンモール福岡", "sv": "岡林", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "トリアス久山", "sv": "佐々木", "is_a_red": false, "non_a_count": 0, "non_a_items": []}]}, "本田　宏一": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "中尾", "sv": "岸", "is_a_red": false, "non_a_count": 0, "non_a_items": []}]}, "櫻井　蓮": {"a_count": 4, "non_a_red_total": 9, "shops": [{"name": "藤崎", "sv": "藤川", "is_a_red": true, "non_a_count": 3, "non_a_items": ["自社VOC F", "自社VOC G", "S26Ultra_Sペンツール"]}, {"name": "べふ", "sv": "ひろた", "is_a_red": true, "non_a_count": 2, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}, {"name": "ウエストコート姪浜", "sv": "別府", "is_a_red": true, "non_a_count": 2, "non_a_items": ["自社VOC F", "自社VOC G"]}, {"name": "イオンマリナタウン", "sv": "下田", "is_a_red": true, "non_a_count": 2, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}]}};
 
         function renderTable() {
             const tbody = document.getElementById('staffTableBody');
             tbody.innerHTML = '';
 
-            // ★指摘数が最上位の櫻井蓮(4回)が一番上にズバッと来るように降順ソート
             const entries = Object.entries(staffData).sort((a, b) => {
                 if (b[1].a_count !== a[1].a_count) return b[1].a_count - a[1].a_count;
-                return b[1].total_red_items - a[1].total_red_items;
+                return b[1].non_a_red_total - a[1].non_a_red_total;
             });
 
             entries.forEach(([staffName, info]) => {
@@ -214,7 +285,7 @@
 
                 const shopCount = info.shops.length;
                 const aCount = info.a_count;
-                const totalRedItems = info.total_red_items;
+                const nonARedTotal = info.non_a_red_total;
 
                 let statusBadge = '';
                 if (aCount === 0) {
@@ -238,7 +309,7 @@
                         <span class="text-xl font-black ${aCount > 0 ? 'text-red-400' : 'text-emerald-400'}">${aCount}</span> <span class="text-xs text-slate-500">回</span>
                     </td>
                     <td class="py-4 px-4 text-center font-bold text-amber-400">
-                        ${totalRedItems} <span class="text-xs font-normal text-slate-500">箇所</span>
+                        ${nonARedTotal} <span class="text-xs font-normal text-slate-500">箇所</span>
                     </td>
                     <td class="py-4 px-6 text-center">${statusBadge}</td>
                     <td class="py-4 px-6 text-right">
@@ -257,7 +328,7 @@
             if (!info) return;
 
             document.getElementById('modalStaffName').textContent = `${staffName} さんの店舗チェック内訳`;
-            document.getElementById('modalStaffMeta').textContent = `担当: ${info.shops.length}店舗 | A列指摘: ${info.a_count}回 | 全列指摘累計: ${info.total_red_items}箇所`;
+            document.getElementById('modalStaffMeta').textContent = `担当: ${info.shops.length}店舗 | A列指摘: ${info.a_count}回 | A列外赤セル内訳累計: ${info.non_a_red_total}箇所`;
 
             const modalBody = document.getElementById('modalBody');
             modalBody.innerHTML = '';
@@ -270,20 +341,34 @@
                     ? '<span class="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-md">A列 赤指摘あり</span>'
                     : '<span class="bg-slate-800 text-slate-400 text-xs font-semibold px-2.5 py-1 rounded-md">A列 指摘なし</span>';
 
+                let nonAItemsHtml = '';
+                if (shop.non_a_items.length > 0) {
+                    nonAItemsHtml = `
+                        <div class="mt-3 pt-2 border-t border-slate-700/60">
+                            <div class="text-xs font-bold text-amber-300 mb-1.5 flex items-center gap-1">
+                                <span>⚠️</span> A列以外の赤背景セル項目 (${shop.non_a_items.length}箇所):
+                            </div>
+                            <div class="flex flex-wrap gap-1.5">
+                                ${shop.non_a_items.map(item => `<span class="bg-amber-900/40 text-amber-200 border border-amber-500/40 text-xs font-medium px-2 py-0.5 rounded">${item}</span>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    nonAItemsHtml = '<div class="text-xs text-slate-500 mt-2">A列以外の赤背景セル項目はありません。</div>';
+                }
+
                 shopCard.innerHTML = `
-                    <div class="flex justify-between items-center mb-2">
+                    <div class="flex justify-between items-center">
                         <div class="flex items-center gap-2">
                             <span class="font-extrabold text-white text-base">${shop.name} 店</span>
                             <span class="text-xs text-slate-400">(SV: ${shop.sv})</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold px-2 py-0.5 rounded">指摘箇所: ${shop.red_count}箇所</span>
+                            <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold px-2 py-0.5 rounded">A列外赤セル: ${shop.non_a_count}箇所</span>
                             ${aStatus}
                         </div>
                     </div>
-                    <div class="mt-2 text-xs text-slate-300 bg-slate-900/80 p-3 rounded-lg border border-slate-800 font-mono leading-relaxed">
-                        <span class="text-slate-500 font-bold">【内訳詳細】</span><br>${shop.items_detail}
-                    </div>
+                    ${nonAItemsHtml}
                 `;
 
                 modalBody.appendChild(shopCard);

@@ -4,17 +4,16 @@ with open('portal_json_data.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 staff_data = data['staff_data']
-all_issue_counts = data['all_issue_counts']
+col_ranking = data['col_ranking']
 
-# 多発エラー項目のランキング作成 (TOP 6)
-sorted_issues = sorted(all_issue_counts.items(), key=lambda x: x[1], reverse=True)[:6]
+sorted_rank = sorted(col_ranking.items(), key=lambda x: x[1], reverse=True)
 ranking_html = ''
-for rank, (issue_name, count) in enumerate(sorted_issues, 1):
+for rank, (col_name, count) in enumerate(sorted_rank, 1):
     ranking_html += f"""
     <div class="flex items-center justify-between p-3.5 bg-slate-50 hover:bg-slate-100/80 rounded-xl transition-all border border-slate-200/60">
         <div class="flex items-center gap-3">
             <span class="w-6 h-6 rounded-full bg-slate-800 text-white font-bold text-xs flex items-center justify-center">{rank}</span>
-            <span class="font-bold text-slate-800 text-sm">{issue_name}</span>
+            <span class="font-bold text-slate-800 text-sm">{col_name}</span>
         </div>
         <span class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-full border border-red-200">{count} 店舗</span>
     </div>
@@ -75,7 +74,7 @@ html_content = f"""<!DOCTYPE html>
             <div class="flex items-center gap-4 text-xs font-semibold bg-slate-800/90 text-slate-300 px-4 py-2.5 rounded-xl border border-slate-700">
                 <div class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span>2026/10/01 提出マスタ全40店舗集計完了</span>
+                    <span>2026/10/01 提出マスタ全40店舗 実測集計</span>
                 </div>
             </div>
         </div>
@@ -83,7 +82,7 @@ html_content = f"""<!DOCTYPE html>
 
     <main class="max-w-6xl mx-auto px-4 md:px-8 mt-8 space-y-8">
 
-        <!-- 📊 トップKPIサマリー (一目でわかる極上シンプル指標) -->
+        <!-- 📊 トップKPIサマリー -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="main-card p-6 rounded-2xl">
                 <div class="text-slate-400 text-xs font-bold uppercase tracking-wider">全チェック店舗数</div>
@@ -97,21 +96,21 @@ html_content = f"""<!DOCTYPE html>
                 <div class="text-xs text-red-300/80 font-bold mt-2">最多指摘: 櫻井 蓮 (4回)</div>
             </div>
 
-            <div class="main-card p-6 rounded-2xl bg-gradient-to-br from-slate-800 to-emerald-950/40 border-emerald-500/30">
-                <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider">A列ノーミス評価スタッフ</div>
-                <div class="text-4xl font-black text-emerald-400 mt-2">6 <span class="text-sm font-normal text-slate-400">名 / 全13名</span></div>
-                <div class="text-xs text-emerald-300/80 font-bold mt-2">46.2% がパーフェクト</div>
+            <div class="main-card p-6 rounded-2xl bg-gradient-to-br from-slate-800 to-amber-950/40 border-amber-500/30">
+                <div class="text-amber-400 text-xs font-bold uppercase tracking-wider">A列以外の赤背景セル (内訳総数)</div>
+                <div class="text-4xl font-black text-amber-400 mt-2">26 <span class="text-sm font-normal text-slate-400">箇所</span></div>
+                <div class="text-xs text-amber-300/80 font-bold mt-2">具体項目数 (櫻井: 9箇所, 吉田: 6箇所...)</div>
             </div>
         </div>
 
-        <!-- 👔 メインテーブル: スタッフ別マスタミス指摘数 (最優先表示) -->
+        <!-- 👔 メインテーブル: スタッフ別マスタミス指摘数 ＆ A列以外内訳数 -->
         <section class="main-card rounded-2xl overflow-hidden">
             <div class="p-6 border-b border-slate-700/60 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-800/40">
                 <div>
                     <h2 class="text-xl font-extrabold text-white flex items-center gap-2">
-                        <span>👔</span> 最終更新スタッフ別 指摘数一覧 (指摘が多い順)
+                        <span>👔</span> 最終更新スタッフ別 指摘数 ＆ 内訳箇所数 (指摘が多い順)
                     </h2>
-                    <p class="text-xs text-slate-400 mt-1">A列の赤店舗マーカーをカウント。クリックで具体店舗・内訳を表示</p>
+                    <p class="text-xs text-slate-400 mt-1">A列指摘数と、A列以外の赤セル内訳箇所数を表示。クリックで該当項目名を確認</p>
                 </div>
             </div>
 
@@ -122,7 +121,7 @@ html_content = f"""<!DOCTYPE html>
                             <th class="py-4 px-6">最終更新スタッフ</th>
                             <th class="py-4 px-4 text-center">担当店舗数</th>
                             <th class="py-4 px-4 text-center">A列 指摘数<br><span class="text-2xs font-normal text-red-400">(マスタミス回数)</span></th>
-                            <th class="py-4 px-4 text-center">全列指摘累計<br><span class="text-2xs font-normal text-amber-400">(内訳箇所数)</span></th>
+                            <th class="py-4 px-4 text-center">A列外 赤セル件数<br><span class="text-2xs font-normal text-amber-400">(内訳箇所数)</span></th>
                             <th class="py-4 px-6 text-center">評価ステータス</th>
                             <th class="py-4 px-6 text-right">アクション</th>
                         </tr>
@@ -134,14 +133,14 @@ html_content = f"""<!DOCTYPE html>
             </div>
         </section>
 
-        <!-- 📌 ミス多発項目内訳 (どこでミスが多いか一目でわかる) -->
+        <!-- 📌 A列以外 赤セル多発項目内訳 -->
         <section class="main-card p-6 rounded-2xl">
             <div class="mb-4 pb-3 border-b border-slate-700/60 flex justify-between items-center">
                 <div>
                     <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                        <span>📌</span> ミス多発項目 内訳ランキング (全40店舗)
+                        <span>📌</span> A列以外 赤セル多発項目 ランキング (内訳箇所の特定)
                     </h2>
-                    <p class="text-xs text-slate-400 mt-1">どの項目で記入漏れ・エラーが多いかを可視化</p>
+                    <p class="text-xs text-slate-400 mt-1">具体的にどの項目で赤色マーカーの指摘が多いかを可視化</p>
                 </div>
             </div>
 
@@ -152,7 +151,7 @@ html_content = f"""<!DOCTYPE html>
 
     </main>
 
-    <!-- モーダルダイアログ (シンプル＆見やすいデザイン) -->
+    <!-- モーダルダイアログ -->
     <div id="detailModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="main-card rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden border border-slate-700">
             <div class="px-6 py-5 bg-slate-900 text-white flex justify-between items-center border-b border-slate-800">
@@ -178,10 +177,9 @@ html_content = f"""<!DOCTYPE html>
             const tbody = document.getElementById('staffTableBody');
             tbody.innerHTML = '';
 
-            // ★指摘数が最上位の櫻井蓮(4回)が一番上にズバッと来るように降順ソート
             const entries = Object.entries(staffData).sort((a, b) => {{
                 if (b[1].a_count !== a[1].a_count) return b[1].a_count - a[1].a_count;
-                return b[1].total_red_items - a[1].total_red_items;
+                return b[1].non_a_red_total - a[1].non_a_red_total;
             }});
 
             entries.forEach(([staffName, info]) => {{
@@ -190,7 +188,7 @@ html_content = f"""<!DOCTYPE html>
 
                 const shopCount = info.shops.length;
                 const aCount = info.a_count;
-                const totalRedItems = info.total_red_items;
+                const nonARedTotal = info.non_a_red_total;
 
                 let statusBadge = '';
                 if (aCount === 0) {{
@@ -214,7 +212,7 @@ html_content = f"""<!DOCTYPE html>
                         <span class="text-xl font-black ${{aCount > 0 ? 'text-red-400' : 'text-emerald-400'}}">${{aCount}}</span> <span class="text-xs text-slate-500">回</span>
                     </td>
                     <td class="py-4 px-4 text-center font-bold text-amber-400">
-                        ${{totalRedItems}} <span class="text-xs font-normal text-slate-500">箇所</span>
+                        ${{nonARedTotal}} <span class="text-xs font-normal text-slate-500">箇所</span>
                     </td>
                     <td class="py-4 px-6 text-center">${{statusBadge}}</td>
                     <td class="py-4 px-6 text-right">
@@ -233,7 +231,7 @@ html_content = f"""<!DOCTYPE html>
             if (!info) return;
 
             document.getElementById('modalStaffName').textContent = `${{staffName}} さんの店舗チェック内訳`;
-            document.getElementById('modalStaffMeta').textContent = `担当: ${{info.shops.length}}店舗 | A列指摘: ${{info.a_count}}回 | 全列指摘累計: ${{info.total_red_items}}箇所`;
+            document.getElementById('modalStaffMeta').textContent = `担当: ${{info.shops.length}}店舗 | A列指摘: ${{info.a_count}}回 | A列外赤セル内訳累計: ${{info.non_a_red_total}}箇所`;
 
             const modalBody = document.getElementById('modalBody');
             modalBody.innerHTML = '';
@@ -246,20 +244,34 @@ html_content = f"""<!DOCTYPE html>
                     ? '<span class="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-md">A列 赤指摘あり</span>'
                     : '<span class="bg-slate-800 text-slate-400 text-xs font-semibold px-2.5 py-1 rounded-md">A列 指摘なし</span>';
 
+                let nonAItemsHtml = '';
+                if (shop.non_a_items.length > 0) {{
+                    nonAItemsHtml = `
+                        <div class="mt-3 pt-2 border-t border-slate-700/60">
+                            <div class="text-xs font-bold text-amber-300 mb-1.5 flex items-center gap-1">
+                                <span>⚠️</span> A列以外の赤背景セル項目 (${{shop.non_a_items.length}}箇所):
+                            </div>
+                            <div class="flex flex-wrap gap-1.5">
+                                ${{shop.non_a_items.map(item => `<span class="bg-amber-900/40 text-amber-200 border border-amber-500/40 text-xs font-medium px-2 py-0.5 rounded">${{item}}</span>`).join('')}}
+                            </div>
+                        </div>
+                    `;
+                }} else {{
+                    nonAItemsHtml = '<div class="text-xs text-slate-500 mt-2">A列以外の赤背景セル項目はありません。</div>';
+                }}
+
                 shopCard.innerHTML = `
-                    <div class="flex justify-between items-center mb-2">
+                    <div class="flex justify-between items-center">
                         <div class="flex items-center gap-2">
                             <span class="font-extrabold text-white text-base">${{shop.name}} 店</span>
                             <span class="text-xs text-slate-400">(SV: ${{shop.sv}})</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold px-2 py-0.5 rounded">指摘箇所: ${{shop.red_count}}箇所</span>
+                            <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold px-2 py-0.5 rounded">A列外赤セル: ${{shop.non_a_count}}箇所</span>
                             ${{aStatus}}
                         </div>
                     </div>
-                    <div class="mt-2 text-xs text-slate-300 bg-slate-900/80 p-3 rounded-lg border border-slate-800 font-mono leading-relaxed">
-                        <span class="text-slate-500 font-bold">【内訳詳細】</span><br>${{shop.items_detail}}
-                    </div>
+                    ${{nonAItemsHtml}}
                 `;
 
                 modalBody.appendChild(shopCard);
@@ -281,4 +293,4 @@ html_content = f"""<!DOCTYPE html>
 with open('index.html', 'w', encoding='utf-8') as out:
     out.write(html_content)
 
-print('Rebuilt index.html with ultra-clean modern BOARD layout successfully')
+print('Generated exact index.html based on user specified definition successfully')
