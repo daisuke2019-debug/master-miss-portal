@@ -1,0 +1,378 @@
+{
+  "staff_data": {
+    "下村　公人": {
+      "a_count": 1,
+      "non_a_count": 2,
+      "shops": [
+        {
+          "name": "高知北",
+          "sv": "山本",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "土佐道路",
+          "sv": "大藤",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "新居浜川東",
+          "sv": "真鍋",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "イオンモール新居浜",
+          "sv": "松本",
+          "is_a_red": true,
+          "non_a_items": [
+            "A57_バックシート",
+            "Galaxy Ambassadorについて"
+          ]
+        }
+      ]
+    },
+    "吉田　明香": {
+      "a_count": 3,
+      "non_a_count": 6,
+      "shops": [
+        {
+          "name": "下郡",
+          "sv": "後藤",
+          "is_a_red": true,
+          "non_a_items": [
+            "Galaxy_販売コンテスト認知確認",
+            "Galaxy_販売コンテスト星取表(実績管理表)",
+            "S26_MNP POP"
+          ]
+        },
+        {
+          "name": "大在",
+          "sv": "ます",
+          "is_a_red": true,
+          "non_a_items": [
+            "FFF8_インセンティブ施策認知確認",
+            "FFF8_インセンティブ施策認知についてのフリーコメント"
+          ]
+        },
+        {
+          "name": "鶴崎",
+          "sv": "野田",
+          "is_a_red": true,
+          "non_a_items": [
+            "SRP施策についてのフリーコメント"
+          ]
+        }
+      ]
+    },
+    "笹原　彩佳": {
+      "a_count": 1,
+      "non_a_count": 1,
+      "shops": [
+        {
+          "name": "フジグラン東広島",
+          "sv": "塁川",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "東広島",
+          "sv": "太田",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "福山北",
+          "sv": "渋谷",
+          "is_a_red": true,
+          "non_a_items": [
+            "店舗タイプ"
+          ]
+        }
+      ]
+    },
+    "山崎　紗季": {
+      "a_count": 1,
+      "non_a_count": 3,
+      "shops": [
+        {
+          "name": "諫早バイパス",
+          "sv": "田中",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "佐世保大塔",
+          "sv": "大隈",
+          "is_a_red": true,
+          "non_a_items": [
+            "FFF8_インセンティブ施策認知確認",
+            "FFF8_インセンティブ施策認知についてのフリーコメント",
+            "店舗タイプ"
+          ]
+        },
+        {
+          "name": "佐賀夢咲",
+          "sv": "三原",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "佐賀西",
+          "sv": "ナカジマ",
+          "is_a_red": false,
+          "non_a_items": []
+        }
+      ]
+    },
+    "小川　菜緒子": {
+      "a_count": 0,
+      "non_a_count": 0,
+      "shops": [
+        {
+          "name": "福山みどり町",
+          "sv": "すが",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "安東",
+          "sv": "みわ",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "井原",
+          "sv": "ともたき",
+          "is_a_red": false,
+          "non_a_items": []
+        }
+      ]
+    },
+    "小野　あかね": {
+      "a_count": 0,
+      "non_a_count": 0,
+      "shops": [
+        {
+          "name": "小倉南インター",
+          "sv": "高野",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "サンリブシティ小倉",
+          "sv": "宮崎",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "サンリブきふね",
+          "sv": "越野",
+          "is_a_red": false,
+          "non_a_items": []
+        }
+      ]
+    },
+    "秦　貴凡": {
+      "a_count": 2,
+      "non_a_count": 2,
+      "shops": [
+        {
+          "name": "あき",
+          "sv": "竹田",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "マルナカ南国",
+          "sv": "加藤",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "高須",
+          "sv": "金岡",
+          "is_a_red": true,
+          "non_a_items": [
+            "Galaxy_販売コンテスト認知確認"
+          ]
+        },
+        {
+          "name": "土佐山田",
+          "sv": "西村",
+          "is_a_red": true,
+          "non_a_items": [
+            "FFF8_MNP割引施策についてのフリーコメント"
+          ]
+        }
+      ]
+    },
+    "垂水　翔平": {
+      "a_count": 1,
+      "non_a_count": 3,
+      "shops": [
+        {
+          "name": "はえばる",
+          "sv": "宮城、井上、金城",
+          "is_a_red": true,
+          "non_a_items": [
+            "Z8シリーズ_MNP割引施策POPについて",
+            "S26_MNP POP_展示関連について",
+            "店舗タイプ"
+          ]
+        },
+        {
+          "name": "浦添内間",
+          "sv": "柿谷、砂川、美島",
+          "is_a_red": false,
+          "non_a_items": []
+        }
+      ]
+    },
+    "清原　由梨": {
+      "a_count": 0,
+      "non_a_count": 0,
+      "shops": [
+        {
+          "name": "岡山南",
+          "sv": "船越",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "西市",
+          "sv": "周藤",
+          "is_a_red": false,
+          "non_a_items": []
+        }
+      ]
+    },
+    "浅田　鈴美": {
+      "a_count": 0,
+      "non_a_count": 0,
+      "shops": [
+        {
+          "name": "中山バイパス",
+          "sv": "末永",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "鹿児島中央駅前",
+          "sv": "永原",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "天文館",
+          "sv": "米田",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "田上天神",
+          "sv": "小田原",
+          "is_a_red": false,
+          "non_a_items": []
+        }
+      ]
+    },
+    "大内　真奈美": {
+      "a_count": 0,
+      "non_a_count": 0,
+      "shops": [
+        {
+          "name": "久留米野伏間",
+          "sv": "金子、藤田",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "イオンモール福岡",
+          "sv": "岡林",
+          "is_a_red": false,
+          "non_a_items": []
+        },
+        {
+          "name": "トリアス久山",
+          "sv": "佐々木",
+          "is_a_red": false,
+          "non_a_items": []
+        }
+      ]
+    },
+    "本田　宏一": {
+      "a_count": 0,
+      "non_a_count": 0,
+      "shops": [
+        {
+          "name": "中尾",
+          "sv": "岸",
+          "is_a_red": false,
+          "non_a_items": []
+        }
+      ]
+    },
+    "櫻井　蓮": {
+      "a_count": 4,
+      "non_a_count": 9,
+      "shops": [
+        {
+          "name": "藤崎",
+          "sv": "藤川",
+          "is_a_red": true,
+          "non_a_items": [
+            "自社VOC F",
+            "自社VOC G",
+            "S26Ultra_Sペンツール"
+          ]
+        },
+        {
+          "name": "べふ",
+          "sv": "ひろた",
+          "is_a_red": true,
+          "non_a_items": [
+            "FFF8_インセンティブ施策認知確認",
+            "FFF8_インセンティブ施策認知についてのフリーコメント"
+          ]
+        },
+        {
+          "name": "ウエストコート姪浜",
+          "sv": "別府",
+          "is_a_red": true,
+          "non_a_items": [
+            "自社VOC F",
+            "自社VOC G"
+          ]
+        },
+        {
+          "name": "イオンマリナタウン",
+          "sv": "下田",
+          "is_a_red": true,
+          "non_a_items": [
+            "FFF8_インセンティブ施策認知確認",
+            "FFF8_インセンティブ施策認知についてのフリーコメント"
+          ]
+        }
+      ]
+    }
+  },
+  "col_ranking": {
+    "A57_バックシート": 1,
+    "Galaxy Ambassadorについて": 1,
+    "Galaxy_販売コンテスト認知確認": 2,
+    "Galaxy_販売コンテスト星取表(実績管理表)": 1,
+    "S26_MNP POP": 1,
+    "FFF8_インセンティブ施策認知確認": 4,
+    "FFF8_インセンティブ施策認知についてのフリーコメント": 4,
+    "SRP施策についてのフリーコメント": 1,
+    "店舗タイプ": 3,
+    "FFF8_MNP割引施策についてのフリーコメント": 1,
+    "Z8シリーズ_MNP割引施策POPについて": 1,
+    "S26_MNP POP_展示関連について": 1,
+    "自社VOC F": 2,
+    "自社VOC G": 2,
+    "S26Ultra_Sペンツール": 1
+  }
+}
