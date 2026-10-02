@@ -46,12 +46,18 @@ for r in range(2, sheet_orig.max_row + 1):
     staff_data[staff]['shops'].append({
         'name': shop,
         'sv': sv,
+        'date': '10/01',
         'is_a_red': is_a_red,
         'non_a_count': len(non_a_red),
         'non_a_items': non_a_red
     })
 
+# ミス率（%）の計算
+for s, info in staff_data.items():
+    total_shops = len(info['shops'])
+    info['miss_rate'] = round((info['a_count'] / total_shops * 100), 1) if total_shops > 0 else 0.0
+
 with open('portal_json_data.json', 'w', encoding='utf-8') as f:
     json.dump({'staff_data': staff_data, 'col_ranking': col_red_ranking}, f, ensure_ascii=False, indent=2)
 
-print('Saved exact portal_json_data.json successfully')
+print('Saved exact portal_json_data.json with miss_rate successfully')
