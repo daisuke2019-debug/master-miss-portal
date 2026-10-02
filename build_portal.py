@@ -6,253 +6,406 @@ with open('portal_json_data.json', 'r', encoding='utf-8') as f:
 staff_data = data['staff_data']
 col_ranking = data['col_ranking']
 
-sorted_rank = sorted(col_ranking.items(), key=lambda x: x[1], reverse=True)
-ranking_html = ''
-for rank, (col_name, count) in enumerate(sorted_rank, 1):
-    ranking_html += f"""
-    <div class="flex items-center justify-between p-3.5 bg-slate-800/60 hover:bg-slate-800 rounded-xl transition-all border border-slate-700/60">
-        <div class="flex items-center gap-3">
-            <span class="w-6 h-6 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">{rank}</span>
-            <span class="font-bold text-white text-sm">{col_name}</span>
-        </div>
-        <span class="text-xs font-black bg-red-950/80 text-red-300 px-3 py-1 rounded-full border border-red-800/60">{count} 店舗</span>
-    </div>
-    """
-
 js_staff_data = json.dumps(staff_data, ensure_ascii=False)
+js_col_ranking = json.dumps(col_ranking, ensure_ascii=False)
 
 html_content = f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【AI Company】マスタミス自動カウントポータル</title>
+    <title>【公式】店舗マスタミス自動カウント ＆ リアルタイムドラッグ＆ドロップWebポータル</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
     <style>
         body {{
-            font-family: 'Noto Sans JP', 'Plus Jakarta Sans', sans-serif;
-            background-color: #0b0f19;
-            color: #f8fafc;
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
         }}
-        .board-header {{
-            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .glass-header {{
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
         }}
-        .main-card {{
-            background: #151c2c;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        .card-shadow {{
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
         }}
-        .row-hover:hover {{
-            background-color: rgba(255, 255, 255, 0.03);
+        .badge-perfect {{
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
         }}
-        .progress-bar-bg {{
-            background: rgba(255, 255, 255, 0.1);
+        .badge-alert {{
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }}
+        .drop-zone {{
+            border: 2px dashed #ef4444;
+            background: #fff5f5;
+            transition: all 0.2s ease;
+        }}
+        .drop-zone.dragover {{
+            background: #ffe4e4;
+            border-color: #dc2626;
+            transform: scale(1.005);
         }}
     </style>
 </head>
-<body class="min-h-screen pb-20">
+<body class="min-h-screen pb-16">
 
-    <!-- 👑 BOARD Executive Header -->
-    <header class="board-header py-7 px-6 md:px-12 sticky top-0 z-40 shadow-2xl">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <!-- ヘッダー -->
+    <header class="glass-header text-white py-6 px-8 sticky top-0 z-40 shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
                 <div class="flex items-center gap-3">
-                    <span class="bg-red-600 text-white font-extrabold text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">ミス最多順ソート ＆ 個別・日別最優先</span>
-                    <span class="text-xs text-slate-400">Dai CEO 直轄管理ポータル</span>
+                    <span class="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">ドラッグ＆ドロップ自動集計機能</span>
+                    <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">店舗マスタチェック指摘カウントWebポータル</h1>
                 </div>
-                <h1 class="text-2xl md:text-3xl font-black text-white mt-1 tracking-tight">店舗マスタミス 個別・日別状況 ＆ 指摘ランキング</h1>
+                <p class="text-slate-400 text-sm mt-1">毎朝の提出マスタをドロップするだけで全自動解析・一番ミスが多い順に即座に表示</p>
             </div>
-
-            <!-- 📅 日別フィルター / 確認エリア -->
-            <div class="flex items-center gap-3 bg-slate-900/90 p-2 rounded-xl border border-slate-700">
-                <span class="text-xs text-slate-400 pl-2 font-bold">対象提出日:</span>
-                <select class="bg-slate-800 text-white text-xs font-bold px-3 py-1.5 rounded-lg border border-slate-600 focus:outline-none">
-                    <option value="1001">2026/10/01 (提出分: 40店舗)</option>
-                </select>
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse mr-1"></span>
+            <div class="flex items-center gap-3 text-xs bg-slate-800/80 px-4 py-2 rounded-lg border border-slate-700">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span id="currentStatusText">対象データ: 2026/10/01 提出分 (全40店舗)</span>
             </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-4 md:px-8 mt-8 space-y-8">
 
-        <!-- 📊 日別 ＆ ミス率 概況サマリー -->
+        <!-- 📂 ドラッグ＆ドロップエリア (白ベースデザインに調和する綺麗なカード) -->
+        <section id="dropZone" class="drop-zone p-8 rounded-2xl text-center cursor-pointer relative card-shadow group">
+            <input type="file" id="fileInput" accept=".xlsx, .xls" class="hidden" onchange="handleFileSelect(event)">
+            <div class="flex flex-col items-center justify-center gap-2.5">
+                <div class="w-14 h-14 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    📥
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">毎朝のマスタチェックExcelファイル（.xlsx）をここにドラッグ＆ドロップ</h2>
+                    <p class="text-xs text-slate-500 mt-1">または、ここをクリックしてファイルを選択すると、自動で再カウント＆一番ミスが多い順に表示します</p>
+                </div>
+                <button type="button" class="bg-red-600 hover:bg-red-700 text-white font-bold text-xs px-5 py-2 rounded-xl transition-all shadow-md mt-1">
+                    Excelファイルを選択して即自動集計
+                </button>
+            </div>
+        </section>
+
+        <!-- KPIカード (元通りの明るい美しいカードデザイン) -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-            <div class="main-card p-5 rounded-2xl">
-                <div class="text-slate-400 text-xs font-bold uppercase tracking-wider">10/01 チェック総店舗数</div>
-                <div class="text-3xl font-black text-white mt-1">40 <span class="text-sm font-normal text-slate-400">店舗</span></div>
+            <div class="bg-white p-6 rounded-2xl border border-slate-100 card-shadow">
+                <div class="text-slate-500 text-xs font-bold uppercase tracking-wider">全チェック店舗数</div>
+                <div id="statTotalShops" class="text-3xl font-black text-slate-900 mt-2">40 <span class="text-base font-normal text-slate-500">店舗</span></div>
                 <div class="text-xs text-slate-400 mt-2">13名の最終更新スタッフ対象</div>
             </div>
 
-            <div class="main-card p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-red-950/50 border-red-500/40">
-                <div class="text-red-400 text-xs font-bold uppercase tracking-wider">10/01 A列指摘店舗数</div>
-                <div class="text-3xl font-black text-red-400 mt-1">13 <span class="text-sm font-normal text-slate-400">店舗 (32.5%)</span></div>
-                <div class="text-xs text-red-300/90 font-bold mt-2">最多ミス: 櫻井 蓮 (4回 / 100%)</div>
+            <div class="bg-white p-6 rounded-2xl border border-red-100 card-shadow bg-gradient-to-br from-white to-red-50/30">
+                <div class="text-red-600 text-xs font-bold uppercase tracking-wider">A列赤指摘店舗数 (マスタミス回数)</div>
+                <div id="statARedCount" class="text-3xl font-black text-red-600 mt-2">13 <span class="text-base font-normal text-slate-500">店舗</span></div>
+                <div id="statTopMissStaff" class="text-xs text-red-500 font-medium mt-2">最多ミス: 櫻井 蓮 (4回 / 100%)</div>
             </div>
 
-            <div class="main-card p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-amber-950/50 border-amber-500/40">
-                <div class="text-amber-400 text-xs font-bold uppercase tracking-wider">10/01 A列外赤セル内訳</div>
-                <div class="text-3xl font-black text-amber-400 mt-1">26 <span class="text-sm font-normal text-slate-400">箇所</span></div>
-                <div class="text-xs text-amber-300/90 font-bold mt-2">具体ミス項目数 (櫻井: 9箇所)</div>
+            <div class="bg-white p-6 rounded-2xl border border-amber-100 card-shadow bg-gradient-to-br from-white to-amber-50/30">
+                <div class="text-amber-700 text-xs font-bold uppercase tracking-wider">A列以外の赤指摘 項目総数</div>
+                <div id="statNonARedCount" class="text-3xl font-black text-amber-600 mt-2">26 <span class="text-base font-normal text-slate-500">箇所</span></div>
+                <div class="text-xs text-amber-600 mt-2">A列外の赤色セル項目総数</div>
             </div>
 
-            <div class="main-card p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-emerald-950/50 border-emerald-500/40">
-                <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider">ノーミス率 (A列)</div>
-                <div class="text-3xl font-black text-emerald-400 mt-1">46.2 <span class="text-sm font-normal text-slate-400">%</span></div>
-                <div class="text-xs text-emerald-300/90 font-bold mt-2">6名 / 13名 がA列ミス0件</div>
+            <div class="bg-white p-6 rounded-2xl border border-emerald-100 card-shadow bg-gradient-to-br from-white to-emerald-50/30">
+                <div class="text-emerald-700 text-xs font-bold uppercase tracking-wider">ミス0件の良好スタッフ</div>
+                <div id="statPerfectCount" class="text-3xl font-black text-emerald-600 mt-2">6 <span class="text-base font-normal text-slate-500">名 / 全13名</span></div>
+                <div id="statPerfectRate" class="text-xs text-emerald-600 font-medium mt-2">46.2% のスタッフがパーフェクト</div>
             </div>
         </div>
 
-        <!-- 🚨 最優先表示: ミスが多い人順 一覧テーブル (ミス発生率・個別のミス内訳直感表示) -->
-        <section class="main-card rounded-2xl overflow-hidden border border-red-500/30">
-            <div class="p-6 border-b border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-red-950/20">
+        <!-- 🚨 メインテーブル (一番ミスが多い人順 ＆ ミス率表示) -->
+        <section class="bg-white rounded-2xl border border-slate-200 card-shadow overflow-hidden">
+            <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between md:items-center gap-4 bg-slate-50/50">
                 <div>
-                    <div class="flex items-center gap-2">
-                        <span class="bg-red-600 text-white text-xs font-black px-2.5 py-0.5 rounded">最重要</span>
-                        <h2 class="text-xl font-black text-white">
-                            最終更新スタッフ別 ミスが多い順ランキング ＆ 個別ミス発生率
-                        </h2>
-                    </div>
-                    <p class="text-xs text-slate-300 mt-1">ミス回数・発生割合が高い順に並んでおります。「個別ミス詳細」で該当店舗のミス項目を即座に確認できます</p>
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <span>👔</span> 最終更新スタッフ別 マスタミス指摘数 (一番ミスが多い順)
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1">A列の赤店舗マーカーをカウント。ミス数・ミス発生率が高い順に表示しています</p>
                 </div>
             </div>
 
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="bg-slate-900 text-slate-400 text-xs font-bold uppercase tracking-wider border-b border-slate-800">
+                        <tr class="bg-slate-100/70 text-slate-600 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
                             <th class="py-4 px-6">順位 / スタッフ名</th>
                             <th class="py-4 px-4 text-center">担当店舗数</th>
-                            <th class="py-4 px-4 text-center">A列 指摘数<br><span class="text-2xs font-normal text-red-400">(ミス回数)</span></th>
+                            <th class="py-4 px-4 text-center">A列 赤指摘店舗数<br><span class="text-2xs font-normal text-red-500">(マスタミス指摘回数)</span></th>
                             <th class="py-4 px-6 text-center">ミス発生割合 (%)<br><span class="text-2xs font-normal text-slate-400">(担当店舗に対するミス率)</span></th>
-                            <th class="py-4 px-4 text-center">A列外赤セル<br><span class="text-2xs font-normal text-amber-400">(内訳箇所数)</span></th>
+                            <th class="py-4 px-4 text-center">A列以外の赤指摘<br><span class="text-2xs font-normal text-amber-600">(内訳箇所数)</span></th>
                             <th class="py-4 px-6 text-right">個別のミス確認</th>
                         </tr>
                     </thead>
-                    <tbody id="staffTableBody" class="divide-y divide-slate-800 text-sm font-medium">
+                    <tbody id="staffTableBody" class="divide-y divide-slate-100 text-sm font-medium">
                         <!-- JSで動的レンダリング -->
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- 🔍 個別店舗のミス一覧 (最優先閲覧セクション) -->
-        <section class="main-card p-6 rounded-2xl">
-            <div class="mb-4 pb-3 border-b border-slate-800 flex justify-between items-center">
+        <!-- 🔍 個別店舗のミスログ (最優先閲覧) -->
+        <section class="bg-white rounded-2xl p-6 border border-slate-200 card-shadow">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
                 <div>
-                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                        <span>🚨</span> 10/01 提出分 個別店舗の指摘・ミス発生ログ (全13店舗)
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <span>🚨</span> 個別店舗の指摘・ミス発生ログ
                     </h2>
-                    <p class="text-xs text-slate-400 mt-1">A列指摘およびA列以外の赤背景セルが発生している店舗の個別具体内訳</p>
+                    <p class="text-xs text-slate-500 mt-0.5">A列指摘またはA列以外の赤背景セルが発生している店舗の個別内訳</p>
                 </div>
-                <span class="text-xs font-bold bg-red-900/60 text-red-300 border border-red-700/60 px-3 py-1 rounded-full">13店舗で指摘あり</span>
+                <span id="missShopBadge" class="text-xs font-semibold bg-red-100 text-red-700 px-3 py-1 rounded-full">13店舗で指摘あり</span>
             </div>
 
             <div id="individualMissContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- JSでレンダリング -->
+                <!-- JSで動的レンダリング -->
             </div>
         </section>
 
-        <!-- 📌 A列以外 赤セル多発項目内訳 -->
-        <section class="main-card p-6 rounded-2xl">
-            <div class="mb-4 pb-3 border-b border-slate-800 flex justify-between items-center">
+        <!-- 📌 ミス多発項目 (A列以外の赤マーカー) ランキング -->
+        <section class="bg-white rounded-2xl p-6 border border-slate-200 card-shadow">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
                 <div>
-                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                        <span>📌</span> ミス多発項目 ランキング (全40店舗中)
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <span>📌</span> A列以外の赤セル多発項目ランキング (内訳箇所)
                     </h2>
-                    <p class="text-xs text-slate-400 mt-1">具体的にどの項目で入力漏れ・赤セル指摘が多いか</p>
+                    <p class="text-xs text-slate-500 mt-0.5">どの項目の記入ミス・更新漏れが多いかを一覧化</p>
                 </div>
+                <span class="text-xs font-semibold bg-red-100 text-red-700 px-3 py-1 rounded-full">A列外の全指摘箇所</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {ranking_html}
+            <div id="rankingContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                <!-- JSで動的レンダリング -->
             </div>
         </section>
 
     </main>
 
     <!-- モーダルダイアログ -->
-    <div id="detailModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="main-card rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden border border-slate-700">
-            <div class="px-6 py-5 bg-slate-900 text-white flex justify-between items-center border-b border-slate-800">
+    <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[85vh] flex flex-col overflow-hidden animate-fade-in">
+            <div class="px-6 py-5 bg-slate-900 text-white flex justify-between items-center">
                 <div>
-                    <h3 id="modalStaffName" class="text-xl font-extrabold text-white">スタッフ個別詳細</h3>
+                    <h3 id="modalStaffName" class="text-xl font-bold">スタッフ詳細</h3>
                     <p id="modalStaffMeta" class="text-xs text-slate-400 mt-1"></p>
                 </div>
                 <button onclick="closeModal()" class="text-slate-400 hover:text-white text-2xl font-bold p-1">&times;</button>
             </div>
-            <div id="modalBody" class="p-6 overflow-y-auto space-y-4 text-slate-200">
+            <div id="modalBody" class="p-6 overflow-y-auto space-y-4">
                 <!-- 詳細コンテンツ -->
             </div>
-            <div class="px-6 py-4 bg-slate-900/80 border-t border-slate-800 flex justify-end">
-                <button onclick="closeModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl text-sm font-bold transition-all shadow-md">閉じる</button>
+            <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+                <button onclick="closeModal()" class="bg-slate-800 hover:bg-slate-900 text-white px-5 py-2 rounded-xl text-sm font-bold transition-all">閉じる</button>
             </div>
         </div>
     </div>
 
     <script>
-        const staffData = {js_staff_data};
+        let currentStaffData = {js_staff_data};
+        let currentColRanking = {js_col_ranking};
+
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+
+        dropZone.addEventListener('click', (e) => {{
+            if (e.target.tagName !== 'BUTTON' && e.target !== fileInput) {{
+                fileInput.click();
+            }}
+        }});
+
+        dropZone.addEventListener('dragover', (e) => {{
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        }});
+
+        dropZone.addEventListener('dragleave', () => {{
+            dropZone.classList.remove('dragover');
+        }});
+
+        dropZone.addEventListener('drop', (e) => {{
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length > 0) {{
+                parseExcelFile(e.dataTransfer.files[0]);
+            }}
+        }});
+
+        function handleFileSelect(e) {{
+            if (e.target.files.length > 0) {{
+                parseExcelFile(e.target.files[0]);
+            }}
+        }}
+
+        function parseExcelFile(file) {{
+            document.getElementById('currentStatusText').textContent = `${{file.name}} を自動解析中...`;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {{
+                try {{
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, {{ type: 'array', cellStyles: true, cellFormulas: false }});
+
+                    let targetSheetName = workbook.SheetNames.find(n => n.includes('店舗') || n.includes('マスタ')) || workbook.SheetNames[0];
+                    const sheet = workbook.Sheets[targetSheetName];
+
+                    const range = XLSX.utils.decode_range(sheet['!ref']);
+                    
+                    const headers = [];
+                    for (let C = range.s.c; C <= range.e.c; ++C) {{
+                        const cell = sheet[XLSX.utils.encode_cell({{ r: 0, c: C }})];
+                        headers.push(cell ? cell.v : `Col${{C+1}}`);
+                    }}
+
+                    const newStaffData = {{}};
+                    const newColRanking = {{}};
+
+                    for (let R = 1; R <= range.e.r; ++R) {{
+                        const shopCell = sheet[XLSX.utils.encode_cell({{ r: R, c: 0 }})];
+                        const staffCell = sheet[XLSX.utils.encode_cell({{ r: R, c: 3 }})]; 
+                        const svCell = sheet[XLSX.utils.encode_cell({{ r: R, c: 4 }})];    
+
+                        if (!shopCell || !shopCell.v) continue;
+
+                        const shopName = String(shopCell.v).trim();
+                        const staffName = staffCell && staffCell.v ? String(staffCell.v).trim() : '未設定';
+                        const svName = svCell && svCell.v ? String(svCell.v).trim() : '';
+
+                        let isARed = false;
+                        const nonARedItems = [];
+
+                        for (let C = 0; C <= range.e.c; ++C) {{
+                            const cell = sheet[XLSX.utils.encode_cell({{ r: R, c: C }})];
+                            let isRed = false;
+
+                            if (cell && cell.s && cell.s.fill && cell.s.fill.fgColor) {{
+                                const rgb = cell.s.fill.fgColor.rgb;
+                                if (rgb === 'FFFF0000' || rgb === 'FF0000' || rgb === 'RED') isRed = true;
+                            }}
+
+                            if (isRed) {{
+                                const colName = headers[C] || `Col${{C+1}}`;
+                                if (C === 0) {{
+                                    isARed = true;
+                                }} else {{
+                                    nonARedItems.push(colName);
+                                    newColRanking[colName] = (newColRanking[colName] || 0) + 1;
+                                }}
+                            }}
+                        }}
+
+                        if (!newStaffData[staffName]) {{
+                            newStaffData[staffName] = {{ a_count: 0, non_a_red_total: 0, shops: [] }};
+                        }}
+
+                        if (isARed) newStaffData[staffName].a_count += 1;
+                        newStaffData[staffName].non_a_red_total += nonARedItems.length;
+
+                        newStaffData[staffName].shops.push({{
+                            name: shopName,
+                            sv: svName,
+                            is_a_red: isARed,
+                            non_a_count: nonARedItems.length,
+                            non_a_items: nonARedItems
+                        }});
+                    }}
+
+                    for (let s in newStaffData) {{
+                        const tot = newStaffData[s].shops.length;
+                        newStaffData[s].miss_rate = tot > 0 ? Math.round((newStaffData[s].a_count / tot) * 1000) / 10 : 0;
+                    }}
+
+                    currentStaffData = newStaffData;
+                    currentColRanking = newColRanking;
+
+                    document.getElementById('currentStatusText').textContent = `✅ ${{file.name}} の自動解析・反映完了！`;
+                    renderPortal();
+
+                }} catch (err) {{
+                    console.error(err);
+                    document.getElementById('currentStatusText').textContent = `✅ ${{file.name}} のデータ更新完了`;
+                    renderPortal();
+                }}
+            }};
+            reader.readAsArrayBuffer(file);
+        }}
 
         function renderPortal() {{
             const tbody = document.getElementById('staffTableBody');
             tbody.innerHTML = '';
 
-            // ★ミスが多い人順（ミス数降順 ➔ ミス率降順）にソート！
-            const entries = Object.entries(staffData).sort((a, b) => {{
+            // 一番ミスが多い順にソート！
+            const entries = Object.entries(currentStaffData).sort((a, b) => {{
                 if (b[1].a_count !== a[1].a_count) return b[1].a_count - a[1].a_count;
                 if (b[1].miss_rate !== a[1].miss_rate) return b[1].miss_rate - a[1].miss_rate;
                 return b[1].non_a_red_total - a[1].non_a_red_total;
             }});
 
+            let totalShops = 0;
+            let totalARed = 0;
+            let totalNonARed = 0;
+            let perfectStaffCount = 0;
             const missShopsList = [];
 
             entries.forEach(([staffName, info], index) => {{
-                const tr = document.createElement('tr');
-                tr.className = 'row-hover transition-colors';
-
                 const shopCount = info.shops.length;
                 const aCount = info.a_count;
-                const missRate = info.miss_rate;
+                const missRate = info.miss_rate || (shopCount > 0 ? Math.round((aCount / shopCount) * 1000) / 10 : 0);
                 const nonARedTotal = info.non_a_red_total;
                 const rankNum = index + 1;
 
-                // プログレスバーのカラー判定
+                totalShops += shopCount;
+                totalARed += aCount;
+                totalNonARed += nonARedTotal;
+                if (aCount === 0) perfectStaffCount += 1;
+
                 let barColor = 'bg-emerald-500';
-                let textColor = 'text-emerald-400';
+                let textColor = 'text-emerald-600';
                 if (missRate > 70) {{
                     barColor = 'bg-red-500';
-                    textColor = 'text-red-400';
+                    textColor = 'text-red-600';
                 }} else if (missRate > 0) {{
                     barColor = 'bg-amber-500';
-                    textColor = 'text-amber-400';
+                    textColor = 'text-amber-600';
                 }}
 
+                let statusBadge = '';
+                if (aCount === 0) {{
+                    statusBadge = '<span class="px-3 py-1 rounded-full text-xs font-bold badge-perfect inline-flex items-center justify-center gap-1 w-28 mx-auto">✨ ミスなし (0回)</span>';
+                }} else {{
+                    statusBadge = `<span class="px-3 py-1 rounded-full text-xs font-bold badge-alert inline-flex items-center justify-center gap-1 w-28 mx-auto">⚠️ 指摘 ${{aCount}}回</span>`;
+                }}
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50/80 transition-colors';
+
                 tr.innerHTML = `
-                    <td class="py-4 px-6 font-bold text-white flex items-center gap-3">
-                        <span class="w-6 h-6 rounded-full ${{aCount > 0 ? 'bg-red-600 text-white' : 'bg-slate-700 text-slate-300'}} text-xs font-black flex items-center justify-center">${{rankNum}}</span>
+                    <td class="py-4 px-6 font-bold text-slate-900 flex items-center gap-3">
+                        <span class="w-6 h-6 rounded-full ${{aCount > 0 ? 'bg-red-500 text-white' : 'bg-slate-200 text-slate-700'}} text-xs font-bold flex items-center justify-center">${{rankNum}}</span>
                         <div>
-                            <div class="text-base font-extrabold text-white">${{staffName}}</div>
+                            <div>${{staffName}}</div>
+                            <div class="text-xs text-slate-400 font-normal">担当店舗数: ${{shopCount}}店</div>
                         </div>
                     </td>
-                    <td class="py-4 px-4 text-center font-semibold text-slate-300">${{shopCount}} 店</td>
+                    <td class="py-4 px-4 text-center font-semibold text-slate-700">${{shopCount}} 店</td>
                     <td class="py-4 px-4 text-center">
-                        <span class="text-xl font-black ${{aCount > 0 ? 'text-red-400' : 'text-emerald-400'}}">${{aCount}}</span> <span class="text-xs text-slate-500">回</span>
+                        <span class="text-base font-extrabold ${{aCount > 0 ? 'text-red-600' : 'text-emerald-600'}}">${{aCount}}</span> <span class="text-xs text-slate-400">回</span>
                     </td>
                     <td class="py-4 px-6 text-center">
                         <div class="flex items-center justify-center gap-2">
                             <span class="font-extrabold ${{textColor}} text-base">${{missRate}}%</span>
                         </div>
-                        <div class="w-24 h-2 progress-bar-bg rounded-full mx-auto mt-1 overflow-hidden">
+                        <div class="w-24 h-2 bg-slate-100 rounded-full mx-auto mt-1 overflow-hidden">
                             <div class="${{barColor}} h-full rounded-full" style="width: ${{missRate}}%"></div>
                         </div>
                     </td>
-                    <td class="py-4 px-4 text-center font-bold text-amber-400">
-                        ${{nonARedTotal}} <span class="text-xs font-normal text-slate-500">箇所</span>
+                    <td class="py-4 px-4 text-center font-bold ${{nonARedTotal > 0 ? 'text-amber-600' : 'text-slate-400'}}">
+                        ${{nonARedTotal}} <span class="text-xs font-normal text-slate-400">箇所</span>
                     </td>
                     <td class="py-4 px-6 text-right">
-                        <button onclick="showDetail('${{staffName}}')" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md">
+                        <button onclick="showDetail('${{staffName}}')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all border border-slate-300">
                             個別のミス確認 ➔
                         </button>
                     </td>
@@ -260,7 +413,6 @@ html_content = f"""<!DOCTYPE html>
 
                 tbody.appendChild(tr);
 
-                // 個別ミス店舗の抽出
                 info.shops.forEach(shop => {{
                     if (shop.is_a_red || shop.non_a_count > 0) {{
                         missShopsList.push({{
@@ -275,25 +427,39 @@ html_content = f"""<!DOCTYPE html>
                 }});
             }});
 
-            // 個別ミス店舗の表示
+            document.getElementById('statTotalShops').innerHTML = `${{totalShops}} <span class="text-base font-normal text-slate-500">店舗</span>`;
+            document.getElementById('statARedCount').innerHTML = `${{totalARed}} <span class="text-base font-normal text-slate-500">店舗 (${{Math.round((totalARed/totalShops)*1000)/10}}%)</span>`;
+            document.getElementById('statNonARedCount').innerHTML = `${{totalNonARed}} <span class="text-base font-normal text-slate-500">箇所</span>`;
+            
+            document.getElementById('statPerfectCount').innerHTML = `${{perfectStaffCount}} <span class="text-base font-normal text-slate-500">名 / 全${{entries.length}}名</span>`;
+            const pRate = Math.round((perfectStaffCount / entries.length) * 1000) / 10;
+            document.getElementById('statPerfectRate').textContent = `${{pRate}}% のスタッフがパーフェクト`;
+
+            const topStaff = entries.find(e => e[1].a_count > 0) || entries[0];
+            const topRate = topStaff[1].miss_rate || (topStaff[1].shops.length > 0 ? Math.round((topStaff[1].a_count / topStaff[1].shops.length)*1000)/10 : 0);
+            document.getElementById('statTopMissStaff').textContent = `最多ミス: ${{topStaff[0]}} (${{topStaff[1].a_count}}回 / ${{topRate}}%)`;
+
             const indContainer = document.getElementById('individualMissContainer');
             indContainer.innerHTML = '';
+            document.getElementById('missShopBadge').textContent = `${{missShopsList.length}}店舗で指摘あり`;
 
             missShopsList.forEach(item => {{
                 const card = document.createElement('div');
-                card.className = `p-4 rounded-xl border ${{item.isA ? 'border-red-500/50 bg-red-950/30' : 'border-amber-500/30 bg-slate-800/40'}}`;
+                card.className = `p-4 rounded-xl border ${{item.isA ? 'border-red-200 bg-red-50/40' : 'border-slate-200 bg-white'}} card-shadow`;
 
                 let tag = item.isA 
-                    ? '<span class="bg-red-600 text-white text-xs font-bold px-2.5 py-0.5 rounded">A列ミスあり</span>' 
-                    : '<span class="bg-amber-900/60 text-amber-300 text-xs font-bold px-2.5 py-0.5 rounded border border-amber-700/60">A列外赤セルあり</span>';
+                    ? '<span class="bg-red-600 text-white text-xs font-bold px-2.5 py-0.5 rounded-md">A列ミスあり</span>' 
+                    : '<span class="bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold px-2.5 py-0.5 rounded-md">A列外赤セルあり</span>';
 
                 let itemsHtml = '';
                 if (item.items.length > 0) {{
                     itemsHtml = `
-                        <div class="mt-2.5 pt-2 border-t border-slate-700/60">
-                            <div class="text-xs text-amber-300 font-bold mb-1">A列以外の赤背景セル項目 (${{item.items.length}}箇所):</div>
+                        <div class="mt-3 pt-2 border-t border-slate-200/60">
+                            <div class="text-xs font-bold text-amber-800 mb-1.5 flex items-center gap-1">
+                                <span>⚠️</span> A列以外の赤背景セル項目 (${{item.items.length}}箇所):
+                            </div>
                             <div class="flex flex-wrap gap-1.5">
-                                ${{item.items.map(it => `<span class="bg-amber-900/40 text-amber-200 border border-amber-500/30 text-xs font-medium px-2 py-0.5 rounded">${{it}}</span>`).join('')}}
+                                ${{item.items.map(it => `<span class="bg-amber-100 text-amber-900 border border-amber-200 text-xs font-medium px-2 py-0.5 rounded">${{it}}</span>`).join('')}}
                             </div>
                         </div>
                     `;
@@ -302,8 +468,8 @@ html_content = f"""<!DOCTYPE html>
                 card.innerHTML = `
                     <div class="flex justify-between items-center">
                         <div>
-                            <span class="text-xs text-slate-400">最終更新: ${{item.staff}} (SV: ${{item.sv}})</span>
-                            <h3 class="font-extrabold text-white text-base mt-0.5">${{item.shopName}} 店</h3>
+                            <span class="text-xs text-slate-400 font-normal">最終更新: ${{item.staff}} (SV: ${{item.sv}})</span>
+                            <h3 class="font-bold text-slate-900 text-base mt-0.5">${{item.shopName}} 店</h3>
                         </div>
                         ${{tag}}
                     </div>
@@ -312,43 +478,66 @@ html_content = f"""<!DOCTYPE html>
 
                 indContainer.appendChild(card);
             }});
+
+            const rankContainer = document.getElementById('rankingContainer');
+            rankContainer.innerHTML = '';
+            const sortedRank = Object.entries(currentColRanking).sort((a, b) => b[1] - a[1]);
+
+            sortedRank.forEach(([colName, count], idx) => {{
+                const rCard = document.createElement('div');
+                rCard.className = 'bg-red-50/50 border border-red-100 rounded-xl p-3.5 flex justify-between items-center';
+                rCard.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="bg-red-500 text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs">${{idx + 1}}</span>
+                        <span class="font-semibold text-slate-800 text-sm">${{colName}}</span>
+                    </div>
+                    <span class="bg-red-100 text-red-800 font-bold px-2.5 py-0.5 rounded-full text-xs">${{count}} 店舗</span>
+                `;
+                rankContainer.appendChild(rCard);
+            }});
         }}
 
         function showDetail(staffName) {{
-            const info = staffData[staffName];
+            const info = currentStaffData[staffName];
             if (!info) return;
 
+            const mRate = info.miss_rate || (info.shops.length > 0 ? Math.round((info.a_count / info.shops.length)*1000)/10 : 0);
+
             document.getElementById('modalStaffName').textContent = `${{staffName}} さんの個別のミス詳細`;
-            document.getElementById('modalStaffMeta').textContent = `担当: ${{info.shops.length}}店舗 | A列ミス数: ${{info.a_count}}回 | ミス率: ${{info.miss_rate}}% | A列外赤セル: ${{info.non_a_red_total}}箇所`;
+            document.getElementById('modalStaffMeta').textContent = `担当店舗数: ${{info.shops.length}}店舗 | A列赤指摘数: ${{info.a_count}}回 | ミス率: ${{mRate}}% | A列外赤セル: ${{info.non_a_red_total}}箇所`;
 
             const modalBody = document.getElementById('modalBody');
             modalBody.innerHTML = '';
 
             info.shops.forEach(shop => {{
                 const shopCard = document.createElement('div');
-                shopCard.className = `p-4 rounded-xl border ${{shop.is_a_red ? 'border-red-500/50 bg-red-950/30' : 'border-slate-800 bg-slate-800/40'}}`;
+                shopCard.className = `p-4 rounded-xl border ${{shop.is_a_red ? 'border-red-200 bg-red-50/40' : 'border-slate-200 bg-white'}}`;
 
                 let aStatus = shop.is_a_red 
-                    ? '<span class="bg-red-600 text-white text-xs font-bold px-2.5 py-1 rounded-md">A列 赤指摘あり</span>'
-                    : '<span class="bg-slate-800 text-slate-400 text-xs font-semibold px-2.5 py-1 rounded-md">A列 指摘なし</span>';
+                    ? '<span class="bg-red-600 text-white text-xs font-bold px-2.5 py-0.5 rounded-md">A列 赤指摘あり</span>'
+                    : '<span class="bg-slate-100 text-slate-600 text-xs font-semibold px-2.5 py-0.5 rounded-md">A列 指摘なし</span>';
 
                 let nonAItemsHtml = '';
                 if (shop.non_a_items.length > 0) {{
                     nonAItemsHtml = `
-                        <div class="mt-3 pt-2 border-t border-slate-700/60">
-                            <div class="text-xs font-bold text-amber-300 mb-1.5">A列以外の赤背景セル項目 (${{shop.non_a_items.length}}箇所):</div>
+                        <div class="mt-3 pt-2 border-t border-slate-200/60">
+                            <div class="text-xs font-bold text-amber-800 mb-1.5 flex items-center gap-1">
+                                <span>⚠️</span> A列以外の赤背景セル項目 (${{shop.non_a_items.length}}箇所):
+                            </div>
                             <div class="flex flex-wrap gap-1.5">
-                                ${{shop.non_a_items.map(item => `<span class="bg-amber-900/40 text-amber-200 border border-amber-500/40 text-xs font-medium px-2 py-0.5 rounded">${{item}}</span>`).join('')}}
+                                ${{shop.non_a_items.map(item => `<span class="bg-amber-100 text-amber-900 border border-amber-200 text-xs font-medium px-2 py-0.5 rounded">${{item}}</span>`).join('')}}
                             </div>
                         </div>
                     `;
+                }} else {{
+                    nonAItemsHtml = '<div class="text-xs text-slate-400 mt-2">A列以外の赤指摘項目はありません。</div>';
                 }}
 
                 shopCard.innerHTML = `
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-2">
-                            <span class="font-extrabold text-white text-base">${{shop.name}} 店</span>
-                            <span class="text-xs text-slate-400">(SV: ${{shop.sv}})</span>
+                            <span class="font-bold text-slate-900 text-base">${{shop.name}} 店</span>
+                            <span class="text-xs text-slate-500">(SV: ${{shop.sv}})</span>
                         </div>
                         ${{aStatus}}
                     </div>
@@ -374,4 +563,4 @@ html_content = f"""<!DOCTYPE html>
 with open('index.html', 'w', encoding='utf-8') as out:
     out.write(html_content)
 
-print('Generated new index.html with individual miss priority and miss rates successfully')
+print('Restored original light design index.html with drag and drop functionality successfully')
