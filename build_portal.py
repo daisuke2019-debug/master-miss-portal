@@ -74,7 +74,7 @@ html_content = f"""<!DOCTYPE html>
 
     <main class="max-w-7xl mx-auto px-4 md:px-8 mt-8 space-y-8">
 
-        <!-- 📂 ドラッグ＆ドロップエリア (白ベースデザインに調和する綺麗なカード) -->
+        <!-- 📂 ドラッグ＆ドロップエリア -->
         <section id="dropZone" class="drop-zone p-8 rounded-2xl text-center cursor-pointer relative card-shadow group">
             <input type="file" id="fileInput" accept=".xlsx, .xls" class="hidden" onchange="handleFileSelect(event)">
             <div class="flex flex-col items-center justify-center gap-2.5">
@@ -91,7 +91,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
         </section>
 
-        <!-- KPIカード (元通りの明るい美しいカードデザイン) -->
+        <!-- KPIカード -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div class="bg-white p-6 rounded-2xl border border-slate-100 card-shadow">
                 <div class="text-slate-500 text-xs font-bold uppercase tracking-wider">全チェック店舗数</div>
@@ -118,7 +118,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- 🚨 メインテーブル (一番ミスが多い人順 ＆ ミス率表示) -->
+        <!-- 🚨 メインテーブル (一番ミスが多い人順) -->
         <section class="bg-white rounded-2xl border border-slate-200 card-shadow overflow-hidden">
             <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between md:items-center gap-4 bg-slate-50/50">
                 <div>
@@ -148,7 +148,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
         </section>
 
-        <!-- 🔍 個別店舗のミスログ (最優先閲覧) -->
+        <!-- 🔍 個別店舗のミスログ -->
         <section class="bg-white rounded-2xl p-6 border border-slate-200 card-shadow">
             <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
                 <div>
@@ -165,7 +165,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
         </section>
 
-        <!-- 📌 ミス多発項目 (A列以外の赤マーカー) ランキング -->
+        <!-- 📌 A列以外 赤セル多発項目 ランキング -->
         <section class="bg-white rounded-2xl p-6 border border-slate-200 card-shadow">
             <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
                 <div>
@@ -336,7 +336,6 @@ html_content = f"""<!DOCTYPE html>
             const tbody = document.getElementById('staffTableBody');
             tbody.innerHTML = '';
 
-            // 一番ミスが多い順にソート！
             const entries = Object.entries(currentStaffData).sort((a, b) => {{
                 if (b[1].a_count !== a[1].a_count) return b[1].a_count - a[1].a_count;
                 if (b[1].miss_rate !== a[1].miss_rate) return b[1].miss_rate - a[1].miss_rate;
@@ -369,13 +368,6 @@ html_content = f"""<!DOCTYPE html>
                 }} else if (missRate > 0) {{
                     barColor = 'bg-amber-500';
                     textColor = 'text-amber-600';
-                }}
-
-                let statusBadge = '';
-                if (aCount === 0) {{
-                    statusBadge = '<span class="px-3 py-1 rounded-full text-xs font-bold badge-perfect inline-flex items-center justify-center gap-1 w-28 mx-auto">✨ ミスなし (0回)</span>';
-                }} else {{
-                    statusBadge = `<span class="px-3 py-1 rounded-full text-xs font-bold badge-alert inline-flex items-center justify-center gap-1 w-28 mx-auto">⚠️ 指摘 ${{aCount}}回</span>`;
                 }}
 
                 const tr = document.createElement('tr');
@@ -418,7 +410,6 @@ html_content = f"""<!DOCTYPE html>
                         missShopsList.push({{
                             staff: staffName,
                             shopName: shop.name,
-                            sv: shop.sv,
                             isA: shop.is_a_red,
                             nonACount: shop.non_a_count,
                             items: shop.non_a_items
@@ -468,7 +459,7 @@ html_content = f"""<!DOCTYPE html>
                 card.innerHTML = `
                     <div class="flex justify-between items-center">
                         <div>
-                            <span class="text-xs text-slate-400 font-normal">最終更新: ${{item.staff}} (SV: ${{item.sv}})</span>
+                            <span class="text-xs text-slate-400 font-normal">最終更新: ${{item.staff}}</span>
                             <h3 class="font-bold text-slate-900 text-base mt-0.5">${{item.shopName}} 店</h3>
                         </div>
                         ${{tag}}
@@ -537,7 +528,6 @@ html_content = f"""<!DOCTYPE html>
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-2">
                             <span class="font-bold text-slate-900 text-base">${{shop.name}} 店</span>
-                            <span class="text-xs text-slate-500">(SV: ${{shop.sv}})</span>
                         </div>
                         ${{aStatus}}
                     </div>
@@ -563,4 +553,4 @@ html_content = f"""<!DOCTYPE html>
 with open('index.html', 'w', encoding='utf-8') as out:
     out.write(html_content)
 
-print('Restored original light design index.html with drag and drop functionality successfully')
+print('Removed SV name text completely and updated index.html successfully')
