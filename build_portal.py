@@ -15,7 +15,7 @@ html_content = f"""<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>店舗マスタチェック指摘カウントWebポータル | AI Company Executive</title>
-    <!-- Tailwind CSS v3 Play CDN (slate-950, backdrop-blur等の最新クラスフル対応) -->
+    <!-- Tailwind CSS v3 Play CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -553,14 +553,16 @@ html_content = f"""<!DOCTYPE html>
                 totalNonARed += nonARedTotal;
                 if (aCount === 0) perfectStaffCount += 1;
 
-                let barColor = 'bg-emerald-600';
-                let textColor = 'text-emerald-800';
+                // カラーコード＆CSS指定の完全確実化
+                let barColorCode = '#10b981'; // 0% (エメラルドグリーン)
+                let textColorClass = 'text-emerald-700';
+
                 if (missRate > 70) {{
-                    barColor = 'bg-red-600';
-                    textColor = 'text-red-700';
+                    barColorCode = '#dc2626'; // 70%超 (鮮烈な赤)
+                    textColorClass = 'text-red-600';
                 }} else if (missRate > 0) {{
-                    barColor = 'bg-amber-600';
-                    textColor = 'text-amber-900';
+                    barColorCode = '#d97706'; // 1〜70% (はっきり見える濃いアンバーオレンジ)
+                    textColorClass = 'text-amber-800';
                 }}
 
                 let rankBadgeHtml = '';
@@ -585,10 +587,10 @@ html_content = f"""<!DOCTYPE html>
                     </td>
                     <td class="py-4.5 px-6 text-center">
                         <div class="flex items-center justify-center gap-2">
-                            <span class="font-black ${{textColor}} text-base">${{missRate}}%</span>
+                            <span class="font-black ${{textColorClass}} text-base">${{missRate}}%</span>
                         </div>
-                        <div class="w-28 h-3 bg-slate-300 rounded-full mx-auto mt-1 overflow-hidden border border-slate-400">
-                            <div class="${{barColor}} h-full rounded-full transition-all duration-500" style="width: ${{missRate}}%"></div>
+                        <div class="w-32 h-3.5 bg-slate-200 rounded-full mx-auto mt-1 overflow-hidden border-2 border-slate-300 shadow-inner">
+                            <div class="h-full rounded-full transition-all duration-500" style="width: ${{missRate}}%; background-color: ${{barColorCode}};"></div>
                         </div>
                     </td>
                     <td class="py-4.5 px-4 text-center font-black text-base ${{nonARedTotal > 0 ? 'text-amber-900' : 'text-slate-800'}}">
@@ -624,10 +626,10 @@ html_content = f"""<!DOCTYPE html>
                         <div class="space-y-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
                             <div class="flex justify-between text-xs sm:text-sm font-black text-slate-900">
                                 <span>巡回店舗数: ${{shopCount}}店舗</span>
-                                <span class="${{textColor}}">ミス率: ${{missRate}}%</span>
+                                <span class="${{textColorClass}}">ミス率: ${{missRate}}%</span>
                             </div>
-                            <div class="w-full h-3 bg-slate-300 rounded-full overflow-hidden border border-slate-400">
-                                <div class="${{barColor}} h-full rounded-full transition-all duration-500" style="width: ${{missRate}}%"></div>
+                            <div class="w-full h-3.5 bg-slate-200 rounded-full overflow-hidden border-2 border-slate-300 shadow-inner">
+                                <div class="h-full rounded-full transition-all duration-500" style="width: ${{missRate}}%; background-color: ${{barColorCode}};"></div>
                             </div>
                         </div>
 
@@ -843,4 +845,4 @@ html_content = f"""<!DOCTYPE html>
 with open('index.html', 'w', encoding='utf-8') as out:
     out.write(html_content)
 
-print('Updated index.html: Fixed button background bug and applied Tailwind v3 Play CDN')
+print('Updated index.html: Progress bar color coding fixed for all percentages')
