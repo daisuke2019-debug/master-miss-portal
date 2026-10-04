@@ -138,7 +138,7 @@ html_content = f"""<!DOCTYPE html>
 </head>
 <body class="min-h-screen pb-20 selection:bg-red-500 selection:text-white">
 
-    <!-- サイドバー -->
+    <!-- サイドバー (ハンバーガーメニュー・A列赤指摘＆A列外赤セル累計を一目で視覚化) -->
     <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden transition-opacity duration-300"></div>
     <aside id="sidebar" class="fixed top-0 left-0 w-80 h-full bg-white z-50 transform -translate-x-full shadow-2xl flex flex-col justify-between p-6 border-r-2 border-slate-300 transition-transform duration-300 ease-out">
         <div>
@@ -154,20 +154,48 @@ html_content = f"""<!DOCTYPE html>
                 </div>
                 <button onclick="toggleSidebar()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-black text-2xl flex items-center justify-center transition-colors">&times;</button>
             </div>
-            <nav class="mt-6 space-y-3">
-                <button onclick="switchView('daily'); toggleSidebar();" class="w-full text-left px-4 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-slate-900 flex items-center justify-between border-2 border-slate-300 transition-all shadow-sm active:scale-98">
-                    <div class="flex items-center gap-3">
-                        <span class="text-xl">📅</span>
-                        <span class="text-base">本日の日別チェック</span>
+
+            <nav class="mt-6 space-y-4">
+                <!-- 📅 本日の日別チェックボタン -->
+                <button onclick="switchView('daily'); toggleSidebar();" class="w-full text-left p-4 rounded-2xl bg-slate-100 hover:bg-slate-200 font-black text-slate-900 flex flex-col gap-2.5 border-2 border-slate-300 transition-all shadow-sm active:scale-98">
+                    <div class="flex items-center justify-between w-full">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-xl">📅</span>
+                            <span class="text-base font-black">本日の日別チェック</span>
+                        </div>
+                        <span class="text-xs bg-red-600 text-white font-black px-2.5 py-1 rounded-lg shadow-sm">日別</span>
                     </div>
-                    <span class="text-xs bg-red-600 text-white font-black px-3 py-1 rounded-full shadow-sm">13件</span>
+                    <div class="grid grid-cols-2 gap-2 w-full pt-2 border-t border-slate-300 text-xs font-black">
+                        <div class="bg-red-50 text-red-950 p-2 rounded-xl border border-red-300 flex flex-col items-center justify-center text-center">
+                            <span class="text-[10px] text-red-800 block font-bold">A列赤指摘店舗</span>
+                            <span id="sidebarDailyARed" class="text-sm font-black text-red-600 mt-0.5">13 店舗</span>
+                        </div>
+                        <div class="bg-amber-50 text-amber-950 p-2 rounded-xl border border-amber-300 flex flex-col items-center justify-center text-center">
+                            <span class="text-[10px] text-amber-800 block font-bold">A列外赤セル内訳</span>
+                            <span id="sidebarDailyNonARed" class="text-sm font-black text-amber-800 mt-0.5">26 箇所</span>
+                        </div>
+                    </div>
                 </button>
-                <button onclick="switchView('total'); toggleSidebar();" class="w-full text-left px-4 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-slate-900 flex items-center justify-between border-2 border-slate-300 transition-all shadow-sm active:scale-98">
-                    <div class="flex items-center gap-3">
-                        <span class="text-xl">📊</span>
-                        <span class="text-base">10月度 累計実績</span>
+
+                <!-- 📊 10月度 累計実績ボタン (A列赤指摘店舗 累計 ＆ A列外赤セル内訳 累計) -->
+                <button onclick="switchView('total'); toggleSidebar();" class="w-full text-left p-4 rounded-2xl bg-slate-100 hover:bg-slate-200 font-black text-slate-900 flex flex-col gap-2.5 border-2 border-slate-300 transition-all shadow-sm active:scale-98">
+                    <div class="flex items-center justify-between w-full">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-xl">📊</span>
+                            <span class="text-base font-black">10月度 累計実績</span>
+                        </div>
+                        <span class="text-xs bg-amber-600 text-white font-black px-2.5 py-1 rounded-lg shadow-sm">全累計</span>
                     </div>
-                    <span class="text-xs bg-amber-600 text-white font-black px-3 py-1 rounded-full shadow-sm">26箇所</span>
+                    <div class="grid grid-cols-2 gap-2 w-full pt-2 border-t border-slate-300 text-xs font-black">
+                        <div class="bg-red-100 text-red-950 p-2 rounded-xl border border-red-300 flex flex-col items-center justify-center text-center">
+                            <span class="text-[10px] text-red-800 block font-bold">A列赤指摘 累計</span>
+                            <span id="sidebarTotalARed" class="text-sm font-black text-red-600 mt-0.5">13 店舗</span>
+                        </div>
+                        <div class="bg-amber-100 text-amber-950 p-2 rounded-xl border border-amber-300 flex flex-col items-center justify-center text-center">
+                            <span class="text-[10px] text-amber-800 block font-bold">A列外赤セル 累計</span>
+                            <span id="sidebarTotalNonARed" class="text-sm font-black text-amber-800 mt-0.5">26 箇所</span>
+                        </div>
+                    </div>
                 </button>
             </nav>
         </div>
@@ -176,7 +204,7 @@ html_content = f"""<!DOCTYPE html>
         </div>
     </aside>
 
-    <!-- ヘッダー (スマホ・PC最適化＆超高コントラスト) -->
+    <!-- ヘッダー -->
     <header class="header-gradient text-white py-2.5 sm:py-4 px-3 sm:px-8 sticky top-0 z-40 shadow-xl border-b-2 border-slate-700">
         <div class="max-w-7xl mx-auto flex justify-between items-center gap-2 sm:gap-4">
             
@@ -197,7 +225,7 @@ html_content = f"""<!DOCTYPE html>
 
             <!-- 右側：印刷/ステータス/PC用切り替え -->
             <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                <!-- 🖨️ 印刷/PDF保存ボタン (PC用) -->
+                <!-- 🖨️ 印刷/PDF保存ボタン -->
                 <button onclick="window.print()" class="hidden sm:flex bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black shadow border border-slate-600 items-center gap-1.5 transition-all active:scale-95">
                     <span>🖨️</span>
                     <span>印刷/PDF</span>
@@ -213,7 +241,7 @@ html_content = f"""<!DOCTYPE html>
                     </button>
                 </div>
 
-                <!-- ステータスバッジ (スマホ・PC共通・くっきり表記) -->
+                <!-- ステータスバッジ -->
                 <div class="bg-slate-950 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl border-2 border-slate-700 text-2xs sm:text-sm font-black text-emerald-400 flex items-center gap-1.5 shadow-md">
                     <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-400 animate-pulse shadow-sm shrink-0"></span>
                     <span id="currentStatusText" class="text-white font-black whitespace-nowrap">10/01 40店舗</span>
@@ -221,7 +249,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- スマホ用切り替えタブ (超高コントラスト・ハッキリ表示) -->
+        <!-- スマホ用切り替えタブ -->
         <div class="flex md:hidden items-center bg-slate-950 p-1.5 rounded-xl border-2 border-slate-700 max-w-7xl mx-auto mt-2 text-xs sm:text-sm font-black shadow-lg">
             <button id="tabDailyMobile" onclick="switchView('daily')" class="flex-1 py-2 rounded-lg bg-red-600 text-white text-center font-black shadow-md border border-red-500">
                 📅 日別 (10/01)
@@ -809,6 +837,12 @@ ${{staffName}} さん
             const pRate = Math.round((perfectStaffCount / entries.length) * 1000) / 10;
             document.getElementById('statPerfectRate').textContent = `${{pRate}}% がミスなし`;
 
+            /* ハンバーガーメニュー内の数値を即時更新 */
+            if (document.getElementById('sidebarDailyARed')) document.getElementById('sidebarDailyARed').textContent = `${{totalARed}} 店舗`;
+            if (document.getElementById('sidebarDailyNonARed')) document.getElementById('sidebarDailyNonARed').textContent = `${{totalNonARed}} 箇所`;
+            if (document.getElementById('sidebarTotalARed')) document.getElementById('sidebarTotalARed').textContent = `${{totalARed}} 店舗`;
+            if (document.getElementById('sidebarTotalNonARed')) document.getElementById('sidebarTotalNonARed').textContent = `${{totalNonARed}} 箇所`;
+
             const indContainer = document.getElementById('individualMissContainer');
             indContainer.innerHTML = '';
             document.getElementById('missShopBadge').textContent = `${{missShopsList.length}}店舗で指摘あり`;
@@ -1007,4 +1041,4 @@ ${{staffName}} さん
 with open('index.html', 'w', encoding='utf-8') as out:
     out.write(html_content)
 
-print('Updated index.html: Mobile header optimized for high contrast and readability')
+print('Updated index.html: Sidebar hamburger menu enhanced with A-red and non-A-red total badges')
