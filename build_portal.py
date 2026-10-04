@@ -225,9 +225,9 @@ html_content = f"""<!DOCTYPE html>
                     <thead>
                         <tr class="bg-slate-100/70 text-slate-600 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
                             <th class="py-4 px-6">順位 / スタッフ名</th>
-                            <th class="py-4 px-4 text-center">担当店舗数</th>
+                            <th class="py-4 px-4 text-center">巡回店舗数</th>
                             <th class="py-4 px-4 text-center">A列 赤指摘店舗数<br><span class="text-2xs font-normal text-red-500">(マスタミス指摘回数)</span></th>
-                            <th class="py-4 px-6 text-center">ミス発生割合 (%)<br><span class="text-2xs font-normal text-slate-400">(担当店舗に対するミス率)</span></th>
+                            <th class="py-4 px-6 text-center">ミス発生割合 (%)<br><span class="text-2xs font-normal text-slate-400">(巡回店舗に対するミス率)</span></th>
                             <th class="py-4 px-4 text-center">A列以外の赤指摘<br><span class="text-2xs font-normal text-amber-600">(内訳箇所数)</span></th>
                             <th class="py-4 px-6 text-right">個別のミス確認</th>
                         </tr>
@@ -530,10 +530,10 @@ html_content = f"""<!DOCTYPE html>
                         ${{rankBadgeHtml}}
                         <div>
                             <div>${{staffName}}</div>
-                            <div class="text-xs text-slate-400 font-normal">担当店舗数: ${{shopCount}}店</div>
+                            <div class="text-xs text-slate-400 font-normal">巡回店舗数: ${{shopCount}}</div>
                         </div>
                     </td>
-                    <td class="py-4 px-4 text-center font-semibold text-slate-700">${{shopCount}} 店</td>
+                    <td class="py-4 px-4 text-center font-semibold text-slate-700">${{shopCount}}</td>
                     <td class="py-4 px-4 text-center">
                         <span class="text-base font-extrabold ${{aCount > 0 ? 'text-red-600' : 'text-emerald-600'}}">${{aCount}}</span> <span class="text-xs text-slate-400">回</span>
                     </td>
@@ -572,7 +572,7 @@ html_content = f"""<!DOCTYPE html>
                                 ${{rankBadgeHtml}}
                                 <div>
                                     <h3 class="font-black text-slate-900 text-base leading-snug">${{staffName}}</h3>
-                                    <span class="text-xs text-slate-500 font-medium">担当: ${{shopCount}}店舗</span>
+                                    <span class="text-xs text-slate-500 font-medium">巡回: ${{shopCount}}店舗</span>
                                 </div>
                             </div>
                             <div class="text-right shrink-0">
@@ -664,7 +664,7 @@ html_content = f"""<!DOCTYPE html>
                     <div class="flex justify-between items-center">
                         <div>
                             <span class="text-xs text-slate-400 font-normal">最終更新: ${{item.staff}}</span>
-                            <h3 class="font-bold text-slate-900 text-base mt-0.5">${{item.shopName}} 店</h3>
+                            <h3 class="font-bold text-slate-900 text-base mt-0.5">${{item.shopName}}</h3>
                         </div>
                         ${{tag}}
                     </div>
@@ -699,7 +699,7 @@ html_content = f"""<!DOCTYPE html>
             const mRate = info.miss_rate || (info.shops.length > 0 ? Math.round((info.a_count / info.shops.length)*1000)/10 : 0);
 
             document.getElementById('modalStaffName').textContent = `${{staffName}} さんの個別のミス詳細`;
-            document.getElementById('modalStaffMeta').textContent = `担当店舗数: ${{info.shops.length}}店舗 | A列赤指摘数: ${{info.a_count}}回 | ミス率: ${{mRate}}% | A列外赤セル: ${{info.non_a_red_total}}箇所`;
+            document.getElementById('modalStaffMeta').textContent = `巡回店舗数: ${{info.shops.length}}店舗 | A列赤指摘数: ${{info.a_count}}回 | ミス率: ${{mRate}}% | A列外赤セル: ${{info.non_a_red_total}}箇所`;
 
             const modalBody = document.getElementById('modalBody');
             modalBody.innerHTML = '';
@@ -731,7 +731,7 @@ html_content = f"""<!DOCTYPE html>
                 shopCard.innerHTML = `
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-2">
-                            <span class="font-bold text-slate-900 text-base">${{shop.name}} 店</span>
+                            <span class="font-bold text-slate-900 text-base">${{shop.name}}</span>
                         </div>
                         ${{aStatus}}
                     </div>
