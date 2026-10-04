@@ -165,27 +165,31 @@
         </div>
     </aside>
 
-    <!-- ヘッダー -->
-    <header class="header-gradient text-white py-4 px-4 sm:px-8 sticky top-0 z-40 shadow-xl">
-        <div class="max-w-7xl mx-auto flex justify-between items-center gap-4">
-            <div class="flex items-center gap-3.5">
-                <button onclick="toggleSidebar()" class="btn-action-red px-4 py-2.5 rounded-xl text-sm font-black flex items-center gap-2 cursor-pointer transition-all active:scale-95">
-                    <span class="text-xl leading-none">☰</span>
-                    <span>メニュー</span>
+    <!-- ヘッダー (スマホ・PC最適化＆超高コントラスト) -->
+    <header class="header-gradient text-white py-2.5 sm:py-4 px-3 sm:px-8 sticky top-0 z-40 shadow-xl border-b-2 border-slate-700">
+        <div class="max-w-7xl mx-auto flex justify-between items-center gap-2 sm:gap-4">
+            
+            <!-- 左側：メニューボタン ＆ タイトル -->
+            <div class="flex items-center gap-2 sm:gap-3.5 min-w-0">
+                <button onclick="toggleSidebar()" class="btn-action-red px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-black flex items-center gap-1.5 cursor-pointer transition-all active:scale-95 shrink-0">
+                    <span class="text-base sm:text-xl leading-none">☰</span>
+                    <span class="hidden xs:inline">メニュー</span>
                 </button>
-                <div>
-                    <h1 class="text-lg sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
-                        <span>店舗マスタチェック指摘カウントWebポータル</span>
+                <div class="min-w-0">
+                    <h1 class="text-sm sm:text-2xl font-black text-white tracking-tight leading-snug truncate">
+                        <span class="sm:hidden">店舗マスタ指摘分析ポータル</span>
+                        <span class="hidden sm:inline">店舗マスタチェック指摘カウントWebポータル</span>
                     </h1>
-                    <p class="text-slate-200 text-xs sm:text-sm font-bold mt-0.5 hidden sm:block">Excelをドラッグ＆ドロップして即時自動集計・ミス率順分析</p>
+                    <p class="text-slate-200 text-xs sm:text-sm font-bold mt-0.5 hidden md:block">Excelをドラッグ＆ドロップして即時自動集計・ミス率順分析</p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
-                <!-- 🖨️ 印刷/PDF保存ボタン -->
-                <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black shadow border border-slate-600 flex items-center gap-1.5 transition-all active:scale-95">
+            <!-- 右側：印刷/ステータス/PC用切り替え -->
+            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                <!-- 🖨️ 印刷/PDF保存ボタン (PC用) -->
+                <button onclick="window.print()" class="hidden sm:flex bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black shadow border border-slate-600 items-center gap-1.5 transition-all active:scale-95">
                     <span>🖨️</span>
-                    <span class="hidden sm:inline">印刷 / PDF保存</span>
+                    <span>印刷/PDF</span>
                 </button>
 
                 <!-- PC用切り替えタブ -->
@@ -197,20 +201,22 @@
                         📊 累計トータル
                     </button>
                 </div>
-                <div class="bg-slate-900 px-4 py-2 rounded-2xl border-2 border-slate-700 text-xs sm:text-sm font-black text-emerald-400 flex items-center gap-2 shadow-md">
-                    <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse shadow-sm"></span>
-                    <span id="currentStatusText" class="text-white font-bold">10/01 40店舗</span>
+
+                <!-- ステータスバッジ (スマホ・PC共通・くっきり表記) -->
+                <div class="bg-slate-950 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl border-2 border-slate-700 text-2xs sm:text-sm font-black text-emerald-400 flex items-center gap-1.5 shadow-md">
+                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-400 animate-pulse shadow-sm shrink-0"></span>
+                    <span id="currentStatusText" class="text-white font-black whitespace-nowrap">10/01 40店舗</span>
                 </div>
             </div>
         </div>
 
-        <!-- スマホ用切り替えタブ -->
-        <div class="flex md:hidden items-center bg-slate-900 p-1.5 rounded-2xl border-2 border-slate-700 max-w-7xl mx-auto mt-2 text-sm font-black shadow-inner">
-            <button id="tabDailyMobile" onclick="switchView('daily')" class="flex-1 py-2.5 rounded-xl bg-red-600 text-white text-center shadow-md">
+        <!-- スマホ用切り替えタブ (超高コントラスト・ハッキリ表示) -->
+        <div class="flex md:hidden items-center bg-slate-950 p-1.5 rounded-xl border-2 border-slate-700 max-w-7xl mx-auto mt-2 text-xs sm:text-sm font-black shadow-lg">
+            <button id="tabDailyMobile" onclick="switchView('daily')" class="flex-1 py-2 rounded-lg bg-red-600 text-white text-center font-black shadow-md border border-red-500">
                 📅 日別 (10/01)
             </button>
-            <button id="tabTotalMobile" onclick="switchView('total')" class="flex-1 py-2.5 rounded-xl text-slate-200 text-center font-bold">
-                📊 累計トータル
+            <button id="tabTotalMobile" onclick="switchView('total')" class="flex-1 py-2 rounded-lg bg-slate-800 text-slate-100 hover:text-white text-center font-black border border-slate-600">
+                📊 10月度 累計トータル
             </button>
         </div>
     </header>
@@ -352,7 +358,7 @@
             </div>
         </section>
 
-        <!-- A列以外 赤セル多発項目 (バッジ数値を数字のみ・超すっきりデザイン化) -->
+        <!-- A列以外 赤セル多発項目 -->
         <section id="rankingSection" class="glass-card rounded-2xl p-5 sm:p-6 border-2 border-slate-300">
             <div class="flex items-center justify-between mb-5 pb-3.5 border-b-2 border-slate-300">
                 <div>
@@ -436,8 +442,9 @@
             if (mode === 'daily') {
                 if (btnDaily) btnDaily.className = 'px-5 py-2 rounded-xl bg-red-600 text-white font-black text-sm shadow-md transition-all';
                 if (btnTotal) btnTotal.className = 'px-5 py-2 rounded-xl text-slate-200 font-bold text-sm hover:text-white hover:bg-slate-800 transition-all';
-                if (btnDailyMob) btnDailyMob.className = 'flex-1 py-2.5 rounded-xl bg-red-600 text-white text-center font-black shadow-md';
-                if (btnTotalMob) btnTotalMob.className = 'flex-1 py-2.5 rounded-xl text-slate-200 text-center font-bold';
+                
+                if (btnDailyMob) btnDailyMob.className = 'flex-1 py-2 rounded-lg bg-red-600 text-white text-center font-black shadow-md border border-red-500';
+                if (btnTotalMob) btnTotalMob.className = 'flex-1 py-2 rounded-lg bg-slate-800 text-slate-100 hover:text-white text-center font-black border border-slate-600';
 
                 if (ribbon) ribbon.className = 'p-4 sm:p-5 rounded-2xl bg-white border-2 border-red-600 shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3';
                 if (badge) badge.textContent = '日別データ表示中';
@@ -447,8 +454,9 @@
             } else {
                 if (btnDaily) btnDaily.className = 'px-5 py-2 rounded-xl text-slate-200 font-bold text-sm hover:text-white hover:bg-slate-800 transition-all';
                 if (btnTotal) btnTotal.className = 'px-5 py-2 rounded-xl bg-amber-600 text-white font-black text-sm shadow-md transition-all';
-                if (btnDailyMob) btnDailyMob.className = 'flex-1 py-2.5 rounded-xl text-slate-200 text-center font-bold';
-                if (btnTotalMob) btnTotalMob.className = 'flex-1 py-2.5 rounded-xl bg-amber-600 text-white text-center font-black shadow-md';
+                
+                if (btnDailyMob) btnDailyMob.className = 'flex-1 py-2 rounded-lg bg-slate-800 text-slate-100 hover:text-white text-center font-black border border-slate-600';
+                if (btnTotalMob) btnTotalMob.className = 'flex-1 py-2 rounded-lg bg-amber-600 text-white text-center font-black shadow-md border border-amber-500';
 
                 if (ribbon) ribbon.className = 'p-4 sm:p-5 rounded-2xl bg-white border-2 border-amber-500 shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3';
                 if (badge) badge.textContent = '10月度 累計トータル表示中';
@@ -832,7 +840,7 @@ ${text}`);
                 indContainer.appendChild(card);
             });
 
-            /* 機能4: 項目別多発ミスのビジュアルメーター（数字のみの超高視認性バッジ化） */
+            /* 機能4: 項目別多発ミスのビジュアルメーター */
             const rankContainer = document.getElementById('rankingContainer');
             rankContainer.innerHTML = '';
             const sortedRank = Object.entries(currentColRanking).sort((a, b) => b[1] - a[1]);
