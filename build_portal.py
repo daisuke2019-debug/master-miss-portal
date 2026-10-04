@@ -15,7 +15,8 @@ html_content = f"""<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>店舗マスタチェック指摘カウントWebポータル | AI Company Executive</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Tailwind CSS v3 Play CDN (slate-950, backdrop-blur等の最新クラスフル対応) -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -33,21 +34,40 @@ html_content = f"""<!DOCTYPE html>
             border-bottom: 2px solid #334155;
         }}
         
+        /* 確実なダークボタン（背景：漆黒濃紺、文字：完全純白） */
+        .btn-action-dark {{
+            background-color: #0f172a !important;
+            color: #ffffff !important;
+            border: 1px solid #1e293b !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+        }}
+        .btn-action-dark:hover {{
+            background-color: #000000 !important;
+            color: #ffffff !important;
+        }}
+
+        /* 確実な赤色ボタン（背景：深紅、文字：完全純白） */
+        .btn-action-red {{
+            background-color: #dc2626 !important;
+            color: #ffffff !important;
+            border: 1px solid #b91c1c !important;
+            box-shadow: 0 2px 5px rgba(220,38,38,0.3) !important;
+        }}
+        .btn-action-red:hover {{
+            background-color: #b91c1c !important;
+            color: #ffffff !important;
+        }}
+
         .glass-card {{
             background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }}
-        
-        .glass-card:hover {{
-            box-shadow: 0 12px 30px -5px rgba(15, 23, 42, 0.08);
-            border-color: #cbd5e1;
         }}
         
         .kpi-card {{
             background: #ffffff;
-            border: 2px solid #e2e8f0;
+            border: 2px solid #cbd5e1;
             border-radius: 1rem;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }}
@@ -85,7 +105,7 @@ html_content = f"""<!DOCTYPE html>
 <body class="min-h-screen pb-20 selection:bg-red-500 selection:text-white">
 
     <!-- サイドバー -->
-    <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-950/70 backdrop-blur-xs z-50 hidden transition-opacity duration-300"></div>
+    <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden transition-opacity duration-300"></div>
     <aside id="sidebar" class="fixed top-0 left-0 w-80 h-full bg-white z-50 transform -translate-x-full shadow-2xl flex flex-col justify-between p-6 border-r-2 border-slate-300 transition-transform duration-300 ease-out">
         <div>
             <div class="flex items-center justify-between pb-5 border-b-2 border-slate-200">
@@ -101,19 +121,19 @@ html_content = f"""<!DOCTYPE html>
                 <button onclick="toggleSidebar()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-black text-2xl flex items-center justify-center transition-colors">&times;</button>
             </div>
             <nav class="mt-6 space-y-3">
-                <button onclick="switchView('daily'); toggleSidebar();" class="w-full text-left px-4 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-slate-900 flex items-center justify-between border-2 border-slate-300 transition-all shadow-xs active:scale-98">
+                <button onclick="switchView('daily'); toggleSidebar();" class="w-full text-left px-4 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-slate-900 flex items-center justify-between border-2 border-slate-300 transition-all shadow-sm active:scale-98">
                     <div class="flex items-center gap-3">
                         <span class="text-xl">📅</span>
                         <span class="text-base">本日の日別チェック</span>
                     </div>
-                    <span class="text-xs bg-red-600 text-white font-black px-3 py-1 rounded-full shadow-xs">13件</span>
+                    <span class="text-xs bg-red-600 text-white font-black px-3 py-1 rounded-full shadow-sm">13件</span>
                 </button>
-                <button onclick="switchView('total'); toggleSidebar();" class="w-full text-left px-4 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-slate-900 flex items-center justify-between border-2 border-slate-300 transition-all shadow-xs active:scale-98">
+                <button onclick="switchView('total'); toggleSidebar();" class="w-full text-left px-4 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-slate-900 flex items-center justify-between border-2 border-slate-300 transition-all shadow-sm active:scale-98">
                     <div class="flex items-center gap-3">
                         <span class="text-xl">📊</span>
                         <span class="text-base">10月度 累計実績</span>
                     </div>
-                    <span class="text-xs bg-amber-600 text-white font-black px-3 py-1 rounded-full shadow-xs">26箇所</span>
+                    <span class="text-xs bg-amber-600 text-white font-black px-3 py-1 rounded-full shadow-sm">26箇所</span>
                 </button>
             </nav>
         </div>
@@ -126,7 +146,7 @@ html_content = f"""<!DOCTYPE html>
     <header class="header-gradient text-white py-4 px-4 sm:px-8 sticky top-0 z-40 shadow-xl">
         <div class="max-w-7xl mx-auto flex justify-between items-center gap-4">
             <div class="flex items-center gap-3.5">
-                <button onclick="toggleSidebar()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl text-sm font-black shadow-md flex items-center gap-2 cursor-pointer border-2 border-red-500 transition-all active:scale-95">
+                <button onclick="toggleSidebar()" class="btn-action-red px-4 py-2.5 rounded-xl text-sm font-black flex items-center gap-2 cursor-pointer transition-all active:scale-95">
                     <span class="text-xl leading-none">☰</span>
                     <span>メニュー</span>
                 </button>
@@ -140,15 +160,15 @@ html_content = f"""<!DOCTYPE html>
 
             <div class="flex items-center gap-3">
                 <!-- PC用切り替えタブ -->
-                <div class="hidden md:flex items-center bg-slate-950/80 p-1.5 rounded-2xl border-2 border-slate-700 shadow-inner">
+                <div class="hidden md:flex items-center bg-slate-900 p-1.5 rounded-2xl border-2 border-slate-700 shadow-inner">
                     <button id="tabDaily" onclick="switchView('daily')" class="px-5 py-2 rounded-xl bg-red-600 text-white font-black text-sm shadow-md transition-all">
                         📅 日別 (10/01)
                     </button>
-                    <button id="tabTotal" onclick="switchView('total')" class="px-5 py-2 rounded-xl text-slate-200 font-bold text-sm hover:text-white hover:bg-slate-800/80 transition-all">
+                    <button id="tabTotal" onclick="switchView('total')" class="px-5 py-2 rounded-xl text-slate-200 font-bold text-sm hover:text-white hover:bg-slate-800 transition-all">
                         📊 累計トータル
                     </button>
                 </div>
-                <div class="bg-slate-950/90 px-4 py-2 rounded-2xl border-2 border-slate-700 text-xs sm:text-sm font-black text-emerald-400 flex items-center gap-2 shadow-md">
+                <div class="bg-slate-900 px-4 py-2 rounded-2xl border-2 border-slate-700 text-xs sm:text-sm font-black text-emerald-400 flex items-center gap-2 shadow-md">
                     <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse shadow-sm"></span>
                     <span id="currentStatusText" class="text-white font-bold">10/01 40店舗</span>
                 </div>
@@ -156,7 +176,7 @@ html_content = f"""<!DOCTYPE html>
         </div>
 
         <!-- スマホ用切り替えタブ -->
-        <div class="flex md:hidden items-center bg-slate-950/90 p-1.5 rounded-2xl border-2 border-slate-700 max-w-7xl mx-auto mt-2 text-sm font-black shadow-inner">
+        <div class="flex md:hidden items-center bg-slate-900 p-1.5 rounded-2xl border-2 border-slate-700 max-w-7xl mx-auto mt-2 text-sm font-black shadow-inner">
             <button id="tabDailyMobile" onclick="switchView('daily')" class="flex-1 py-2.5 rounded-xl bg-red-600 text-white text-center shadow-md">
                 📅 日別 (10/01)
             </button>
@@ -190,7 +210,7 @@ html_content = f"""<!DOCTYPE html>
                     <h2 class="text-base sm:text-xl font-black text-slate-900">毎朝のマスタチェックExcelファイル（.xlsx）を直接解析</h2>
                     <p class="text-xs sm:text-sm text-slate-800 mt-1 font-bold">ここをタップ または ファイルをドラッグ＆ドロップで即座に自動集計</p>
                 </div>
-                <button type="button" class="bg-red-600 hover:bg-red-700 text-white font-black text-sm sm:text-base px-8 py-3 rounded-xl shadow-md mt-1 cursor-pointer border-2 border-red-700 active:scale-95 transition-all">
+                <button type="button" class="btn-action-red font-black text-sm sm:text-base px-8 py-3 rounded-xl shadow-md mt-1 cursor-pointer active:scale-95 transition-all">
                     Excelファイルを選択して自動解析
                 </button>
             </div>
@@ -200,7 +220,7 @@ html_content = f"""<!DOCTYPE html>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div class="kpi-card p-4 sm:p-5 shadow-sm">
                 <div class="text-slate-800 text-xs sm:text-sm font-black">全チェック店舗数</div>
-                <div id="statTotalShops" class="text-3xl sm:text-4xl font-black text-slate-950 mt-1 tracking-tight">40 <span class="text-sm font-bold text-slate-700">店舗</span></div>
+                <div id="statTotalShops" class="text-3xl sm:text-4xl font-black text-slate-900 mt-1 tracking-tight">40 <span class="text-sm font-bold text-slate-700">店舗</span></div>
                 <div class="text-xs text-slate-800 mt-1 font-bold">13名のスタッフ対象</div>
             </div>
 
@@ -225,9 +245,9 @@ html_content = f"""<!DOCTYPE html>
 
         <!-- メインテーブル -->
         <section id="staffTableSection" class="glass-card rounded-2xl overflow-hidden border-2 border-slate-300">
-            <div class="p-4 sm:p-6 border-b-2 border-slate-300 flex flex-col md:flex-row justify-between md:items-center gap-4 bg-slate-100/90">
+            <div class="p-4 sm:p-6 border-b-2 border-slate-300 flex flex-col md:flex-row justify-between md:items-center gap-4 bg-slate-100">
                 <div>
-                    <h2 id="tableHeading" class="text-lg sm:text-xl font-black text-slate-950">
+                    <h2 id="tableHeading" class="text-lg sm:text-xl font-black text-slate-900">
                         👔 最終更新スタッフ別 マスタミス指摘数 (一番ミスが多い順)
                     </h2>
                     <p id="tableSubHeading" class="text-xs sm:text-sm text-slate-800 mt-0.5 font-bold">A列の赤店舗マーカーをカウント。ミス率が高い順に整列中</p>
@@ -235,8 +255,8 @@ html_content = f"""<!DOCTYPE html>
 
                 <!-- 絞り込み検索 ＆ CSVボタン -->
                 <div class="flex items-center gap-3 w-full md:w-auto">
-                    <input type="text" id="searchInput" oninput="filterStaffList()" placeholder="スタッフ名で絞り込み..." class="w-full md:w-64 px-4 py-2.5 text-sm bg-white border-2 border-slate-400 rounded-xl font-bold text-slate-950 focus:outline-none focus:ring-2 focus:ring-red-600 shadow-xs">
-                    <button onclick="exportToCSV()" class="bg-slate-950 hover:bg-black text-white text-xs sm:text-sm font-black px-4 py-2.5 rounded-xl shadow-md shrink-0 cursor-pointer border border-slate-800 active:scale-95 transition-all">
+                    <input type="text" id="searchInput" oninput="filterStaffList()" placeholder="スタッフ名で絞り込み..." class="w-full md:w-64 px-4 py-2.5 text-sm bg-white border-2 border-slate-400 rounded-xl font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-600 shadow-sm">
+                    <button onclick="exportToCSV()" class="btn-action-dark text-xs sm:text-sm font-black px-4 py-2.5 rounded-xl shadow-md shrink-0 cursor-pointer active:scale-95 transition-all">
                         📥 CSV出力
                     </button>
                 </div>
@@ -246,7 +266,7 @@ html_content = f"""<!DOCTYPE html>
             <div class="overflow-x-auto hidden md:block">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="bg-slate-200 text-slate-950 text-xs sm:text-sm font-black border-b-2 border-slate-300">
+                        <tr class="bg-slate-200 text-slate-900 text-xs sm:text-sm font-black border-b-2 border-slate-300">
                             <th class="py-4 px-6">順位 / スタッフ名</th>
                             <th class="py-4 px-4 text-center">巡回店舗数</th>
                             <th class="py-4 px-4 text-center">A列 赤指摘店舗数<br><span class="text-xs font-black text-red-600">(マスタミス指摘回数)</span></th>
@@ -262,7 +282,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
 
             <!-- スマホ用カード一覧 -->
-            <div id="staffCardList" class="md:hidden p-3.5 space-y-3.5 bg-slate-100/70">
+            <div id="staffCardList" class="md:hidden p-3.5 space-y-3.5 bg-slate-100">
                 <!-- JS描画 -->
             </div>
         </section>
@@ -271,7 +291,7 @@ html_content = f"""<!DOCTYPE html>
         <section class="glass-card rounded-2xl p-5 sm:p-6 border-2 border-slate-300">
             <div class="flex items-center justify-between mb-5 pb-3.5 border-b-2 border-slate-300">
                 <div>
-                    <h2 class="text-lg sm:text-xl font-black text-slate-950">
+                    <h2 class="text-lg sm:text-xl font-black text-slate-900">
                         🚨 個別店舗の指摘・ミス発生ログ
                     </h2>
                     <p class="text-xs sm:text-sm text-slate-800 mt-0.5 font-bold">A列指摘またはA列以外の赤背景セルが発生している店舗の内訳</p>
@@ -288,7 +308,7 @@ html_content = f"""<!DOCTYPE html>
         <section id="rankingSection" class="glass-card rounded-2xl p-5 sm:p-6 border-2 border-slate-300">
             <div class="flex items-center justify-between mb-5 pb-3.5 border-b-2 border-slate-300">
                 <div>
-                    <h2 class="text-lg sm:text-xl font-black text-slate-950">
+                    <h2 class="text-lg sm:text-xl font-black text-slate-900">
                         📌 A列以外の赤セル多発項目ランキング (内訳箇所)
                     </h2>
                     <p class="text-xs sm:text-sm text-slate-800 mt-0.5 font-bold">どの項目の記入ミス・更新漏れが多いかを一覧化</p>
@@ -303,28 +323,28 @@ html_content = f"""<!DOCTYPE html>
     </main>
 
     <!-- モーダルダイアログ -->
-    <div id="detailModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-xs z-50 hidden flex items-center justify-center p-3 sm:p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden border-2 border-slate-400 animate-in fade-in zoom-in-95 duration-200">
+    <div id="detailModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden border-2 border-slate-400">
             <!-- ヘッダー -->
-            <div class="px-6 py-4 bg-white border-b-2 border-slate-300 flex justify-between items-center gap-4 shadow-xs">
+            <div class="px-6 py-4 bg-white border-b-2 border-slate-300 flex justify-between items-center gap-4 shadow-sm">
                 <div class="min-w-0">
-                    <h3 id="modalStaffName" class="text-xl sm:text-2xl font-black text-slate-950 leading-snug">スタッフ詳細</h3>
+                    <h3 id="modalStaffName" class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">スタッフ詳細</h3>
                     <div id="modalStaffMeta" class="mt-2.5 flex flex-wrap items-center gap-2"></div>
                 </div>
-                <button onclick="closeModal()" class="bg-red-600 hover:bg-red-700 text-white font-black text-sm px-4.5 py-2.5 rounded-xl shadow-md cursor-pointer border-2 border-red-700 flex items-center gap-1.5 shrink-0 active:scale-95 transition-all">
+                <button onclick="closeModal()" class="btn-action-red text-sm px-4.5 py-2.5 rounded-xl font-black flex items-center gap-1.5 shrink-0 active:scale-95 transition-all">
                     <span class="text-lg leading-none">✕</span>
                     <span>閉じる</span>
                 </button>
             </div>
             
             <!-- ボディ -->
-            <div id="modalBody" class="p-4 sm:p-6 overflow-y-auto space-y-4 bg-slate-100/90">
+            <div id="modalBody" class="p-4 sm:p-6 overflow-y-auto space-y-4 bg-slate-100">
                 <!-- 詳細 -->
             </div>
             
             <!-- フッター -->
             <div class="px-6 py-3.5 bg-slate-200 border-t-2 border-slate-300 flex justify-end">
-                <button onclick="closeModal()" class="bg-slate-950 hover:bg-black text-white font-black text-sm px-7 py-2.5 rounded-xl shadow-md cursor-pointer border border-slate-800 active:scale-95 transition-all">閉じる</button>
+                <button onclick="closeModal()" class="btn-action-dark text-sm px-7 py-2.5 rounded-xl font-black active:scale-95 transition-all">閉じる</button>
             </div>
         </div>
     </div>
@@ -359,7 +379,7 @@ html_content = f"""<!DOCTYPE html>
 
             if (mode === 'daily') {{
                 if (btnDaily) btnDaily.className = 'px-5 py-2 rounded-xl bg-red-600 text-white font-black text-sm shadow-md transition-all';
-                if (btnTotal) btnTotal.className = 'px-5 py-2 rounded-xl text-slate-200 font-bold text-sm hover:text-white hover:bg-slate-800/80 transition-all';
+                if (btnTotal) btnTotal.className = 'px-5 py-2 rounded-xl text-slate-200 font-bold text-sm hover:text-white hover:bg-slate-800 transition-all';
                 if (btnDailyMob) btnDailyMob.className = 'flex-1 py-2.5 rounded-xl bg-red-600 text-white text-center font-black shadow-md';
                 if (btnTotalMob) btnTotalMob.className = 'flex-1 py-2.5 rounded-xl text-slate-200 text-center font-bold';
 
@@ -369,7 +389,7 @@ html_content = f"""<!DOCTYPE html>
 
                 document.getElementById('tableHeading').innerHTML = '👔 最終更新スタッフ別 本日のマスタミス指摘数 (一番ミスが多い順)';
             }} else {{
-                if (btnDaily) btnDaily.className = 'px-5 py-2 rounded-xl text-slate-200 font-bold text-sm hover:text-white hover:bg-slate-800/80 transition-all';
+                if (btnDaily) btnDaily.className = 'px-5 py-2 rounded-xl text-slate-200 font-bold text-sm hover:text-white hover:bg-slate-800 transition-all';
                 if (btnTotal) btnTotal.className = 'px-5 py-2 rounded-xl bg-amber-600 text-white font-black text-sm shadow-md transition-all';
                 if (btnDailyMob) btnDailyMob.className = 'flex-1 py-2.5 rounded-xl text-slate-200 text-center font-bold';
                 if (btnTotalMob) btnTotalMob.className = 'flex-1 py-2.5 rounded-xl bg-amber-600 text-white text-center font-black shadow-md';
@@ -547,17 +567,17 @@ html_content = f"""<!DOCTYPE html>
                 if (aCount > 0) {{
                     rankBadgeHtml = `<span class="w-8 h-8 rounded-full bg-red-600 text-white text-sm font-black flex items-center justify-center shrink-0 shadow-md">${{rankNum}}</span>`;
                 }} else {{
-                    rankBadgeHtml = `<span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-950 text-xs font-black border-2 border-emerald-400 shrink-0 shadow-xs">✨ ミスなし</span>`;
+                    rankBadgeHtml = `<span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black border-2 border-emerald-400 shrink-0 shadow-sm">✨ ミスなし</span>`;
                 }}
 
                 // PC用テーブル行
                 const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-100/80 transition-colors border-b border-slate-200';
+                tr.className = 'hover:bg-slate-100 transition-colors border-b border-slate-200';
 
                 tr.innerHTML = `
-                    <td class="py-4.5 px-6 font-black text-slate-950 flex items-center gap-3">
+                    <td class="py-4.5 px-6 font-black text-slate-900 flex items-center gap-3">
                         ${{rankBadgeHtml}}
-                        <div class="text-base text-slate-950 font-black">${{staffName}}</div>
+                        <div class="text-base text-slate-900 font-black">${{staffName}}</div>
                     </td>
                     <td class="py-4.5 px-4 text-center font-black text-slate-900 text-base">${{shopCount}}</td>
                     <td class="py-4.5 px-4 text-center">
@@ -571,11 +591,11 @@ html_content = f"""<!DOCTYPE html>
                             <div class="${{barColor}} h-full rounded-full transition-all duration-500" style="width: ${{missRate}}%"></div>
                         </div>
                     </td>
-                    <td class="py-4.5 px-4 text-center font-black text-base ${{nonARedTotal > 0 ? 'text-amber-950' : 'text-slate-800'}}">
+                    <td class="py-4.5 px-4 text-center font-black text-base ${{nonARedTotal > 0 ? 'text-amber-900' : 'text-slate-800'}}">
                         ${{nonARedTotal}} <span class="text-xs font-bold text-slate-800">箇所</span>
                     </td>
                     <td class="py-4.5 px-6 text-right">
-                        <button onclick="showDetail('${{staffName}}')" class="bg-slate-950 hover:bg-black text-white px-4.5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all shadow-md cursor-pointer border border-slate-800 active:scale-95">
+                        <button onclick="showDetail('${{staffName}}')" class="btn-action-dark px-4.5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer active:scale-95">
                             個別のミス確認 ➔
                         </button>
                     </td>
@@ -590,19 +610,19 @@ html_content = f"""<!DOCTYPE html>
                     
                     let statusBadge = aCount > 0 
                         ? `<span class="bg-red-600 text-white text-xs font-black px-3 py-1 rounded-lg shadow-sm">${{aCount}}店舗ミスあり</span>`
-                        : `<span class="bg-emerald-100 text-emerald-950 text-xs font-black px-3 py-1 rounded-lg border-2 border-emerald-400">✨ ミスなし(0件)</span>`;
+                        : `<span class="bg-emerald-100 text-emerald-900 text-xs font-black px-3 py-1 rounded-lg border-2 border-emerald-400">✨ ミスなし(0件)</span>`;
 
                     mCard.innerHTML = `
                         <div class="flex justify-between items-center gap-2">
                             <div class="flex items-center gap-3">
                                 ${{rankBadgeHtml}}
-                                <h3 class="font-black text-slate-950 text-base sm:text-lg">${{staffName}}</h3>
+                                <h3 class="font-black text-slate-900 text-base sm:text-lg">${{staffName}}</h3>
                             </div>
                             ${{statusBadge}}
                         </div>
 
                         <div class="space-y-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                            <div class="flex justify-between text-xs sm:text-sm font-black text-slate-950">
+                            <div class="flex justify-between text-xs sm:text-sm font-black text-slate-900">
                                 <span>巡回店舗数: ${{shopCount}}店舗</span>
                                 <span class="${{textColor}}">ミス率: ${{missRate}}%</span>
                             </div>
@@ -611,18 +631,18 @@ html_content = f"""<!DOCTYPE html>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-2 bg-slate-100/90 p-3 rounded-xl border border-slate-300 text-center text-xs font-bold">
+                        <div class="grid grid-cols-2 gap-2 bg-slate-100 p-3 rounded-xl border border-slate-300 text-center text-xs font-bold">
                             <div>
-                                <span class="text-slate-950 block font-black">A列 赤指摘店舗</span>
+                                <span class="text-slate-900 block font-black">A列 赤指摘店舗</span>
                                 <span class="font-black ${{aCount > 0 ? 'text-red-600' : 'text-emerald-800'}} text-lg sm:text-xl">${{aCount}} 回</span>
                             </div>
                             <div>
-                                <span class="text-slate-950 block font-black">A列外 赤セル内訳</span>
-                                <span class="font-black ${{nonARedTotal > 0 ? 'text-amber-950' : 'text-slate-800'}} text-lg sm:text-xl">${{nonARedTotal}} 箇所</span>
+                                <span class="text-slate-900 block font-black">A列外 赤セル内訳</span>
+                                <span class="font-black ${{nonARedTotal > 0 ? 'text-amber-900' : 'text-slate-800'}} text-lg sm:text-xl">${{nonARedTotal}} 箇所</span>
                             </div>
                         </div>
 
-                        <button onclick="showDetail('${{staffName}}')" class="w-full bg-slate-950 hover:bg-black text-white font-black py-3 px-4 rounded-xl text-xs sm:text-sm transition-all shadow-md cursor-pointer text-center border border-slate-800 active:scale-95">
+                        <button onclick="showDetail('${{staffName}}')" class="w-full btn-action-dark font-black py-3 px-4 rounded-xl text-xs sm:text-sm transition-all cursor-pointer text-center active:scale-95">
                             個別のミス確認 ➔
                         </button>
                     `;
@@ -663,18 +683,18 @@ html_content = f"""<!DOCTYPE html>
                 card.className = `p-4 sm:p-5 rounded-2xl border-2 ${{item.isA ? 'border-red-400 bg-red-50/70' : 'border-slate-300 bg-white'}} shadow-sm`;
 
                 let tag = item.isA 
-                    ? '<span class="bg-red-600 text-white text-xs font-black px-3.5 py-1 rounded-lg shadow-xs">A列ミスあり</span>' 
-                    : '<span class="bg-amber-200 text-amber-950 border border-amber-400 text-xs font-black px-3.5 py-1 rounded-lg">A列外赤セルあり</span>';
+                    ? '<span class="bg-red-600 text-white text-xs font-black px-3.5 py-1 rounded-lg shadow-sm">A列ミスあり</span>' 
+                    : '<span class="bg-amber-200 text-amber-900 border border-amber-400 text-xs font-black px-3.5 py-1 rounded-lg">A列外赤セルあり</span>';
 
                 let itemsHtml = '';
                 if (item.items.length > 0) {{
                     itemsHtml = `
                         <div class="mt-3 pt-3 border-t-2 border-slate-200">
-                            <div class="text-xs font-black text-amber-950 mb-1.5 flex items-center gap-1">
+                            <div class="text-xs font-black text-amber-900 mb-1.5 flex items-center gap-1">
                                 <span>⚠️</span> A列以外の赤背景セル項目 (${{item.items.length}}箇所):
                             </div>
                             <div class="flex flex-wrap gap-1.5">
-                                ${{item.items.map(it => `<span class="bg-amber-200 text-amber-950 border border-amber-400 text-xs font-black px-2.5 py-1 rounded-md shadow-2xs">${{it}}</span>`).join('')}}
+                                ${{item.items.map(it => `<span class="bg-amber-200 text-amber-900 border border-amber-400 text-xs font-black px-2.5 py-1 rounded-md shadow-sm">${{it}}</span>`).join('')}}
                             </div>
                         </div>
                     `;
@@ -684,7 +704,7 @@ html_content = f"""<!DOCTYPE html>
                     <div class="flex justify-between items-center">
                         <div>
                             <span class="text-xs text-slate-800 font-extrabold">最終更新: ${{item.staff}}</span>
-                            <h3 class="font-black text-slate-950 text-base sm:text-lg mt-0.5">${{item.shopName}}</h3>
+                            <h3 class="font-black text-slate-900 text-base sm:text-lg mt-0.5">${{item.shopName}}</h3>
                         </div>
                         ${{tag}}
                     </div>
@@ -700,13 +720,13 @@ html_content = f"""<!DOCTYPE html>
 
             sortedRank.forEach(([colName, count], idx) => {{
                 const rCard = document.createElement('div');
-                rCard.className = 'bg-white border-2 border-slate-300 rounded-2xl p-4 flex justify-between items-center shadow-xs hover:border-slate-400 transition-all';
+                rCard.className = 'bg-white border-2 border-slate-300 rounded-2xl p-4 flex justify-between items-center shadow-sm hover:border-slate-400 transition-all';
                 rCard.innerHTML = `
                     <div class="flex items-center gap-3">
-                        <span class="bg-red-600 text-white font-black w-8 h-8 rounded-full flex items-center justify-center text-xs sm:text-sm shadow-xs">${{idx + 1}}</span>
-                        <span class="font-black text-slate-950 text-sm sm:text-base">${{colName}}</span>
+                        <span class="bg-red-600 text-white font-black w-8 h-8 rounded-full flex items-center justify-center text-xs sm:text-sm shadow-sm">${{idx + 1}}</span>
+                        <span class="font-black text-slate-900 text-sm sm:text-base">${{colName}}</span>
                     </div>
-                    <span class="bg-red-100 text-red-950 font-black px-3.5 py-1 rounded-xl text-xs sm:text-sm border border-red-300 shadow-2xs">${{count}} 店舗</span>
+                    <span class="bg-red-100 text-red-900 font-black px-3.5 py-1 rounded-xl text-xs sm:text-sm border border-red-300 shadow-sm">${{count}} 店舗</span>
                 `;
                 rankContainer.appendChild(rCard);
             }});
@@ -763,10 +783,10 @@ html_content = f"""<!DOCTYPE html>
 
             document.getElementById('modalStaffName').textContent = `${{staffName}} さんの個別のミス詳細`;
             document.getElementById('modalStaffMeta').innerHTML = `
-                <span class="px-3.5 py-1.5 rounded-xl bg-slate-100 border-2 border-slate-300 text-slate-950 font-black text-xs sm:text-sm shadow-xs">巡回: ${{info.shops.length}}店舗</span>
-                <span class="px-3.5 py-1.5 rounded-xl bg-red-100 border-2 border-red-300 text-red-950 font-black text-xs sm:text-sm shadow-xs">A列赤指摘: ${{info.a_count}}回</span>
-                <span class="px-3.5 py-1.5 rounded-xl bg-amber-100 border-2 border-amber-300 text-amber-950 font-black text-xs sm:text-sm shadow-xs">ミス率: ${{mRate}}%</span>
-                <span class="px-3.5 py-1.5 rounded-xl bg-blue-100 border-2 border-blue-300 text-blue-950 font-black text-xs sm:text-sm shadow-xs">A列外赤セル: ${{info.non_a_red_total}}箇所</span>
+                <span class="px-3.5 py-1.5 rounded-xl bg-slate-100 border-2 border-slate-300 text-slate-900 font-black text-xs sm:text-sm shadow-sm">巡回: ${{info.shops.length}}店舗</span>
+                <span class="px-3.5 py-1.5 rounded-xl bg-red-100 border-2 border-red-300 text-red-900 font-black text-xs sm:text-sm shadow-sm">A列赤指摘: ${{info.a_count}}回</span>
+                <span class="px-3.5 py-1.5 rounded-xl bg-amber-100 border-2 border-amber-300 text-amber-900 font-black text-xs sm:text-sm shadow-sm">ミス率: ${{mRate}}%</span>
+                <span class="px-3.5 py-1.5 rounded-xl bg-blue-100 border-2 border-blue-300 text-blue-900 font-black text-xs sm:text-sm shadow-sm">A列外赤セル: ${{info.non_a_red_total}}箇所</span>
             `;
 
             const modalBody = document.getElementById('modalBody');
@@ -777,18 +797,18 @@ html_content = f"""<!DOCTYPE html>
                 shopCard.className = `p-4 sm:p-5 rounded-2xl border-2 ${{shop.is_a_red ? 'border-red-400 bg-red-50/80' : 'border-slate-300 bg-white'}} shadow-sm`;
 
                 let aStatus = shop.is_a_red 
-                    ? '<span class="bg-red-600 text-white text-xs font-black px-3.5 py-1 rounded-lg shadow-xs">A列 赤指摘あり</span>'
-                    : '<span class="bg-slate-200 text-slate-950 border-2 border-slate-400 text-xs font-black px-3.5 py-1 rounded-lg">A列 指摘なし</span>';
+                    ? '<span class="bg-red-600 text-white text-xs font-black px-3.5 py-1 rounded-lg shadow-sm">A列 赤指摘あり</span>'
+                    : '<span class="bg-slate-200 text-slate-900 border-2 border-slate-400 text-xs font-black px-3.5 py-1 rounded-lg">A列 指摘なし</span>';
 
                 let nonAItemsHtml = '';
                 if (shop.non_a_items.length > 0) {{
                     nonAItemsHtml = `
                         <div class="mt-3 pt-3 border-t-2 border-slate-200">
-                            <div class="text-xs font-black text-amber-950 mb-1.5 flex items-center gap-1">
+                            <div class="text-xs font-black text-amber-900 mb-1.5 flex items-center gap-1">
                                 <span>⚠️</span> A列以外の赤背景セル項目 (${{shop.non_a_items.length}}箇所):
                             </div>
                             <div class="flex flex-wrap gap-1.5">
-                                ${{shop.non_a_items.map(item => `<span class="bg-amber-200 text-amber-950 border border-amber-400 text-xs font-black px-2.5 py-1 rounded-md shadow-2xs">${{item}}</span>`).join('')}}
+                                ${{shop.non_a_items.map(item => `<span class="bg-amber-200 text-amber-900 border border-amber-400 text-xs font-black px-2.5 py-1 rounded-md shadow-sm">${{item}}</span>`).join('')}}
                             </div>
                         </div>
                     `;
@@ -798,7 +818,7 @@ html_content = f"""<!DOCTYPE html>
 
                 shopCard.innerHTML = `
                     <div class="flex justify-between items-center">
-                        <span class="font-black text-slate-950 text-base sm:text-lg">${{shop.name}}</span>
+                        <span class="font-black text-slate-900 text-base sm:text-lg">${{shop.name}}</span>
                         ${{aStatus}}
                     </div>
                     ${{nonAItemsHtml}}
@@ -823,4 +843,4 @@ html_content = f"""<!DOCTYPE html>
 with open('index.html', 'w', encoding='utf-8') as out:
     out.write(html_content)
 
-print('Updated index.html: Executive SaaS level design applied successfully')
+print('Updated index.html: Fixed button background bug and applied Tailwind v3 Play CDN')
