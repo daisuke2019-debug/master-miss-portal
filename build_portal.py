@@ -54,7 +54,6 @@ html_content = f"""<!DOCTYPE html>
         .sidebar-menu {{
             transition: transform 0.3s ease-in-out;
         }}
-        /* 高コントラストメニュー */
         .sidebar-bg {{
             background-color: #ffffff;
             color: #0f172a;
@@ -72,7 +71,7 @@ html_content = f"""<!DOCTYPE html>
 </head>
 <body class="min-h-screen pb-16 relative">
 
-    <!-- 左側サイドバー / ハンバーガーメニュー ドロワー (白ベース＆超高コントラストで視認性抜群) -->
+    <!-- 左側サイドバー / ハンバーガーメニュー ドロワー -->
     <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden transition-opacity"></div>
     
     <aside id="sidebar" class="sidebar-menu fixed top-0 left-0 w-80 h-full sidebar-bg z-50 transform -translate-x-full shadow-2xl flex flex-col justify-between p-6 border-r border-slate-200">
@@ -120,7 +119,6 @@ html_content = f"""<!DOCTYPE html>
             
             <!-- 左側: ハンバーガーメニューボタン ＆ タイトル -->
             <div class="flex items-center gap-4">
-                <!-- 👈 ハンバーガーボタン (左側配置) -->
                 <button onclick="toggleSidebar()" class="bg-red-600 hover:bg-red-700 text-white px-3.5 py-2 rounded-xl transition-all flex items-center gap-2 text-xs font-black shadow-md">
                     <span class="text-base leading-none">☰</span>
                     <span>メニュー</span>
@@ -480,12 +478,20 @@ html_content = f"""<!DOCTYPE html>
                     textColor = 'text-amber-600';
                 }}
 
+                // ★ミスが0件の人には順位番号バッジ（数字）を表示しない！
+                let rankBadgeHtml = '';
+                if (aCount > 0) {{
+                    rankBadgeHtml = `<span class="w-6 h-6 rounded-full bg-red-500 text-white text-xs font-bold flex items-center justify-center">${{rankNum}}</span>`;
+                }} else {{
+                    rankBadgeHtml = `<span class="w-6 h-6 rounded-full bg-transparent flex items-center justify-center"></span>`;
+                }}
+
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-slate-50/80 transition-colors';
 
                 tr.innerHTML = `
                     <td class="py-4 px-6 font-bold text-slate-900 flex items-center gap-3">
-                        <span class="w-6 h-6 rounded-full ${{aCount > 0 ? 'bg-red-500 text-white' : 'bg-slate-200 text-slate-700'}} text-xs font-bold flex items-center justify-center">${{rankNum}}</span>
+                        ${{rankBadgeHtml}}
                         <div>
                             <div>${{staffName}}</div>
                             <div class="text-xs text-slate-400 font-normal">担当店舗数: ${{shopCount}}店</div>
@@ -663,4 +669,4 @@ html_content = f"""<!DOCTYPE html>
 with open('index.html', 'w', encoding='utf-8') as out:
     out.write(html_content)
 
-print('Updated index.html: moved hamburger menu to left side and enhanced text contrast successfully')
+print('Updated index.html: removed rank number badge for 0-miss staff members successfully')
