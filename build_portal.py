@@ -119,44 +119,44 @@ html_content = f"""<!DOCTYPE html>
             
             <!-- 左側: ハンバーガーメニューボタン ＆ タイトル -->
             <div class="flex items-center gap-3 md:gap-4">
-                <button onclick="toggleSidebar()" class="bg-red-600 hover:bg-red-700 text-white px-3.5 py-2.5 rounded-xl transition-all flex items-center gap-2 text-xs font-black shadow-md cursor-pointer shrink-0">
+                <button onclick="toggleSidebar()" class="bg-red-600 hover:bg-red-700 active:scale-95 text-white px-3.5 py-2.5 rounded-xl transition-all flex items-center gap-2 text-xs font-black shadow-md cursor-pointer shrink-0 border border-red-500">
                     <span class="text-base leading-none">☰</span>
                     <span class="hidden sm:inline">メニュー</span>
                 </button>
 
                 <div class="min-w-0">
                     <div class="flex items-center gap-2">
-                        <span class="bg-red-500 text-white text-3xs sm:text-xs font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0">マスタチェック</span>
-                        <h1 class="text-sm sm:text-xl md:text-2xl font-black tracking-tight text-white truncate">店舗マスタ指摘カウントWebポータル</h1>
+                        <span class="bg-red-500 text-white text-3xs sm:text-xs font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider shrink-0 shadow-sm">マスタチェック</span>
+                        <h1 class="text-sm sm:text-xl md:text-2xl font-black tracking-tight text-white truncate drop-shadow-sm">店舗マスタ指摘カウントWebポータル</h1>
                     </div>
-                    <p class="text-slate-400 text-xs mt-0.5 hidden sm:block">毎朝の提出マスタをドロップするだけで全自動解析・一番ミスが多い順に表示</p>
+                    <p class="text-slate-200 text-xs mt-1 hidden sm:block font-medium drop-shadow-sm">毎朝の提出マスタをドロップするだけで全自動解析・一番ミスが多い順に即表示</p>
                 </div>
             </div>
 
             <!-- 右側: 切替タブ ＆ ステータス (PC用) -->
             <div class="flex items-center gap-2 md:gap-3 shrink-0">
-                <div class="hidden md:flex items-center bg-slate-800/90 p-1 rounded-xl border border-slate-700 text-xs font-bold">
-                    <button id="tabDaily" onclick="switchView('daily')" class="px-3.5 py-1.5 rounded-lg bg-red-600 text-white transition-all shadow-sm cursor-pointer">
+                <div class="hidden md:flex items-center bg-slate-900/90 p-1.5 rounded-xl border border-slate-700 text-xs font-bold shadow-inner">
+                    <button id="tabDaily" onclick="switchView('daily')" class="px-4 py-1.5 rounded-lg bg-red-600 text-white font-black transition-all shadow-md cursor-pointer">
                         📅 日別 (10/01)
                     </button>
-                    <button id="tabTotal" onclick="switchView('total')" class="px-3.5 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all cursor-pointer">
-                        📊 累計トータル
+                    <button id="tabTotal" onclick="switchView('total')" class="px-4 py-1.5 rounded-lg text-slate-200 hover:text-white font-bold transition-all cursor-pointer">
+                        📊 10月度 累計
                     </button>
                 </div>
 
-                <div class="flex items-center gap-1.5 sm:gap-2 text-xs bg-slate-800/80 px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-700 shrink-0">
-                    <span class="w-2 rounded-full bg-emerald-400 animate-pulse h-2"></span>
-                    <span id="currentStatusText" class="text-3xs sm:text-2xs font-bold text-slate-200">10/01 40店舗</span>
+                <div class="flex items-center gap-1.5 sm:gap-2 text-xs bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-700 shrink-0 shadow-sm">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-sm"></span>
+                    <span id="currentStatusText" class="text-3xs sm:text-2xs font-extrabold text-white">10/01 40店舗</span>
                 </div>
             </div>
         </div>
 
         <!-- 📱 スマホ専用 タブ切り替えバー (スマホ閲覧時、上部で一発切り替え可能) -->
-        <div class="flex md:hidden items-center bg-slate-900/90 p-1 rounded-xl border border-slate-700 text-xs font-bold max-w-7xl mx-auto mt-3 shadow-md">
-            <button id="tabDailyMobile" onclick="switchView('daily')" class="flex-1 py-2 rounded-lg bg-red-600 text-white transition-all text-center cursor-pointer font-extrabold">
+        <div class="flex md:hidden items-center bg-slate-900/95 p-1.5 rounded-xl border border-slate-700 text-xs font-bold max-w-7xl mx-auto mt-3 shadow-lg">
+            <button id="tabDailyMobile" onclick="switchView('daily')" class="flex-1 py-2.5 rounded-lg bg-red-600 text-white transition-all text-center cursor-pointer font-black shadow-md">
                 📅 日別 (10/01)
             </button>
-            <button id="tabTotalMobile" onclick="switchView('total')" class="flex-1 py-2 rounded-lg text-slate-300 hover:text-white transition-all text-center cursor-pointer font-extrabold">
+            <button id="tabTotalMobile" onclick="switchView('total')" class="flex-1 py-2.5 rounded-lg text-slate-200 hover:text-white transition-all text-center cursor-pointer font-bold">
                 📊 10月度 累計トータル
             </button>
         </div>
@@ -164,93 +164,104 @@ html_content = f"""<!DOCTYPE html>
 
     <main class="max-w-7xl mx-auto px-3 sm:px-6 md:px-8 mt-4 sm:mt-8 space-y-6 sm:space-y-8">
 
-        <!-- 🏷️ 日別 vs トータルデータ 明確識別リボンバー (一目瞭然で見分け可能) -->
-        <div id="modeNoticeRibbon" class="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-red-600 to-slate-900 text-white shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 transition-all border border-red-500/30">
-            <div class="flex items-center gap-2.5">
-                <span id="modeIconBadge" class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-xl text-xs font-black tracking-wider flex items-center gap-1.5 shrink-0">
+        <!-- 🏷️ 日別 vs トータルデータ 明確識別リボンバー (超高対比・超高視認性デザイン) -->
+        <div id="modeNoticeRibbon" class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-red-600 via-red-800 to-slate-950 text-white shadow-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 transition-all border-2 border-red-500/50">
+            <div class="flex items-center gap-3">
+                <span id="modeIconBadge" class="bg-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-black tracking-wider flex items-center gap-1.5 shrink-0 border border-white/30 shadow-sm">
                     <span>📅</span> <span id="modeBadgeText">日別データ表示中</span>
                 </span>
-                <span id="modeDescriptionText" class="text-xs sm:text-sm font-bold">10/01 提出マスタの単日チェックデータです (日別表示)</span>
+                <span id="modeDescriptionText" class="text-xs sm:text-base font-extrabold text-white drop-shadow">10/01 提出マスタの単日チェックデータです (日別表示)</span>
             </div>
-            <div class="text-3xs sm:text-xs text-white/80 font-medium">※切替タブで「累計トータルデータ」と即座切替可能</div>
+            <div class="text-xs text-white font-extrabold bg-black/40 px-3 py-1.5 rounded-xl border border-white/20 shadow-sm shrink-0">※上の切替タブで「累計トータルデータ」と即座切替可能</div>
         </div>
 
-        <!-- 📂 ドラッグ＆ドロップエリア (スマホ最適化) -->
-        <section id="dropZone" class="drop-zone p-5 sm:p-7 rounded-2xl text-center cursor-pointer relative card-shadow group bg-white">
+        <!-- 📂 ドラッグ＆ドロップエリア (プロフェッショナルデザイン) -->
+        <section id="dropZone" class="drop-zone p-5 sm:p-7 rounded-2xl text-center cursor-pointer relative card-shadow group bg-white border-2 border-dashed border-red-400 hover:border-red-600 transition-all">
             <input type="file" id="fileInput" accept=".xlsx, .xls" class="hidden" onchange="handleFileSelect(event)">
-            <div class="flex flex-col items-center justify-center gap-2">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xl sm:text-2xl group-hover:scale-110 transition-transform">
+            <div class="flex flex-col items-center justify-center gap-2.5">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xl sm:text-2xl group-hover:scale-110 transition-transform shadow-inner">
                     📥
                 </div>
                 <div>
-                    <h2 class="text-sm sm:text-base font-bold text-slate-900">毎朝のマスタチェックExcelファイル（.xlsx）を解析</h2>
-                    <p class="text-xs text-slate-500 mt-0.5">スマホタップ または ドラッグ＆ドロップで一番ミスが多い順に即自動更新</p>
+                    <h2 class="text-sm sm:text-base font-black text-slate-900">毎朝のマスタチェックExcelファイル（.xlsx）を解析</h2>
+                    <p class="text-xs text-slate-600 mt-0.5 font-medium">スマホタップ または ドラッグ＆ドロップで一番ミスが多い順に即自動更新</p>
                 </div>
-                <button type="button" class="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs px-6 py-2.5 rounded-xl transition-all shadow-md mt-1 cursor-pointer">
+                <button type="button" class="w-full sm:w-auto bg-red-600 hover:bg-red-700 active:scale-95 text-white font-black text-xs px-6 py-2.5 rounded-xl transition-all shadow-md mt-1 cursor-pointer border border-red-500">
                     📱 Excelファイルを選択して即自動集計
                 </button>
             </div>
         </section>
 
-        <!-- KPIカード (スマホ2列グリッドで超見やすく整理) -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
-            <div class="bg-white p-3.5 sm:p-5 rounded-2xl border border-slate-100 card-shadow">
-                <div id="lblStatTitle1" class="text-slate-500 text-3xs sm:text-xs font-bold uppercase tracking-wider">全チェック店舗数</div>
-                <div id="statTotalShops" class="text-xl sm:text-3xl font-black text-slate-900 mt-1">40 <span class="text-xs sm:text-base font-normal text-slate-500">店舗</span></div>
-                <div class="text-3xs sm:text-xs text-slate-400 mt-1">13名のスタッフ対象</div>
+        <!-- KPIカード (高対比・プロフェッショナルなカードレイアウト) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 md:gap-5">
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 card-shadow hover:-translate-y-0.5 hover:shadow-lg transition-all">
+                <div id="lblStatTitle1" class="text-slate-600 text-3xs sm:text-xs font-black uppercase tracking-wider">全チェック店舗数</div>
+                <div id="statTotalShops" class="text-xl sm:text-3xl font-black text-slate-900 mt-1">40 <span class="text-xs sm:text-base font-bold text-slate-600">店舗</span></div>
+                <div class="text-3xs sm:text-xs text-slate-500 mt-1 font-semibold">13名のスタッフ対象</div>
             </div>
 
-            <div class="bg-white p-3.5 sm:p-5 rounded-2xl border border-red-100 card-shadow bg-gradient-to-br from-white to-red-50/30">
-                <div id="lblStatTitle2" class="text-red-600 text-3xs sm:text-xs font-bold uppercase tracking-wider">A列赤指摘店舗数 (ミス)</div>
-                <div id="statARedCount" class="text-xl sm:text-3xl font-black text-red-600 mt-1">13 <span class="text-xs sm:text-base font-normal text-slate-500">店舗</span></div>
-                <div id="statTopMissStaff" class="text-3xs sm:text-xs text-red-500 font-bold mt-1 truncate">最多: 櫻井 蓮 (4回)</div>
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-red-200 card-shadow bg-gradient-to-br from-white to-red-50/40 hover:-translate-y-0.5 hover:shadow-lg transition-all">
+                <div id="lblStatTitle2" class="text-red-700 text-3xs sm:text-xs font-black uppercase tracking-wider">A列赤指摘店舗数 (ミス)</div>
+                <div id="statARedCount" class="text-xl sm:text-3xl font-black text-red-600 mt-1">13 <span class="text-xs sm:text-base font-bold text-slate-600">店舗</span></div>
+                <div id="statTopMissStaff" class="text-3xs sm:text-xs text-red-600 font-black mt-1 truncate">最多: 櫻井 蓮 (4回)</div>
             </div>
 
-            <div class="bg-white p-3.5 sm:p-5 rounded-2xl border border-amber-100 card-shadow bg-gradient-to-br from-white to-amber-50/30">
-                <div id="lblStatTitle3" class="text-amber-700 text-3xs sm:text-xs font-bold uppercase tracking-wider">A列外 赤指摘項目</div>
-                <div id="statNonARedCount" class="text-xl sm:text-3xl font-black text-amber-600 mt-1">26 <span class="text-xs sm:text-base font-normal text-slate-500">箇所</span></div>
-                <div class="text-3xs sm:text-xs text-amber-600 mt-1">赤セル項目総数</div>
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-amber-200 card-shadow bg-gradient-to-br from-white to-amber-50/40 hover:-translate-y-0.5 hover:shadow-lg transition-all">
+                <div id="lblStatTitle3" class="text-amber-800 text-3xs sm:text-xs font-black uppercase tracking-wider">A列外 赤指摘項目</div>
+                <div id="statNonARedCount" class="text-xl sm:text-3xl font-black text-amber-600 mt-1">26 <span class="text-xs sm:text-base font-bold text-slate-600">箇所</span></div>
+                <div class="text-3xs sm:text-xs text-amber-700 mt-1 font-bold">赤セル項目総数</div>
             </div>
 
-            <div class="bg-white p-3.5 sm:p-5 rounded-2xl border border-emerald-100 card-shadow bg-gradient-to-br from-white to-emerald-50/30">
-                <div id="lblStatTitle4" class="text-emerald-700 text-3xs sm:text-xs font-bold uppercase tracking-wider">ミス0件の良好スタッフ</div>
-                <div id="statPerfectCount" class="text-xl sm:text-3xl font-black text-emerald-600 mt-1">6 <span class="text-xs sm:text-base font-normal text-slate-500">名</span></div>
-                <div id="statPerfectRate" class="text-3xs sm:text-xs text-emerald-600 font-bold mt-1">46.2% がミスなし</div>
+            <div class="bg-white p-4 sm:p-5 rounded-2xl border border-emerald-200 card-shadow bg-gradient-to-br from-white to-emerald-50/40 hover:-translate-y-0.5 hover:shadow-lg transition-all">
+                <div id="lblStatTitle4" class="text-emerald-800 text-3xs sm:text-xs font-black uppercase tracking-wider">ミス0件の良好スタッフ</div>
+                <div id="statPerfectCount" class="text-xl sm:text-3xl font-black text-emerald-600 mt-1">6 <span class="text-xs sm:text-base font-bold text-slate-600">名</span></div>
+                <div id="statPerfectRate" class="text-3xs sm:text-xs text-emerald-700 font-black mt-1">46.2% がミスなし</div>
             </div>
         </div>
 
-        <!-- 🚨 メインテーブル (PC用テーブル ＆ スマホ用カード一覧のレスポンシブ二刀流) -->
+        <!-- 🚨 メインテーブル ＆ リアルタイム検索バー (プロフェッショナル仕様) -->
         <section id="staffTableSection" class="bg-white rounded-2xl border border-slate-200 card-shadow overflow-hidden">
-            <div class="p-4 sm:p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between md:items-center gap-2 sm:gap-4 bg-slate-50/50">
+            <div class="p-4 sm:p-6 border-b border-slate-200 flex flex-col md:flex-row justify-between md:items-center gap-3 bg-slate-50/80">
                 <div>
                     <h2 id="tableHeading" class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
                         <span>👔</span> 最終更新スタッフ別 マスタミス指摘数 (一番ミスが多い順)
                     </h2>
-                    <p id="tableSubHeading" class="text-xs text-slate-500 mt-0.5">A列の赤店舗マーカーをカウント。ミス率が高い順に表示中</p>
+                    <p id="tableSubHeading" class="text-xs text-slate-600 mt-0.5 font-medium">A列の赤店舗マーカーをカウント。ミス率が高い順に表示中</p>
+                </div>
+
+                <!-- 🔍 リアルタイム検索 ＆ CSVエクスポートツール (ブラッシュアップ機能) -->
+                <div class="flex items-center gap-2.5 w-full md:w-auto">
+                    <div class="relative flex-1 md:w-64">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs">🔍</span>
+                        <input type="text" id="searchInput" oninput="filterStaffList()" placeholder="スタッフ名で絞り込み..." class="w-full pl-8 pr-3 py-2 text-xs bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 font-bold text-slate-900 shadow-sm">
+                    </div>
+                    <button onclick="exportToCSV()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs font-extrabold px-3 py-2 rounded-xl transition-all shadow-sm flex items-center gap-1.5 shrink-0 cursor-pointer border border-slate-700">
+                        <span>📥</span> CSV出力
+                    </button>
                 </div>
             </div>
 
-            <!-- PC/タブレット用 テーブル表示 -->
+            <!-- PC/タブレット用 テーブル表示 (W3C AAA高コントラスト) -->
             <div class="overflow-x-auto hidden md:block">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="bg-slate-100/70 text-slate-600 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
+                        <tr class="bg-slate-200/80 text-slate-900 text-xs font-black uppercase tracking-wider border-b-2 border-slate-300">
                             <th class="py-4 px-6">順位 / スタッフ名</th>
                             <th class="py-4 px-4 text-center">巡回店舗数</th>
-                            <th class="py-4 px-4 text-center">A列 赤指摘店舗数<br><span class="text-2xs font-normal text-red-500">(マスタミス指摘回数)</span></th>
-                            <th class="py-4 px-6 text-center">ミス発生割合 (%)<br><span class="text-2xs font-normal text-slate-400">(巡回店舗に対するミス率)</span></th>
-                            <th class="py-4 px-4 text-center">A列以外の赤指摘<br><span class="text-2xs font-normal text-amber-600">(内訳箇所数)</span></th>
+                            <th class="py-4 px-4 text-center">A列 赤指摘店舗数<br><span class="text-2xs font-bold text-red-600">(マスタミス指摘回数)</span></th>
+                            <th class="py-4 px-6 text-center">ミス発生割合 (%)<br><span class="text-2xs font-bold text-slate-600">(巡回店舗に対するミス率)</span></th>
+                            <th class="py-4 px-4 text-center">A列以外の赤指摘<br><span class="text-2xs font-bold text-amber-700">(内訳箇所数)</span></th>
                             <th class="py-4 px-6 text-right">個別のミス確認</th>
                         </tr>
                     </thead>
-                    <tbody id="staffTableBody" class="divide-y divide-slate-100 text-sm font-medium">
+                    <tbody id="staffTableBody" class="divide-y divide-slate-200 text-sm font-semibold">
                         <!-- JSで動的レンダリング -->
                     </tbody>
                 </table>
             </div>
 
             <!-- 📱 スマホ専用カード一覧表示 (スマホ画面で劇的に見やすくタップしやすいデザイン) -->
-            <div id="staffCardList" class="md:hidden p-3 sm:p-4 space-y-3 bg-slate-50/60 divide-y-0">
+            <div id="staffCardList" class="md:hidden p-3 sm:p-4 space-y-3 bg-slate-100/60 divide-y-0">
                 <!-- JSでスマホ用カードを動的描画 -->
             </div>
         </section>
@@ -774,6 +785,49 @@ html_content = f"""<!DOCTYPE html>
 
         function closeModal() {{
             document.getElementById('detailModal').classList.add('hidden');
+        }}
+
+        function filterStaffList() {{
+            const query = (document.getElementById('searchInput')?.value || '').trim().toLowerCase();
+            const rows = document.querySelectorAll('#staffTableBody tr');
+            const cards = document.querySelectorAll('#staffCardList > div');
+
+            rows.forEach(row => {{
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            }});
+
+            cards.forEach(card => {{
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(query) ? '' : 'none';
+            }});
+        }}
+
+        function exportToCSV() {{
+            let csvContent = "data:text/csv;charset=utf-8,\\uFEFF";
+            csvContent += "順位,スタッフ名,巡回店舗数,A列赤指摘店舗数,ミス率(%),A列外赤指摘箇所数\\n";
+
+            const entries = Object.entries(currentStaffData).sort((a, b) => {{
+                if (b[1].a_count !== a[1].a_count) return b[1].a_count - a[1].a_count;
+                if (b[1].miss_rate !== a[1].miss_rate) return b[1].miss_rate - a[1].miss_rate;
+                return b[1].non_a_red_total - a[1].non_a_red_total;
+            }});
+
+            entries.forEach(([staffName, info], idx) => {{
+                const shopCount = info.shops.length;
+                const aCount = info.a_count;
+                const missRate = info.miss_rate || (shopCount > 0 ? Math.round((aCount / shopCount) * 1000) / 10 : 0);
+                const nonARedTotal = info.non_a_red_total;
+                csvContent += `${{idx + 1}},"${{staffName}}",${{shopCount}},${{aCount}},${{missRate}}%,${{nonARedTotal}}\\n`;
+            }});
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `店舗マスタミス分析結果_${{new Date().toISOString().slice(0,10)}}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }}
 
         document.addEventListener('DOMContentLoaded', renderPortal);
