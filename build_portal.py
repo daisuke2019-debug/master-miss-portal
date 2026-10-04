@@ -164,6 +164,17 @@ html_content = f"""<!DOCTYPE html>
 
     <main class="max-w-7xl mx-auto px-3 sm:px-6 md:px-8 mt-4 sm:mt-8 space-y-6 sm:space-y-8">
 
+        <!-- 🏷️ 日別 vs トータルデータ 明確識別リボンバー (一目瞭然で見分け可能) -->
+        <div id="modeNoticeRibbon" class="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-red-600 to-slate-900 text-white shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 transition-all border border-red-500/30">
+            <div class="flex items-center gap-2.5">
+                <span id="modeIconBadge" class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-xl text-xs font-black tracking-wider flex items-center gap-1.5 shrink-0">
+                    <span>📅</span> <span id="modeBadgeText">日別データ表示中</span>
+                </span>
+                <span id="modeDescriptionText" class="text-xs sm:text-sm font-bold">10/01 提出マスタの単日チェックデータです (日別表示)</span>
+            </div>
+            <div class="text-3xs sm:text-xs text-white/80 font-medium">※切替タブで「累計トータルデータ」と即座切替可能</div>
+        </div>
+
         <!-- 📂 ドラッグ＆ドロップエリア (スマホ最適化) -->
         <section id="dropZone" class="drop-zone p-5 sm:p-7 rounded-2xl text-center cursor-pointer relative card-shadow group bg-white">
             <input type="file" id="fileInput" accept=".xlsx, .xls" class="hidden" onchange="handleFileSelect(event)">
@@ -335,17 +346,34 @@ html_content = f"""<!DOCTYPE html>
             const btnDailyMob = document.getElementById('tabDailyMobile');
             const btnTotalMob = document.getElementById('tabTotalMobile');
 
+            const ribbon = document.getElementById('modeNoticeRibbon');
+            const badge = document.getElementById('modeBadgeText');
+            const iconSpan = document.getElementById('modeIconBadge');
+            const desc = document.getElementById('modeDescriptionText');
+
             if (mode === 'daily') {{
                 if (btnDaily) btnDaily.className = 'px-3.5 py-1.5 rounded-lg bg-red-600 text-white transition-all shadow-sm cursor-pointer';
                 if (btnTotal) btnTotal.className = 'px-3.5 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all cursor-pointer';
                 if (btnDailyMob) btnDailyMob.className = 'flex-1 py-2 rounded-lg bg-red-600 text-white transition-all text-center cursor-pointer font-extrabold';
                 if (btnTotalMob) btnTotalMob.className = 'flex-1 py-2 rounded-lg text-slate-300 hover:text-white transition-all text-center cursor-pointer font-extrabold';
+
+                if (ribbon) ribbon.className = 'p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-red-600 via-red-800 to-slate-900 text-white shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 transition-all border border-red-500/40';
+                if (badge) badge.textContent = '日別データ表示中';
+                if (iconSpan && iconSpan.firstElementChild) iconSpan.firstElementChild.textContent = '📅';
+                if (desc) desc.textContent = '10/01 提出マスタの単日チェックデータです (日別表示)';
+
                 document.getElementById('tableHeading').innerHTML = '<span>👔</span> 最終更新スタッフ別 本日のマスタミス指摘数 (一番ミスが多い順)';
             }} else {{
                 if (btnDaily) btnDaily.className = 'px-3.5 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all cursor-pointer';
                 if (btnTotal) btnTotal.className = 'px-3.5 py-1.5 rounded-lg bg-amber-600 text-white transition-all shadow-sm cursor-pointer';
                 if (btnDailyMob) btnDailyMob.className = 'flex-1 py-2 rounded-lg text-slate-300 hover:text-white transition-all text-center cursor-pointer font-extrabold';
                 if (btnTotalMob) btnTotalMob.className = 'flex-1 py-2 rounded-lg bg-amber-600 text-white transition-all text-center cursor-pointer font-extrabold';
+
+                if (ribbon) ribbon.className = 'p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-700 to-slate-900 text-white shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 transition-all border border-amber-500/40';
+                if (badge) badge.textContent = '10月度 累計トータル表示中';
+                if (iconSpan && iconSpan.firstElementChild) iconSpan.firstElementChild.textContent = '📊';
+                if (desc) desc.textContent = '10月度全期間の総合マスタチェック累計実績データです (累計表示)';
+
                 document.getElementById('tableHeading').innerHTML = '<span>📊</span> 最終更新スタッフ別 累計実績 ＆ 指摘ランキング (一番ミスが多い順)';
             }}
 
