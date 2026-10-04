@@ -16,56 +16,59 @@ html_content = f"""<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>【公式】店舗マスタミス自動カウント ＆ リアルタイムドラッグ＆ドロップWebポータル</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
     <style>
         body {{
-            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: #f8fafc;
             color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+        }}
+        .font-num {{
+            font-family: 'JetBrains Mono', monospace;
+            font-variant-numeric: tabular-nums;
         }}
         .glass-header {{
-            background: rgba(15, 23, 42, 0.98);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.96);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }}
         .card-shadow {{
-            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.04), 0 0 1px 1px rgba(0, 0, 0, 0.02);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }}
-        .badge-perfect {{
-            background: #dcfce7;
-            color: #166534;
-            border: 1px solid #86efac;
-        }}
-        .badge-alert {{
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fca5a5;
+        .card-shadow:hover {{
+            box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.04);
         }}
         .drop-zone {{
-            border: 2px dashed #ef4444;
-            background: #fff5f5;
-            transition: all 0.2s ease;
+            border: 2px dashed #f43f5e;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+            transition: all 0.25s ease;
         }}
         .drop-zone.dragover {{
-            background: #ffe4e4;
-            border-color: #dc2626;
-            transform: scale(1.005);
+            background: #ffe4e6;
+            border-color: #e11d48;
+            transform: scale(1.008);
         }}
         .sidebar-menu {{
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }}
         .sidebar-bg {{
             background-color: #ffffff;
             color: #0f172a;
         }}
         .nav-btn {{
-            background-color: #f1f5f9;
+            background-color: #f8fafc;
             color: #0f172a;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
         }}
         .nav-btn:hover {{
-            background-color: #e2e8f0;
-            color: #000000;
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+            transform: translateX(2px);
         }}
     </style>
 </head>
@@ -556,39 +559,47 @@ html_content = f"""<!DOCTYPE html>
 
                 let rankBadgeHtml = '';
                 if (aCount > 0) {{
-                    rankBadgeHtml = `<span class="w-6 h-6 rounded-full bg-red-500 text-white text-xs font-bold flex items-center justify-center shrink-0">${{rankNum}}</span>`;
+                    if (rankNum === 1) {{
+                        rankBadgeHtml = `<span class="w-7 h-7 rounded-full bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 text-slate-950 text-xs font-black flex items-center justify-center shrink-0 shadow-md border border-amber-200" title="1位">🥇</span>`;
+                    }} else if (rankNum === 2) {{
+                        rankBadgeHtml = `<span class="w-7 h-7 rounded-full bg-gradient-to-br from-slate-200 via-slate-300 to-slate-400 text-slate-950 text-xs font-black flex items-center justify-center shrink-0 shadow-sm border border-slate-300" title="2位">🥈</span>`;
+                    }} else if (rankNum === 3) {{
+                        rankBadgeHtml = `<span class="w-7 h-7 rounded-full bg-gradient-to-br from-amber-600 via-amber-700 to-amber-800 text-white text-xs font-black flex items-center justify-center shrink-0 shadow-sm border border-amber-500" title="3位">🥉</span>`;
+                    }} else {{
+                        rankBadgeHtml = `<span class="w-7 h-7 rounded-full bg-rose-600 text-white text-xs font-black flex items-center justify-center shrink-0 shadow-sm font-num">${{rankNum}}</span>`;
+                    }}
                 }} else {{
-                    rankBadgeHtml = `<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center shrink-0">✨</span>`;
+                    rankBadgeHtml = `<span class="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 text-white text-xs font-black flex items-center justify-center shrink-0 shadow-sm" title="ミスなし">✨</span>`;
                 }}
 
                 const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-50/80 transition-colors';
+                tr.className = 'hover:bg-slate-100/70 transition-colors border-b border-slate-200/60';
 
                 tr.innerHTML = `
                     <td class="py-4 px-6 font-bold text-slate-900 flex items-center gap-3">
                         ${{rankBadgeHtml}}
                         <div>
-                            <div>${{staffName}}</div>
-                            <div class="text-xs text-slate-400 font-normal">巡回店舗数: ${{shopCount}}</div>
+                            <div class="font-extrabold text-base text-slate-900">${{staffName}}</div>
+                            <div class="text-xs text-slate-500 font-semibold">巡回店舗数: <span class="font-num">${{shopCount}}</span></div>
                         </div>
                     </td>
-                    <td class="py-4 px-4 text-center font-semibold text-slate-700">${{shopCount}}</td>
+                    <td class="py-4 px-4 text-center font-bold text-slate-800 font-num text-base">${{shopCount}}</td>
                     <td class="py-4 px-4 text-center">
-                        <span class="text-base font-extrabold ${{aCount > 0 ? 'text-red-600' : 'text-emerald-600'}}">${{aCount}}</span> <span class="text-xs text-slate-400">回</span>
+                        <span class="text-lg font-black font-num ${{aCount > 0 ? 'text-rose-600' : 'text-emerald-600'}}">${{aCount}}</span> <span class="text-xs text-slate-500 font-bold">回</span>
                     </td>
                     <td class="py-4 px-6 text-center">
                         <div class="flex items-center justify-center gap-2">
-                            <span class="font-extrabold ${{textColor}} text-base">${{missRate}}%</span>
+                            <span class="font-black font-num ${{textColor}} text-base">${{missRate}}%</span>
                         </div>
-                        <div class="w-24 h-2 bg-slate-100 rounded-full mx-auto mt-1 overflow-hidden">
-                            <div class="${{barColor}} h-full rounded-full" style="width: ${{missRate}}%"></div>
+                        <div class="w-28 h-2.5 bg-slate-100 rounded-full mx-auto mt-1 overflow-hidden border border-slate-200/60">
+                            <div class="${{barColor}} h-full rounded-full transition-all duration-300" style="width: ${{missRate}}%"></div>
                         </div>
                     </td>
-                    <td class="py-4 px-4 text-center font-bold ${{nonARedTotal > 0 ? 'text-amber-600' : 'text-slate-400'}}">
+                    <td class="py-4 px-4 text-center font-black font-num text-base ${{nonARedTotal > 0 ? 'text-amber-600' : 'text-slate-400'}}">
                         ${{nonARedTotal}} <span class="text-xs font-normal text-slate-400">箇所</span>
                     </td>
                     <td class="py-4 px-6 text-right">
-                        <button onclick="showDetail('${{staffName}}')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all border border-slate-300 cursor-pointer">
+                        <button onclick="showDetail('${{staffName}}')" class="bg-slate-900 hover:bg-slate-800 active:scale-95 text-white px-4 py-2 rounded-xl text-xs font-extrabold transition-all shadow-sm cursor-pointer border border-slate-800">
                             個別のミス確認 ➔
                         </button>
                     </td>
@@ -596,14 +607,14 @@ html_content = f"""<!DOCTYPE html>
 
                 if (tbody) tbody.appendChild(tr);
 
-                // 📱 スマホ専用カード表現
+                // 📱 スマホ専用カード表現 (SaaSプレミアム仕様)
                 if (mobileContainer) {{
                     const mCard = document.createElement('div');
-                    mCard.className = 'bg-white rounded-2xl p-4 border border-slate-200 card-shadow space-y-3';
+                    mCard.className = 'bg-white rounded-2xl p-4 border border-slate-200 card-shadow space-y-3.5';
                     
                     let statusBadge = aCount > 0 
-                        ? `<span class="bg-red-100 text-red-700 text-2xs font-extrabold px-2.5 py-1 rounded-md border border-red-200">${{aCount}}店舗ミスあり</span>`
-                        : `<span class="bg-emerald-100 text-emerald-800 text-2xs font-extrabold px-2.5 py-1 rounded-md border border-emerald-200">✨ ミスなし(0件)</span>`;
+                        ? `<span class="bg-rose-50 text-rose-700 text-2xs font-extrabold px-2.5 py-1 rounded-lg border border-rose-200 shadow-2xs">${{aCount}}店舗ミスあり</span>`
+                        : `<span class="bg-emerald-50 text-emerald-800 text-2xs font-extrabold px-2.5 py-1 rounded-lg border border-emerald-200 shadow-2xs">✨ ミスなし(0件)</span>`;
 
                     mCard.innerHTML = `
                         <div class="flex justify-between items-start gap-2">
@@ -611,7 +622,7 @@ html_content = f"""<!DOCTYPE html>
                                 ${{rankBadgeHtml}}
                                 <div>
                                     <h3 class="font-black text-slate-900 text-base leading-snug">${{staffName}}</h3>
-                                    <span class="text-xs text-slate-500 font-medium">巡回: ${{shopCount}}店舗</span>
+                                    <span class="text-xs text-slate-500 font-semibold">巡回: <span class="font-num font-bold">${{shopCount}}</span>店舗</span>
                                 </div>
                             </div>
                             <div class="text-right shrink-0">
@@ -619,28 +630,28 @@ html_content = f"""<!DOCTYPE html>
                             </div>
                         </div>
 
-                        <div class="space-y-1">
+                        <div class="space-y-1.5">
                             <div class="flex justify-between text-xs font-bold">
                                 <span class="text-slate-500">ミス発生割合</span>
-                                <span class="${{textColor}}">${{missRate}}%</span>
+                                <span class="${{textColor}} font-num font-black text-sm">${{missRate}}%</span>
                             </div>
-                            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200/50">
                                 <div class="${{barColor}} h-full rounded-full transition-all duration-300" style="width: ${{missRate}}%"></div>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-center text-xs">
+                        <div class="grid grid-cols-2 gap-2 bg-slate-50/80 p-3 rounded-xl border border-slate-200/60 text-center text-xs">
                             <div>
-                                <span class="text-slate-400 block text-3xs font-bold uppercase">A列 赤指摘店舗</span>
-                                <span class="font-extrabold ${{aCount > 0 ? 'text-red-600' : 'text-emerald-600'}} text-sm">${{aCount}} <span class="text-2xs text-slate-400 font-normal">回</span></span>
+                                <span class="text-slate-500 block text-3xs font-extrabold uppercase tracking-wider">A列 赤指摘店舗</span>
+                                <span class="font-black font-num ${{aCount > 0 ? 'text-rose-600' : 'text-emerald-600'}} text-base">${{aCount}} <span class="text-2xs text-slate-400 font-normal">回</span></span>
                             </div>
                             <div>
-                                <span class="text-slate-400 block text-3xs font-bold uppercase">A列外 赤セル内訳</span>
-                                <span class="font-extrabold ${{nonARedTotal > 0 ? 'text-amber-600' : 'text-slate-400'}} text-sm">${{nonARedTotal}} <span class="text-2xs text-slate-400 font-normal">箇所</span></span>
+                                <span class="text-slate-500 block text-3xs font-extrabold uppercase tracking-wider">A列外 赤セル内訳</span>
+                                <span class="font-black font-num ${{nonARedTotal > 0 ? 'text-amber-600' : 'text-slate-400'}} text-base">${{nonARedTotal}} <span class="text-2xs text-slate-400 font-normal">箇所</span></span>
                             </div>
                         </div>
 
-                        <button onclick="showDetail('${{staffName}}')" class="w-full bg-slate-900 hover:bg-slate-800 active:scale-98 text-white font-extrabold py-2.5 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer">
+                        <button onclick="showDetail('${{staffName}}')" class="w-full bg-slate-900 hover:bg-slate-800 active:scale-98 text-white font-extrabold py-3 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer border border-slate-800">
                             <span>個別のミス確認</span>
                             <span class="text-sm leading-none">➔</span>
                         </button>
