@@ -86,7 +86,7 @@
             border-color: #dc2626;
         }
 
-        /* 印刷スタイル最適化 (機能5) */
+        /* 印刷スタイル最適化 */
         @media print {
             body {
                 background-color: #ffffff !important;
@@ -182,7 +182,7 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <!-- 🖨️ 印刷/PDF保存ボタン (機能5) -->
+                <!-- 🖨️ 印刷/PDF保存ボタン -->
                 <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black shadow border border-slate-600 flex items-center gap-1.5 transition-all active:scale-95">
                     <span>🖨️</span>
                     <span class="hidden sm:inline">印刷 / PDF保存</span>
@@ -292,7 +292,7 @@
                     </div>
                 </div>
 
-                <!-- 🔘 ワンタップ条件フィルター (機能1) -->
+                <!-- 🔘 ワンタップ条件フィルター -->
                 <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-300 print-hide">
                     <span class="text-xs font-black text-slate-700 mr-1">絞り込みフィルター:</span>
                     <button id="filterBtnAll" onclick="setQuickFilter('all')" class="px-3.5 py-1.5 rounded-xl bg-slate-900 text-white font-black text-xs shadow-sm transition-all">
@@ -352,7 +352,7 @@
             </div>
         </section>
 
-        <!-- A列以外 赤セル多発項目 (機能4: 横棒メーター付き) -->
+        <!-- A列以外 赤セル多発項目 (バッジ数値を数字のみ・超すっきりデザイン化) -->
         <section id="rankingSection" class="glass-card rounded-2xl p-5 sm:p-6 border-2 border-slate-300">
             <div class="flex items-center justify-between mb-5 pb-3.5 border-b-2 border-slate-300">
                 <div>
@@ -380,7 +380,7 @@
                     <div id="modalStaffMeta" class="mt-2.5 flex flex-wrap items-center gap-2"></div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <!-- 💬 指導チャット文面コピーボタン (機能2) -->
+                    <!-- 💬 指導チャット文面コピーボタン -->
                     <button id="btnCopyChatModal" onclick="copyStaffChatModal()" class="btn-action-green text-xs sm:text-sm px-3.5 py-2.5 rounded-xl font-black flex items-center gap-1.5 shrink-0 active:scale-95 transition-all">
                         <span>💬 指導チャット作成</span>
                     </button>
@@ -460,7 +460,6 @@
             renderPortal();
         }
 
-        /* 機能1: ワンタップフィルター処理 */
         function setQuickFilter(type) {
             activeQuickFilter = type;
             const btnAll = document.getElementById('filterBtnAll');
@@ -478,7 +477,6 @@
             filterStaffList();
         }
 
-        /* 機能2: 指導チャット文面コピー処理 */
         function copyChatText(staffName) {
             const info = currentStaffData[staffName];
             if (!info) return;
@@ -794,10 +792,6 @@ ${text}`);
             const pRate = Math.round((perfectStaffCount / entries.length) * 1000) / 10;
             document.getElementById('statPerfectRate').textContent = `${pRate}% がミスなし`;
 
-            const topStaff = entries.find(e => e[1].a_count > 0) || entries[0];
-            const topRate = topStaff[1].miss_rate || (topStaff[1].shops.length > 0 ? Math.round((topStaff[1].a_count / topStaff[1].shops.length)*1000)/10 : 0);
-            document.getElementById('statTopMissStaff').textContent = `最多: ${topStaff[0]} (${topStaff[1].a_count}回 / ${topRate}%)`;
-
             const indContainer = document.getElementById('individualMissContainer');
             indContainer.innerHTML = '';
             document.getElementById('missShopBadge').textContent = `${missShopsList.length}店舗で指摘あり`;
@@ -838,7 +832,7 @@ ${text}`);
                 indContainer.appendChild(card);
             });
 
-            /* 機能4: 項目別多発ミスのグラフィカル横棒メーター（ビジュアル描画） */
+            /* 機能4: 項目別多発ミスのビジュアルメーター（数字のみの超高視認性バッジ化） */
             const rankContainer = document.getElementById('rankingContainer');
             rankContainer.innerHTML = '';
             const sortedRank = Object.entries(currentColRanking).sort((a, b) => b[1] - a[1]);
@@ -849,12 +843,12 @@ ${text}`);
                 const rCard = document.createElement('div');
                 rCard.className = 'bg-white border-2 border-slate-300 rounded-2xl p-4 space-y-2.5 shadow-sm hover:border-slate-400 transition-all';
                 rCard.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-2.5">
-                            <span class="bg-red-600 text-white font-black w-7 h-7 rounded-full flex items-center justify-center text-xs shadow-sm">${idx + 1}</span>
-                            <span class="font-black text-slate-900 text-sm sm:text-base">${colName}</span>
+                    <div class="flex justify-between items-center gap-2">
+                        <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                            <span class="bg-red-600 text-white font-black w-7 h-7 rounded-full flex items-center justify-center text-xs shrink-0 shadow-sm">${idx + 1}</span>
+                            <span class="font-black text-slate-900 text-sm sm:text-base leading-snug break-words">${colName}</span>
                         </div>
-                        <span class="bg-red-100 text-red-900 font-black px-3 py-1 rounded-xl text-xs sm:text-sm border border-red-300 shadow-sm">${count} 店舗</span>
+                        <span class="bg-red-600 text-white font-black px-3 py-1 rounded-xl text-base sm:text-lg shadow-sm shrink-0 whitespace-nowrap leading-none">${count}</span>
                     </div>
                     <div class="w-full h-3.5 bg-slate-200 rounded-full overflow-hidden border border-slate-300 shadow-inner">
                         <div class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: ${pct}%;"></div>
