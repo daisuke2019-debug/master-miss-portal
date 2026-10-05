@@ -809,7 +809,7 @@ html_content = """<!DOCTYPE html>
                         </div>
                         <div class="grid grid-cols-3 gap-2 text-center text-xs font-black">
                             <div class="p-2 rounded-lg bg-slate-100">
-                                <div class="text-slate-500">担当</div>
+                                <div class="text-slate-500">巡回</div>
                                 <div class="text-sm mt-0.5">${totalShops}店舗</div>
                             </div>
                             <div class="p-2 rounded-lg ${info.a_count > 0 ? 'bg-red-100 text-red-700' : 'bg-slate-100'}">
