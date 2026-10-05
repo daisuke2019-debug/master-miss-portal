@@ -348,7 +348,7 @@
                     </div>
                     <div>
                         <h3 id="modalStaffName" class="text-lg sm:text-2xl font-black tracking-tight">スタッフ名</h3>
-                        <p id="modalStaffSubText" class="text-xs sm:text-sm text-slate-300 font-bold mt-0.5">担当店舗の指摘詳細一覧</p>
+                        <p id="modalStaffSubText" class="text-xs sm:text-sm text-slate-300 font-bold mt-0.5">巡回店舗の指摘詳細一覧</p>
                     </div>
                 </div>
                 <button onclick="closeModal()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-2xl font-black transition-all">
@@ -359,7 +359,7 @@
             <div class="p-5 sm:p-6 space-y-6 max-h-[75vh] overflow-y-auto">
                 <div class="grid grid-cols-3 gap-3">
                     <div class="p-3.5 rounded-2xl bg-slate-100 border border-slate-300 text-center">
-                        <div class="text-xs text-slate-800 font-black">担当チェック店舗</div>
+                        <div class="text-xs text-slate-800 font-black">巡回チェック店舗</div>
                         <div id="modalShopCount" class="text-xl sm:text-2xl font-black text-slate-900 mt-1">0 <span class="text-xs text-slate-700">店舗</span></div>
                     </div>
                     <div class="p-3.5 rounded-2xl bg-red-100/80 border border-red-300 text-center">
@@ -384,7 +384,7 @@
 
                 <div>
                     <h4 class="text-sm font-black text-slate-900 mb-3 flex items-center justify-between">
-                        <span>🏬 担当店舗一覧 & 各セル指摘詳細</span>
+                        <span>🏬 巡回店舗一覧 & 各セル指摘詳細</span>
                         <span id="modalShopBadge" class="text-xs bg-slate-200 text-slate-800 px-2.5 py-0.5 rounded-full font-bold">0店舗</span>
                     </h4>
                     <div id="modalShopList" class="space-y-2.5">
@@ -746,7 +746,7 @@ ${err.message || 'ファイルの読み込みに失敗しました'}`);
                                 </span>
                                 <div>
                                     <div class="text-base font-black">${s}</div>
-                                    <div class="text-xs text-slate-500 font-bold">${totalShops}店舗担当</div>
+                                    <div class="text-xs text-slate-500 font-bold">${totalShops}店舗巡回</div>
                                 </div>
                             </div>
                         </td>
@@ -909,9 +909,9 @@ ${err.message || 'ファイルの読み込みに失敗しました'}`);
             const text = `【店舗マスタチェック指摘・修正のお願い】
 ${staffName} さん
 
-お疲れ様です。マスタチェックにて担当店舗の指摘箇所が検出されました。早急に確認と修正をお願いいたします。
+お疲れ様です。マスタチェックにて巡回店舗の指摘箇所が検出されました。早急に確認と修正をお願いいたします。
 
-■ 対象スタッフ: ${staffName}
+■ 巡回スタッフ: ${staffName}
 ■ 対象期間: ${activeDateFilter === 'all' ? '全期間 (累計)' : activeDateFilter + '分'}
 ■ 巡回店舗数: ${info.shops.length} 店舗
 ■ A列赤指摘 (マスタミス): ${info.a_count} 回
