@@ -23,7 +23,6 @@
             border-bottom: 2px solid #334155;
         }
         
-        /* 確実なダークボタン */
         .btn-action-dark {
             background-color: #0f172a !important;
             color: #ffffff !important;
@@ -35,7 +34,6 @@
             color: #ffffff !important;
         }
 
-        /* 確実な赤色ボタン */
         .btn-action-red {
             background-color: #dc2626 !important;
             color: #ffffff !important;
@@ -47,7 +45,6 @@
             color: #ffffff !important;
         }
 
-        /* 緑色LINE/チャット用ボタン */
         .btn-action-green {
             background-color: #059669 !important;
             color: #ffffff !important;
@@ -86,7 +83,6 @@
             border-color: #dc2626;
         }
 
-        /* 印刷スタイル最適化 */
         @media print {
             body {
                 background-color: #ffffff !important;
@@ -108,7 +104,6 @@
             }
         }
 
-        /* スクロールバー */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -127,7 +122,7 @@
 </head>
 <body class="min-h-screen pb-20 selection:bg-red-500 selection:text-white">
 
-    <!-- サイドバー (ハンバーガーメニュー・A列赤指摘＆A列外赤セル累計を一目で視覚化) -->
+    <!-- サイドバー (ハンバーガーメニュー) -->
     <div id="sidebarOverlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden transition-opacity duration-300"></div>
     <aside id="sidebar" class="fixed top-0 left-0 w-80 h-full bg-white z-50 transform -translate-x-full shadow-2xl flex flex-col justify-between p-6 border-r-2 border-slate-300 transition-transform duration-300 ease-out">
         <div>
@@ -137,144 +132,104 @@
                         AI
                     </div>
                     <div>
-                        <h3 class="font-black text-lg text-slate-900 leading-none">AI Company</h3>
-                        <span class="text-xs text-slate-700 font-bold">Executive Portal</span>
+                        <h2 class="font-black text-base text-slate-900 leading-tight">AI Company</h2>
+                        <p class="text-xs text-slate-800 font-bold">Executive Portal</p>
                     </div>
                 </div>
-                <button onclick="toggleSidebar()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-black text-2xl flex items-center justify-center transition-colors">&times;</button>
+                <button onclick="toggleSidebar()" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center text-xl font-black">
+                    ✕
+                </button>
             </div>
 
-            <nav class="mt-6 space-y-4">
-                <!-- 📅 本日の日別チェックボタン -->
-                <button onclick="switchView('daily'); toggleSidebar();" class="w-full text-left p-4 rounded-2xl bg-slate-100 hover:bg-slate-200 font-black text-slate-900 flex flex-col gap-2.5 border-2 border-slate-300 transition-all shadow-sm active:scale-98">
-                    <div class="flex items-center justify-between w-full">
-                        <div class="flex items-center gap-2.5">
-                            <span class="text-xl">📅</span>
-                            <span class="text-base font-black">本日の日別チェック</span>
-                        </div>
-                        <span class="text-xs bg-red-600 text-white font-black px-2.5 py-1 rounded-lg shadow-sm">日別</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2 w-full pt-2 border-t border-slate-300 text-xs font-black">
-                        <div class="bg-red-50 text-red-950 p-2 rounded-xl border border-red-300 flex flex-col items-center justify-center text-center">
-                            <span class="text-[10px] text-red-800 block font-bold">A列赤指摘店舗</span>
-                            <span id="sidebarDailyARed" class="text-sm font-black text-red-600 mt-0.5">13 店舗</span>
-                        </div>
-                        <div class="bg-amber-50 text-amber-950 p-2 rounded-xl border border-amber-300 flex flex-col items-center justify-center text-center">
-                            <span class="text-[10px] text-amber-800 block font-bold">A列外赤セル内訳</span>
-                            <span id="sidebarDailyNonARed" class="text-sm font-black text-amber-800 mt-0.5">26 箇所</span>
-                        </div>
+            <nav class="mt-6 space-y-2">
+                <div class="px-3 py-2 text-xs font-black text-slate-700 uppercase tracking-wider">ビュー切替・日別データ選択</div>
+                
+                <button onclick="setDateFilter('all'); toggleSidebar();" class="w-full text-left p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-900 font-black text-sm flex items-center justify-between transition-all group">
+                    <div class="flex items-center gap-2.5">
+                        <span class="text-lg">🌐</span>
+                        <span>全期間 累計データ</span>
                     </div>
                 </button>
 
-                <!-- 📊 10月度 累計実績ボタン (A列赤指摘店舗 累計 ＆ A列外赤セル内訳 累計) -->
-                <button onclick="switchView('total'); toggleSidebar();" class="w-full text-left p-4 rounded-2xl bg-slate-100 hover:bg-slate-200 font-black text-slate-900 flex flex-col gap-2.5 border-2 border-slate-300 transition-all shadow-sm active:scale-98">
-                    <div class="flex items-center justify-between w-full">
-                        <div class="flex items-center gap-2.5">
-                            <span class="text-xl">📊</span>
-                            <span class="text-base font-black">10月度 累計実績</span>
-                        </div>
-                        <span class="text-xs bg-amber-600 text-white font-black px-2.5 py-1 rounded-lg shadow-sm">全累計</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2 w-full pt-2 border-t border-slate-300 text-xs font-black">
-                        <div class="bg-red-100 text-red-950 p-2 rounded-xl border border-red-300 flex flex-col items-center justify-center text-center">
-                            <span class="text-[10px] text-red-800 block font-bold">A列赤指摘 累計</span>
-                            <span id="sidebarTotalARed" class="text-sm font-black text-red-600 mt-0.5">13 店舗</span>
-                        </div>
-                        <div class="bg-amber-100 text-amber-950 p-2 rounded-xl border border-amber-300 flex flex-col items-center justify-center text-center">
-                            <span class="text-[10px] text-amber-800 block font-bold">A列外赤セル 累計</span>
-                            <span id="sidebarTotalNonARed" class="text-sm font-black text-amber-800 mt-0.5">26 箇所</span>
-                        </div>
-                    </div>
-                </button>
+                <div id="sidebarDateList" class="space-y-1.5 pt-2">
+                    <!-- JavaScriptで動的生成 -->
+                </div>
             </nav>
         </div>
-        <div class="pt-4 border-t-2 border-slate-200 text-xs text-slate-800 text-center font-black bg-slate-50 p-3 rounded-xl border border-slate-300">
-            👑 AI Company BOARD8 経営管理システム
+
+        <div class="pt-4 border-t-2 border-slate-200">
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <p class="text-xs text-slate-800 font-black">🏢 BOARD役員統括ポータル</p>
+                <p class="text-xs text-slate-700 font-bold mt-0.5">Dai CEO爆速意思決定システム v3.5</p>
+            </div>
         </div>
     </aside>
 
     <!-- ヘッダー -->
-    <header class="header-gradient text-white py-2.5 sm:py-4 px-3 sm:px-8 sticky top-0 z-40 shadow-xl border-b-2 border-slate-700">
-        <div class="max-w-7xl mx-auto flex justify-between items-center gap-2 sm:gap-4">
+    <header class="header-gradient text-white sticky top-0 z-40 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-3.5 flex items-center justify-between gap-2">
             
-            <!-- 左側：メニューボタン ＆ タイトル -->
-            <div class="flex items-center gap-2 sm:gap-3.5 min-w-0">
-                <button onclick="toggleSidebar()" class="btn-action-red px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-black flex items-center gap-1.5 cursor-pointer transition-all active:scale-95 shrink-0">
-                    <span class="text-base sm:text-xl leading-none">☰</span>
-                    <span class="hidden xs:inline">メニュー</span>
+            <div class="flex items-center gap-3">
+                <button onclick="toggleSidebar()" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center text-xl font-black shadow-md border border-slate-600 transition-all active:scale-95">
+                    ☰
                 </button>
-                <div class="min-w-0">
-                    <h1 class="text-sm sm:text-2xl font-black text-white tracking-tight leading-snug truncate">
-                        <span class="sm:hidden">店舗マスタ指摘分析ポータル</span>
-                        <span class="hidden sm:inline">店舗マスタチェック指摘カウントWebポータル</span>
-                    </h1>
-                    <p class="text-slate-200 text-xs sm:text-sm font-bold mt-0.5 hidden md:block">Excelをドラッグ＆ドロップして即時自動集計・ミス率順分析</p>
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-red-600 flex items-center justify-center text-white font-black text-base sm:text-lg shadow-md shrink-0 border border-red-500">
+                        AI
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-base sm:text-xl font-black tracking-tight text-white">店舗マスタチェック指摘カウント</h1>
+                            <span class="bg-red-600 text-white text-xs font-black px-2 py-0.5 rounded border border-red-400 shrink-0">10月度</span>
+                        </div>
+                        <p class="text-xs text-slate-300 hidden sm:block font-bold">全スタッフの店舗巡回・マスタミス指摘結果の一覧・日別比較分析</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- 右側：印刷/ステータス/PC用切り替え -->
-            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                <!-- 🖨️ 印刷/PDF保存ボタン -->
-                <button onclick="window.print()" class="hidden sm:flex bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black shadow border border-slate-600 items-center gap-1.5 transition-all active:scale-95">
-                    <span>🖨️</span>
-                    <span>印刷/PDF</span>
+            <div class="flex items-center gap-2 shrink-0">
+                <button onclick="window.print()" class="btn-action-dark text-xs sm:text-sm font-black px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow-md active:scale-95 transition-all print-hide">
+                    <span>🖨️</span> <span class="hidden sm:inline">印刷 / PDF保存</span>
                 </button>
-
-                <!-- PC用切り替えタブ -->
-                <div class="hidden md:flex items-center bg-slate-900 p-1.5 rounded-2xl border-2 border-slate-700 shadow-inner">
-                    <button id="tabDaily" onclick="switchView('daily')" class="px-5 py-2 rounded-xl bg-red-600 text-white font-black text-sm shadow-md transition-all">
-                        📅 日別 (10/01)
-                    </button>
-                    <button id="tabTotal" onclick="switchView('total')" class="px-5 py-2 rounded-xl text-slate-200 font-bold text-sm hover:text-white hover:bg-slate-800 transition-all">
-                        📊 累計トータル
-                    </button>
-                </div>
-
-                <!-- ステータスバッジ -->
-                <div class="bg-slate-950 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl border-2 border-slate-700 text-2xs sm:text-sm font-black text-emerald-400 flex items-center gap-1.5 shadow-md">
-                    <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-400 animate-pulse shadow-sm shrink-0"></span>
-                    <span id="currentStatusText" class="text-white font-black whitespace-nowrap">10/01 40店舗</span>
-                </div>
             </div>
-        </div>
-
-        <!-- スマホ用切り替えタブ -->
-        <div class="flex md:hidden items-center bg-slate-950 p-1.5 rounded-xl border-2 border-slate-700 max-w-7xl mx-auto mt-2 text-xs sm:text-sm font-black shadow-lg">
-            <button id="tabDailyMobile" onclick="switchView('daily')" class="flex-1 py-2 rounded-lg bg-red-600 text-white text-center font-black shadow-md border border-red-500">
-                📅 日別 (10/01)
-            </button>
-            <button id="tabTotalMobile" onclick="switchView('total')" class="flex-1 py-2 rounded-lg bg-slate-800 text-slate-100 hover:text-white text-center font-black border border-slate-600">
-                📊 10月度 累計トータル
-            </button>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-3 sm:px-6 md:px-8 mt-6 space-y-6">
 
-        <!-- 表示モード識別バー -->
-        <div id="modeNoticeRibbon" class="p-4 sm:p-5 rounded-2xl bg-white border-2 border-red-600 shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <!-- 📅 日付別切り替えタブバー (最重要・各日付独立保持＆ワンタップ切替) -->
+        <div class="glass-card p-4 sm:p-5 rounded-2xl border-2 border-slate-300 bg-white shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <span id="modeIconBadge" class="bg-red-600 text-white px-3.5 py-1.5 rounded-xl text-sm font-black flex items-center gap-2 shadow-sm">
-                    <span>📅</span> <span id="modeBadgeText">日別データ表示中</span>
-                </span>
-                <span id="modeDescriptionText" class="text-sm sm:text-base font-black text-slate-900">10/01 提出マスタの単日チェックデータです (日別表示)</span>
+                <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-xl font-black shadow-inner border border-red-200">
+                    📅
+                </div>
+                <div>
+                    <h3 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+                        <span>対象日付の切替</span>
+                        <span id="currentDateDisplayBadge" class="bg-slate-900 text-white text-xs px-2.5 py-0.5 rounded-full font-black">全期間 (累計)</span>
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-700 font-bold mt-0.5">タップすると全KPI・指摘ランキング・テーブル・詳細がその日付のデータに即座に切り替わります</p>
+                </div>
             </div>
-            <div class="text-xs sm:text-sm text-slate-900 font-black bg-slate-100 px-3.5 py-1.5 rounded-xl border-2 border-slate-300">※上部タブで「累計トータル」と切替可能</div>
+            
+            <div id="dateFilterButtons" class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                <!-- JavaScriptで動的生成される日付ボタン群 -->
+            </div>
         </div>
 
         <!-- ドラッグ＆ドロップエリア -->
         <section id="dropZone" class="drop-zone p-6 sm:p-8 rounded-2xl text-center cursor-pointer relative shadow-sm border-2 border-dashed border-red-400 hover:border-red-600 transition-all">
             <input type="file" id="fileInput" accept=".xlsx, .xls" class="hidden" onchange="handleFileSelect(event)">
             <div class="flex flex-col items-center justify-center gap-3">
-                <div class="w-16 h-16 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-3xl font-black shadow-inner border border-red-200">
+                <div class="w-14 h-14 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center text-2xl font-black shadow-inner border border-red-200">
                     📥
                 </div>
                 <div>
-                    <h2 class="text-base sm:text-xl font-black text-slate-900">毎朝のマスタチェックExcelファイル（.xlsx）を直接解析</h2>
-                    <p class="text-xs sm:text-sm text-slate-800 mt-1 font-bold">ここをタップ または ファイルをドラッグ＆ドロップで即座に自動集計</p>
+                    <h2 class="text-base sm:text-xl font-black text-slate-900">毎朝のマスタチェックExcelファイル（.xlsx）を流し込んで自動統合</h2>
+                    <p id="currentStatusText" class="text-xs sm:text-sm text-slate-800 mt-1 font-bold">タップ または ファイルをドラッグ＆ドロップで新しい日付データを追記・スマート更新</p>
                 </div>
                 <button type="button" class="btn-action-red font-black text-sm sm:text-base px-8 py-3 rounded-xl shadow-md mt-1 cursor-pointer active:scale-95 transition-all">
-                    Excelファイルを選択して自動解析
+                    Excelファイルを選択してデータ追加
                 </button>
             </div>
         </section>
@@ -282,27 +237,27 @@
         <!-- KPIカード -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div class="kpi-card p-4 sm:p-5 shadow-sm">
-                <div class="text-slate-800 text-xs sm:text-sm font-black">全チェック店舗数</div>
-                <div id="statTotalShops" class="text-3xl sm:text-4xl font-black text-slate-900 mt-1 tracking-tight">40 <span class="text-sm font-bold text-slate-700">店舗</span></div>
-                <div class="text-xs text-slate-800 mt-1 font-bold">13名のスタッフ対象</div>
+                <div class="text-slate-800 text-xs sm:text-sm font-black">対象チェック店舗数</div>
+                <div id="statTotalShops" class="text-3xl sm:text-4xl font-black text-slate-900 mt-1 tracking-tight">0 <span class="text-sm font-bold text-slate-700">店舗</span></div>
+                <div id="statStaffCountSub" class="text-xs text-slate-800 mt-1 font-bold">13名のスタッフ対象</div>
             </div>
 
             <div class="kpi-card p-4 sm:p-5 border-2 border-red-400 bg-red-50/60 shadow-sm">
                 <div class="text-red-950 text-xs sm:text-sm font-black">A列赤指摘店舗数 (マスタミス)</div>
-                <div id="statARedCount" class="text-3xl sm:text-4xl font-black text-red-600 mt-1 tracking-tight">13 <span class="text-sm font-bold text-slate-800">店舗</span></div>
-                <div id="statTopMissStaff" class="text-xs text-red-950 font-black mt-1 truncate">最多: 櫻井 蓮 (4回)</div>
+                <div id="statARedCount" class="text-3xl sm:text-4xl font-black text-red-600 mt-1 tracking-tight">0 <span class="text-sm font-bold text-slate-800">店舗</span></div>
+                <div id="statTopMissStaff" class="text-xs text-red-950 font-black mt-1 truncate">最多: --</div>
             </div>
 
             <div class="kpi-card p-4 sm:p-5 border-2 border-amber-400 bg-amber-50/60 shadow-sm">
                 <div class="text-amber-950 text-xs sm:text-sm font-black">A列外 赤指摘項目</div>
-                <div id="statNonARedCount" class="text-3xl sm:text-4xl font-black text-amber-800 mt-1 tracking-tight">26 <span class="text-sm font-bold text-slate-800">箇所</span></div>
+                <div id="statNonARedCount" class="text-3xl sm:text-4xl font-black text-amber-800 mt-1 tracking-tight">0 <span class="text-sm font-bold text-slate-800">箇所</span></div>
                 <div class="text-xs text-amber-950 mt-1 font-black">赤セル項目総数</div>
             </div>
 
             <div class="kpi-card p-4 sm:p-5 border-2 border-emerald-400 bg-emerald-50/60 shadow-sm">
                 <div class="text-emerald-950 text-xs sm:text-sm font-black">ミス0件の良好スタッフ</div>
-                <div id="statPerfectCount" class="text-3xl sm:text-4xl font-black text-emerald-800 mt-1 tracking-tight">6 <span class="text-sm font-bold text-slate-800">名</span></div>
-                <div id="statPerfectRate" class="text-xs text-emerald-950 font-black mt-1">46.2% がミスなし</div>
+                <div id="statPerfectCount" class="text-3xl sm:text-4xl font-black text-emerald-800 mt-1 tracking-tight">0 <span class="text-sm font-bold text-slate-800">名</span></div>
+                <div id="statPerfectRate" class="text-xs text-emerald-950 font-black mt-1">0% がミスなし</div>
             </div>
         </div>
 
@@ -317,7 +272,6 @@
                         <p id="tableSubHeading" class="text-xs sm:text-sm text-slate-800 mt-0.5 font-bold">A列の赤店舗マーカーをカウント。ミス率が高い順に整列中</p>
                     </div>
 
-                    <!-- 検索 ＆ CSV ＆ 印刷 -->
                     <div class="flex items-center gap-2.5 w-full md:w-auto">
                         <input type="text" id="searchInput" oninput="filterStaffList()" placeholder="スタッフ名で絞り込み..." class="w-full md:w-60 px-4 py-2.5 text-sm bg-white border-2 border-slate-400 rounded-xl font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-600 shadow-sm">
                         <button onclick="exportToCSV()" class="btn-action-dark text-xs sm:text-sm font-black px-4 py-2.5 rounded-xl shadow-md shrink-0 cursor-pointer active:scale-95 transition-all print-hide">
@@ -326,9 +280,8 @@
                     </div>
                 </div>
 
-                <!-- 🔘 ワンタップ条件フィルター -->
                 <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-300 print-hide">
-                    <span class="text-xs font-black text-slate-700 mr-1">絞り込みフィルター:</span>
+                    <span class="text-xs font-black text-slate-700 mr-1">状態絞り込み:</span>
                     <button id="filterBtnAll" onclick="setQuickFilter('all')" class="px-3.5 py-1.5 rounded-xl bg-slate-900 text-white font-black text-xs shadow-sm transition-all">
                         すべて表示
                     </button>
@@ -339,110 +292,121 @@
                         ✨ ミス0件(完璧)のみ
                     </button>
                     <button id="filterBtnNonA" onclick="setQuickFilter('nona')" class="px-3.5 py-1.5 rounded-xl bg-white border-2 border-amber-500 text-amber-900 hover:bg-amber-50 font-black text-xs shadow-sm transition-all">
-                        ⚠️ A列外赤セルあり
+                        ⚠️ A列外赤セルありのみ
                     </button>
                 </div>
             </div>
 
-            <!-- PC用テーブル -->
-            <div class="overflow-x-auto hidden md:block">
+            <!-- PC用テーブルビュー -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="bg-slate-200 text-slate-900 text-xs sm:text-sm font-black border-b-2 border-slate-300">
+                        <tr class="bg-slate-200/80 text-slate-900 text-xs sm:text-sm font-black border-b-2 border-slate-300">
                             <th class="py-4 px-6">順位 / スタッフ名</th>
-                            <th class="py-4 px-4 text-center">巡回店舗数</th>
-                            <th class="py-4 px-4 text-center">A列 赤指摘店舗数<br><span class="text-xs font-black text-red-600">(マスタミス指摘回数)</span></th>
-                            <th class="py-4 px-6 text-center">ミス発生割合 (%)<br><span class="text-xs font-bold text-slate-800">(巡回店舗に対するミス率)</span></th>
-                            <th class="py-4 px-4 text-center">A列以外の赤指摘<br><span class="text-xs font-black text-amber-900">(内訳箇所数)</span></th>
-                            <th class="py-4 px-6 text-right print-hide">操作・個別のミス確認</th>
+                            <th class="py-4 px-4 text-center">巡回・チェック店舗数</th>
+                            <th class="py-4 px-4 text-center bg-red-100/60 text-red-950">A列 赤指摘店舗 (ミス)</th>
+                            <th class="py-4 px-4 text-center">マスタミス率</th>
+                            <th class="py-4 px-4 text-center bg-amber-100/60 text-amber-950">A列外 赤セル箇所</th>
+                            <th class="py-4 px-6 text-center">アクション / 指導文面</th>
                         </tr>
                     </thead>
-                    <tbody id="staffTableBody" class="divide-y divide-slate-200 text-sm font-bold bg-white">
+                    <tbody id="staffTableBody" class="divide-y divide-slate-200 text-sm font-medium">
                         <!-- JS描画 -->
                     </tbody>
                 </table>
             </div>
 
-            <!-- スマホ用カード一覧 -->
-            <div id="staffCardList" class="md:hidden p-3.5 space-y-3.5 bg-slate-100">
+            <!-- スマホ用カードビュー -->
+            <div id="staffCardList" class="md:hidden divide-y divide-slate-200">
                 <!-- JS描画 -->
             </div>
         </section>
 
-        <!-- 個別店舗のミスログ -->
-        <section class="glass-card rounded-2xl p-5 sm:p-6 border-2 border-slate-300">
-            <div class="flex items-center justify-between mb-5 pb-3.5 border-b-2 border-slate-300">
+        <!-- ワースト指摘項目ランキング -->
+        <section class="glass-card p-5 sm:p-6 rounded-2xl border-2 border-slate-300 space-y-4">
+            <div class="flex items-center justify-between">
                 <div>
-                    <h2 class="text-lg sm:text-xl font-black text-slate-900">
-                        🚨 個別店舗の指摘・ミス発生ログ
+                    <h2 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+                        <span>⚠️ A列外 赤セル指摘項目 ワーストランキング</span>
                     </h2>
-                    <p class="text-xs sm:text-sm text-slate-800 mt-0.5 font-bold">A列指摘またはA列以外の赤背景セルが発生している店舗の内訳</p>
-                </div>
-                <span id="missShopBadge" class="text-xs sm:text-sm font-black bg-red-600 text-white px-4 py-1.5 rounded-full shadow-md">13店舗で指摘あり</span>
-            </div>
-
-            <div id="individualMissContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- JS描画 -->
-            </div>
-        </section>
-
-        <!-- A列以外 赤セル多発項目 -->
-        <section id="rankingSection" class="glass-card rounded-2xl p-5 sm:p-6 border-2 border-slate-300">
-            <div class="flex items-center justify-between mb-5 pb-3.5 border-b-2 border-slate-300">
-                <div>
-                    <h2 class="text-lg sm:text-xl font-black text-slate-900">
-                        📌 A列以外の赤セル多発項目ランキング (内訳箇所・ビジュアルメーター)
-                    </h2>
-                    <p class="text-xs sm:text-sm text-slate-800 mt-0.5 font-bold">どの項目の記入ミス・更新漏れが多いかを横棒グラフメーターで可視化</p>
+                    <p class="text-xs sm:text-sm text-slate-800 font-bold mt-0.5">どの項目で指摘が多く発生しているか一覧可視化</p>
                 </div>
             </div>
-
-            <div id="rankingContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div id="columnRankingContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 <!-- JS描画 -->
             </div>
         </section>
-
     </main>
 
-    <!-- モーダルダイアログ -->
-    <div id="detailModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden border-2 border-slate-400">
-            <!-- ヘッダー -->
-            <div class="px-6 py-4 bg-white border-b-2 border-slate-300 flex justify-between items-center gap-4 shadow-sm">
-                <div class="min-w-0">
-                    <h3 id="modalStaffName" class="text-xl sm:text-2xl font-black text-slate-900 leading-snug">スタッフ詳細</h3>
-                    <div id="modalStaffMeta" class="mt-2.5 flex flex-wrap items-center gap-2"></div>
+    <!-- モーダルダイアログ (詳細店舗一覧 & 指導チャットコピー) -->
+    <div id="detailModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-3xl w-full border-2 border-slate-400 shadow-2xl overflow-hidden my-8 transform transition-all">
+            <div class="header-gradient text-white p-5 sm:p-6 flex items-center justify-between border-b-2 border-slate-700">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-red-600 flex items-center justify-center text-white font-black text-xl shadow-md border border-red-400">
+                        👤
+                    </div>
+                    <div>
+                        <h3 id="modalStaffName" class="text-lg sm:text-2xl font-black tracking-tight">スタッフ名</h3>
+                        <p id="modalStaffSubText" class="text-xs sm:text-sm text-slate-300 font-bold mt-0.5">担当店舗の指摘詳細一覧</p>
+                    </div>
                 </div>
-                <div class="flex items-center gap-2">
-                    <!-- 💬 指導チャット文面コピーボタン -->
-                    <button id="btnCopyChatModal" onclick="copyStaffChatModal()" class="btn-action-green text-xs sm:text-sm px-3.5 py-2.5 rounded-xl font-black flex items-center gap-1.5 shrink-0 active:scale-95 transition-all">
-                        <span>💬 指導チャット作成</span>
+                <button onclick="closeModal()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-2xl font-black transition-all">
+                    ✕
+                </button>
+            </div>
+
+            <div class="p-5 sm:p-6 space-y-6 max-h-[75vh] overflow-y-auto">
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="p-3.5 rounded-2xl bg-slate-100 border border-slate-300 text-center">
+                        <div class="text-xs text-slate-800 font-black">担当チェック店舗</div>
+                        <div id="modalShopCount" class="text-xl sm:text-2xl font-black text-slate-900 mt-1">0 <span class="text-xs text-slate-700">店舗</span></div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-red-100/80 border border-red-300 text-center">
+                        <div class="text-xs text-red-950 font-black">A列 赤指摘 (ミス)</div>
+                        <div id="modalARedCount" class="text-xl sm:text-2xl font-black text-red-700 mt-1">0 <span class="text-xs text-red-900">店舗</span></div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-amber-100/80 border border-amber-300 text-center">
+                        <div class="text-xs text-amber-950 font-black">A列外 赤セル箇所</div>
+                        <div id="modalNonARedCount" class="text-xl sm:text-2xl font-black text-amber-900 mt-1">0 <span class="text-xs text-amber-950">箇所</span></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 p-4 bg-emerald-50 rounded-2xl border-2 border-emerald-300">
+                    <div>
+                        <div class="text-xs font-black text-emerald-950">💬 指導・確認用チャット文面自動生成</div>
+                        <div class="text-xs text-emerald-900 font-bold mt-0.5">ワンタップでLINEやチャットツールにそのまま貼れる指示文をコピーできます</div>
+                    </div>
+                    <button onclick="copyStaffChatModal()" class="btn-action-green font-black text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-md shrink-0 active:scale-95 transition-all">
+                        📋 指導用チャット文面をコピー
                     </button>
-                    <button onclick="closeModal()" class="btn-action-red text-sm px-4.5 py-2.5 rounded-xl font-black flex items-center gap-1.5 shrink-0 active:scale-95 transition-all">
-                        <span class="text-lg leading-none">✕</span>
-                        <span>閉じる</span>
-                    </button>
+                </div>
+
+                <div>
+                    <h4 class="text-sm font-black text-slate-900 mb-3 flex items-center justify-between">
+                        <span>🏬 担当店舗一覧 & 各セル指摘詳細</span>
+                        <span id="modalShopBadge" class="text-xs bg-slate-200 text-slate-800 px-2.5 py-0.5 rounded-full font-bold">0店舗</span>
+                    </h4>
+                    <div id="modalShopList" class="space-y-2.5">
+                        <!-- JS描画 -->
+                    </div>
                 </div>
             </div>
-            
-            <!-- ボディ -->
-            <div id="modalBody" class="p-4 sm:p-6 overflow-y-auto space-y-4 bg-slate-100">
-                <!-- 詳細 -->
-            </div>
-            
-            <!-- フッター -->
-            <div class="px-6 py-3.5 bg-slate-200 border-t-2 border-slate-300 flex justify-end">
-                <button onclick="closeModal()" class="btn-action-dark text-sm px-7 py-2.5 rounded-xl font-black active:scale-95 transition-all">閉じる</button>
+
+            <div class="p-4 bg-slate-100 border-t-2 border-slate-300 flex justify-end">
+                <button onclick="closeModal()" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-black text-sm rounded-xl shadow-md transition-all">
+                    閉じる
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        let currentStaffData = {"下村　公人": {"a_count": 5, "non_a_red_total": 11, "shops": [{"name": "高知北", "sv": "山本", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "土佐道路", "sv": "大藤", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "新居浜川東", "sv": "真鍋", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "イオンモール新居浜", "sv": "松本", "date": "10/01", "is_a_red": true, "non_a_count": 2, "non_a_items": ["A57_バックシート", "Galaxy Ambassadorについて"]}, {"name": "今治駅前", "sv": "宮崎", "date": "10/02", "is_a_red": true, "non_a_count": 3, "non_a_items": ["FFF8_インセンティブ施策認知確認", "S26_MNP POP", "「MDが展示」集計用_S26_MNP POP"]}, {"name": "イオンモール今治新都市", "sv": "関谷", "date": "10/02", "is_a_red": true, "non_a_count": 2, "non_a_items": ["S26_MNP POP", "「MDが展示」集計用_S26_MNP POP"]}, {"name": "東予", "sv": "河野", "date": "10/02", "is_a_red": true, "non_a_count": 2, "non_a_items": ["S26_MNP POP", "「MDが展示」集計用_S26_MNP POP"]}, {"name": "葛島", "sv": "太田", "date": "10/02", "is_a_red": true, "non_a_count": 2, "non_a_items": ["S26_MNP POP", "S26_デモ機"]}], "miss_rate": 62.5}, "吉田　明香": {"a_count": 5, "non_a_red_total": 9, "shops": [{"name": "下郡", "sv": "後藤", "date": "10/01", "is_a_red": true, "non_a_count": 3, "non_a_items": ["Galaxy_販売コンテスト認知確認", "Galaxy_販売コンテスト星取表(実績管理表)", "S26_MNP POP"]}, {"name": "大在", "sv": "ます", "date": "10/01", "is_a_red": true, "non_a_count": 2, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}, {"name": "鶴崎", "sv": "野田", "date": "10/01", "is_a_red": true, "non_a_count": 1, "non_a_items": ["SRP施策についてのフリーコメント"]}, {"name": "へつぎ", "sv": "瀧本", "date": "10/02", "is_a_red": true, "non_a_count": 1, "non_a_items": ["Ambassadorリスト確認"]}, {"name": "延岡駅前", "sv": "うさみ", "date": "10/02", "is_a_red": true, "non_a_count": 2, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}], "miss_rate": 100.0}, "笹原　彩佳": {"a_count": 1, "non_a_red_total": 1, "shops": [{"name": "フジグラン東広島", "sv": "塁川", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "東広島", "sv": "太田", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "福山北", "sv": "渋谷", "date": "10/01", "is_a_red": true, "non_a_count": 1, "non_a_items": ["店舗タイプ"]}, {"name": "尾道", "sv": "亀田", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "東尾道", "sv": "平井", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "蔵王", "sv": "堀家", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 16.7}, "山崎　紗季": {"a_count": 1, "non_a_red_total": 3, "shops": [{"name": "諫早バイパス", "sv": "田中", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "佐世保大塔", "sv": "大隈", "date": "10/01", "is_a_red": true, "non_a_count": 3, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント", "店舗タイプ"]}, {"name": "佐賀夢咲", "sv": "三原", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "佐賀西", "sv": "ナカジマ", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "みなとインター", "sv": "林", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "イオンタウン諫早西部台", "sv": "上野", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "させぼ五番街", "sv": "野田", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 14.3}, "小川　菜緒子": {"a_count": 1, "non_a_red_total": 2, "shops": [{"name": "福山みどり町", "sv": "すが", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "安東", "sv": "みわ", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "井原", "sv": "ともたき", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "広島段原ショッピングセンター", "sv": "にしむら", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "カジル横川", "sv": "はまだ", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "ジ　アウトレット広島", "sv": "大幸", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "舟入", "sv": "やまうち", "date": "10/02", "is_a_red": true, "non_a_count": 2, "non_a_items": ["Ambassadorリスト確認", "備考欄"]}], "miss_rate": 14.3}, "小野　あかね": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "小倉南インター", "sv": "高野", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "サンリブシティ小倉", "sv": "宮崎", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "サンリブきふね", "sv": "越野", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "シーモール下関", "sv": "田尾", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "星見ヶ丘", "sv": "野口", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "ざっしょのくま", "sv": "飯森", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 0.0}, "秦　貴凡": {"a_count": 5, "non_a_red_total": 7, "shops": [{"name": "あき", "sv": "竹田", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "マルナカ南国", "sv": "加藤", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "高須", "sv": "金岡", "date": "10/01", "is_a_red": true, "non_a_count": 1, "non_a_items": ["Galaxy_販売コンテスト認知確認"]}, {"name": "土佐山田", "sv": "西村", "date": "10/01", "is_a_red": true, "non_a_count": 1, "non_a_items": ["FFF8_MNP割引施策についてのフリーコメント"]}, {"name": "兵庫町", "sv": "河谷", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "朝日町", "sv": "原", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "高松香西", "sv": "中野", "date": "10/02", "is_a_red": true, "non_a_count": 1, "non_a_items": ["Ambassadorリスト確認"]}, {"name": "勅使", "sv": "大住", "date": "10/02", "is_a_red": true, "non_a_count": 1, "non_a_items": ["Z8シリーズ_MNP割引施策POP"]}, {"name": "屋島", "sv": "小松", "date": "10/02", "is_a_red": true, "non_a_count": 3, "non_a_items": ["S26MNP割引施策認知確認", "S26_MNP POP", "「MDが展示」集計用_S26_MNP POP"]}], "miss_rate": 55.6}, "垂水　翔平": {"a_count": 1, "non_a_red_total": 3, "shops": [{"name": "はえばる", "sv": "宮城、井上、金城", "date": "10/01", "is_a_red": true, "non_a_count": 3, "non_a_items": ["Z8シリーズ_MNP割引施策POPについて", "S26_MNP POP_展示関連について", "店舗タイプ"]}, {"name": "浦添内間", "sv": "柿谷、砂川、美島", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "イオンモール沖縄ライカム", "sv": "中島、杉浦、謝花", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "こくば", "sv": "佐久間、比嘉、宮城", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "那覇インター", "sv": "伊集、宮城、山崎", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 20.0}, "清原　由梨": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "岡山南", "sv": "船越", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "西市", "sv": "周藤", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "一宮（岡山県）", "sv": "花川", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "平井（岡山県）", "sv": "中田", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "岡山瀬戸", "sv": "市原", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "津山", "sv": "安藤", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 0.0}, "浅田　鈴美": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "中山バイパス", "sv": "末永", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "鹿児島中央駅前", "sv": "永原", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "天文館", "sv": "米田", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "田上天神", "sv": "小田原", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "イオンタウン姶良", "sv": "瀬戸口　上滝", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "末吉", "sv": "肱下", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "串間", "sv": "村元", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "志布志", "sv": "鹿丸", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 0.0}, "大内　真奈美": {"a_count": 2, "non_a_red_total": 2, "shops": [{"name": "久留米野伏間", "sv": "金子、藤田", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "イオンモール福岡", "sv": "岡林", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "トリアス久山", "sv": "佐々木", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "宇美", "sv": "原、吉田", "date": "10/02", "is_a_red": true, "non_a_count": 1, "non_a_items": ["Z8シリーズ_MNP割引施策POP"]}, {"name": "粕屋仲原", "sv": "丸目", "date": "10/02", "is_a_red": true, "non_a_count": 1, "non_a_items": ["S26Ultra_Sペンツール"]}, {"name": "イオン大木ショッピングセンター", "sv": "住吉", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 33.3}, "本田　宏一": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "中尾", "sv": "岸", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 0.0}, "櫻井　蓮": {"a_count": 5, "non_a_red_total": 13, "shops": [{"name": "藤崎", "sv": "藤川", "date": "10/01", "is_a_red": true, "non_a_count": 3, "non_a_items": ["自社VOC F", "自社VOC G", "S26Ultra_Sペンツール"]}, {"name": "べふ", "sv": "ひろた", "date": "10/01", "is_a_red": true, "non_a_count": 2, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}, {"name": "ウエストコート姪浜", "sv": "別府", "date": "10/01", "is_a_red": true, "non_a_count": 2, "non_a_items": ["自社VOC F", "自社VOC G"]}, {"name": "イオンマリナタウン", "sv": "下田", "date": "10/01", "is_a_red": true, "non_a_count": 2, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}, {"name": "天神南", "sv": "たけのうち", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "日赤通り", "sv": "鳥渕", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "那珂川", "sv": "川崎", "date": "10/02", "is_a_red": true, "non_a_count": 4, "non_a_items": ["SRP認知確認", "SRP施策についてのフリーコメント", "FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}, {"name": "筑紫通博多Ｍｉｓｔ", "sv": "松尾", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 62.5}};
+        let currentStaffData = {"下村　公人": {"a_count": 5, "non_a_red_total": 11, "shops": [{"name": "高知北", "staff": "下村　公人", "sv": "山本", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "土佐道路", "staff": "下村　公人", "sv": "大藤", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "新居浜川東", "staff": "下村　公人", "sv": "真鍋", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "イオンモール新居浜", "staff": "下村　公人", "sv": "松本", "date": "10/01", "is_a_red": true, "non_a_count": 2, "non_a_items": ["A57_バックシート", "Galaxy Ambassadorについて"]}, {"name": "今治駅前", "staff": "下村　公人", "sv": "宮崎", "date": "10/02", "is_a_red": true, "non_a_count": 3, "non_a_items": ["FFF8_インセンティブ施策認知確認", "S26_MNP POP", "「MDが展示」集計用_S26_MNP POP"]}, {"name": "イオンモール今治新都市", "staff": "下村　公人", "sv": "関谷", "date": "10/02", "is_a_red": true, "non_a_count": 2, "non_a_items": ["S26_MNP POP", "「MDが展示」集計用_S26_MNP POP"]}, {"name": "東予", "staff": "下村　公人", "sv": "河野", "date": "10/02", "is_a_red": true, "non_a_count": 2, "non_a_items": ["S26_MNP POP", "「MDが展示」集計用_S26_MNP POP"]}, {"name": "葛島", "staff": "下村　公人", "sv": "太田", "date": "10/02", "is_a_red": true, "non_a_count": 2, "non_a_items": ["S26_MNP POP", "S26_デモ機"]}], "miss_rate": 62.5}, "吉田　明香": {"a_count": 5, "non_a_red_total": 9, "shops": [{"name": "下郡", "staff": "吉田　明香", "sv": "後藤", "date": "10/01", "is_a_red": true, "non_a_count": 3, "non_a_items": ["Galaxy_販売コンテスト認知確認", "Galaxy_販売コンテスト星取表(実績管理表)", "S26_MNP POP"]}, {"name": "大在", "staff": "吉田　明香", "sv": "ます", "date": "10/01", "is_a_red": true, "non_a_count": 2, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}, {"name": "鶴崎", "staff": "吉田　明香", "sv": "野田", "date": "10/01", "is_a_red": true, "non_a_count": 1, "non_a_items": ["SRP施策についてのフリーコメント"]}, {"name": "へつぎ", "staff": "吉田　明香", "sv": "瀧本", "date": "10/02", "is_a_red": true, "non_a_count": 1, "non_a_items": ["Ambassadorリスト確認"]}, {"name": "延岡駅前", "staff": "吉田　明香", "sv": "うさみ", "date": "10/02", "is_a_red": true, "non_a_count": 2, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}], "miss_rate": 100.0}, "笹原　彩佳": {"a_count": 1, "non_a_red_total": 1, "shops": [{"name": "フジグラン東広島", "staff": "笹原　彩佳", "sv": "塁川", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "東広島", "staff": "笹原　彩佳", "sv": "太田", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "福山北", "staff": "笹原　彩佳", "sv": "渋谷", "date": "10/01", "is_a_red": true, "non_a_count": 1, "non_a_items": ["店舗タイプ"]}, {"name": "尾道", "staff": "笹原　彩佳", "sv": "亀田", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "東尾道", "staff": "笹原　彩佳", "sv": "平井", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "蔵王", "staff": "笹原　彩佳", "sv": "堀家", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 16.7}, "山崎　紗季": {"a_count": 1, "non_a_red_total": 3, "shops": [{"name": "諫早バイパス", "staff": "山崎　紗季", "sv": "田中", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "佐世保大塔", "staff": "山崎　紗季", "sv": "大隈", "date": "10/01", "is_a_red": true, "non_a_count": 3, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント", "店舗タイプ"]}, {"name": "佐賀夢咲", "staff": "山崎　紗季", "sv": "三原", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "佐賀西", "staff": "山崎　紗季", "sv": "ナカジマ", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "みなとインター", "staff": "山崎　紗季", "sv": "林", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "イオンタウン諫早西部台", "staff": "山崎　紗季", "sv": "上野", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "させぼ五番街", "staff": "山崎　紗季", "sv": "野田", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 14.3}, "小川　菜緒子": {"a_count": 1, "non_a_red_total": 2, "shops": [{"name": "福山みどり町", "staff": "小川　菜緒子", "sv": "すが", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "安東", "staff": "小川　菜緒子", "sv": "みわ", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "井原", "staff": "小川　菜緒子", "sv": "ともたき", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "広島段原ショッピングセンター", "staff": "小川　菜緒子", "sv": "にしむら", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "カジル横川", "staff": "小川　菜緒子", "sv": "はまだ", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "ジ　アウトレット広島", "staff": "小川　菜緒子", "sv": "大幸", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "舟入", "staff": "小川　菜緒子", "sv": "やまうち", "date": "10/02", "is_a_red": true, "non_a_count": 2, "non_a_items": ["Ambassadorリスト確認", "備考欄"]}], "miss_rate": 14.3}, "小野　あかね": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "小倉南インター", "staff": "小野　あかね", "sv": "高野", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "サンリブシティ小倉", "staff": "小野　あかね", "sv": "宮崎", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "サンリブきふね", "staff": "小野　あかね", "sv": "越野", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "シーモール下関", "staff": "小野　あかね", "sv": "田尾", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "星見ヶ丘", "staff": "小野　あかね", "sv": "野口", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "ざっしょのくま", "staff": "小野　あかね", "sv": "飯森", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 0.0}, "秦　貴凡": {"a_count": 5, "non_a_red_total": 7, "shops": [{"name": "あき", "staff": "秦　貴凡", "sv": "竹田", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "マルナカ南国", "staff": "秦　貴凡", "sv": "加藤", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "高須", "staff": "秦　貴凡", "sv": "金岡", "date": "10/01", "is_a_red": true, "non_a_count": 1, "non_a_items": ["Galaxy_販売コンテスト認知確認"]}, {"name": "土佐山田", "staff": "秦　貴凡", "sv": "西村", "date": "10/01", "is_a_red": true, "non_a_count": 1, "non_a_items": ["FFF8_MNP割引施策についてのフリーコメント"]}, {"name": "兵庫町", "staff": "秦　貴凡", "sv": "河谷", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "朝日町", "staff": "秦　貴凡", "sv": "原", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "高松香西", "staff": "秦　貴凡", "sv": "中野", "date": "10/02", "is_a_red": true, "non_a_count": 1, "non_a_items": ["Ambassadorリスト確認"]}, {"name": "勅使", "staff": "秦　貴凡", "sv": "大住", "date": "10/02", "is_a_red": true, "non_a_count": 1, "non_a_items": ["Z8シリーズ_MNP割引施策POP"]}, {"name": "屋島", "staff": "秦　貴凡", "sv": "小松", "date": "10/02", "is_a_red": true, "non_a_count": 3, "non_a_items": ["S26MNP割引施策認知確認", "S26_MNP POP", "「MDが展示」集計用_S26_MNP POP"]}], "miss_rate": 55.6}, "垂水　翔平": {"a_count": 1, "non_a_red_total": 3, "shops": [{"name": "はえばる", "staff": "垂水　翔平", "sv": "宮城、井上、金城", "date": "10/01", "is_a_red": true, "non_a_count": 3, "non_a_items": ["Z8シリーズ_MNP割引施策POPについて", "S26_MNP POP_展示関連について", "店舗タイプ"]}, {"name": "浦添内間", "staff": "垂水　翔平", "sv": "柿谷、砂川、美島", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "イオンモール沖縄ライカム", "staff": "垂水　翔平", "sv": "中島、杉浦、謝花", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "こくば", "staff": "垂水　翔平", "sv": "佐久間、比嘉、宮城", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "那覇インター", "staff": "垂水　翔平", "sv": "伊集、宮城、山崎", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 20.0}, "清原　由梨": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "岡山南", "staff": "清原　由梨", "sv": "船越", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "西市", "staff": "清原　由梨", "sv": "周藤", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "一宮（岡山県）", "staff": "清原　由梨", "sv": "花川", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "平井（岡山県）", "staff": "清原　由梨", "sv": "中田", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "岡山瀬戸", "staff": "清原　由梨", "sv": "市原", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "津山", "staff": "清原　由梨", "sv": "安藤", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 0.0}, "浅田　鈴美": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "中山バイパス", "staff": "浅田　鈴美", "sv": "末永", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "鹿児島中央駅前", "staff": "浅田　鈴美", "sv": "永原", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "天文館", "staff": "浅田　鈴美", "sv": "米田", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "田上天神", "staff": "浅田　鈴美", "sv": "小田原", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "イオンタウン姶良", "staff": "浅田　鈴美", "sv": "瀬戸口　上滝", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "末吉", "staff": "浅田　鈴美", "sv": "肱下", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "串間", "staff": "浅田　鈴美", "sv": "村元", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "志布志", "staff": "浅田　鈴美", "sv": "鹿丸", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 0.0}, "大内　真奈美": {"a_count": 2, "non_a_red_total": 2, "shops": [{"name": "久留米野伏間", "staff": "大内　真奈美", "sv": "金子、藤田", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "イオンモール福岡", "staff": "大内　真奈美", "sv": "岡林", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "トリアス久山", "staff": "大内　真奈美", "sv": "佐々木", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "宇美", "staff": "大内　真奈美", "sv": "原、吉田", "date": "10/02", "is_a_red": true, "non_a_count": 1, "non_a_items": ["Z8シリーズ_MNP割引施策POP"]}, {"name": "粕屋仲原", "staff": "大内　真奈美", "sv": "丸目", "date": "10/02", "is_a_red": true, "non_a_count": 1, "non_a_items": ["S26Ultra_Sペンツール"]}, {"name": "イオン大木ショッピングセンター", "staff": "大内　真奈美", "sv": "住吉", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 33.3}, "本田　宏一": {"a_count": 0, "non_a_red_total": 0, "shops": [{"name": "中尾", "staff": "本田　宏一", "sv": "岸", "date": "10/01", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 0.0}, "櫻井　蓮": {"a_count": 5, "non_a_red_total": 13, "shops": [{"name": "藤崎", "staff": "櫻井　蓮", "sv": "藤川", "date": "10/01", "is_a_red": true, "non_a_count": 3, "non_a_items": ["自社VOC F", "自社VOC G", "S26Ultra_Sペンツール"]}, {"name": "べふ", "staff": "櫻井　蓮", "sv": "ひろた", "date": "10/01", "is_a_red": true, "non_a_count": 2, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}, {"name": "ウエストコート姪浜", "staff": "櫻井　蓮", "sv": "別府", "date": "10/01", "is_a_red": true, "non_a_count": 2, "non_a_items": ["自社VOC F", "自社VOC G"]}, {"name": "イオンマリナタウン", "staff": "櫻井　蓮", "sv": "下田", "date": "10/01", "is_a_red": true, "non_a_count": 2, "non_a_items": ["FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}, {"name": "天神南", "staff": "櫻井　蓮", "sv": "たけのうち", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "日赤通り", "staff": "櫻井　蓮", "sv": "鳥渕", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}, {"name": "那珂川", "staff": "櫻井　蓮", "sv": "川崎", "date": "10/02", "is_a_red": true, "non_a_count": 4, "non_a_items": ["SRP認知確認", "SRP施策についてのフリーコメント", "FFF8_インセンティブ施策認知確認", "FFF8_インセンティブ施策認知についてのフリーコメント"]}, {"name": "筑紫通博多Ｍｉｓｔ", "staff": "櫻井　蓮", "sv": "松尾", "date": "10/02", "is_a_red": false, "non_a_count": 0, "non_a_items": []}], "miss_rate": 62.5}};
         let currentColRanking = {"A57_バックシート": 1, "Galaxy Ambassadorについて": 1, "Galaxy_販売コンテスト認知確認": 2, "Galaxy_販売コンテスト星取表(実績管理表)": 1, "S26_MNP POP": 6, "FFF8_インセンティブ施策認知確認": 7, "FFF8_インセンティブ施策認知についてのフリーコメント": 6, "SRP施策についてのフリーコメント": 2, "店舗タイプ": 3, "FFF8_MNP割引施策についてのフリーコメント": 1, "Z8シリーズ_MNP割引施策POPについて": 1, "S26_MNP POP_展示関連について": 1, "自社VOC F": 2, "自社VOC G": 2, "S26Ultra_Sペンツール": 2, "「MDが展示」集計用_S26_MNP POP": 4, "S26_デモ機": 1, "Ambassadorリスト確認": 3, "備考欄": 1, "Z8シリーズ_MNP割引施策POP": 2, "S26MNP割引施策認知確認": 1, "SRP認知確認": 1};
-        let activeViewMode = 'daily';
+        let activeDateFilter = 'all';
         let activeQuickFilter = 'all';
-        let activeModalStaffName = '';
+        let activeModalStaffName = null;
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -456,124 +420,16 @@
             }
         }
 
-        function switchView(mode) {
-            activeViewMode = mode;
-            const btnDaily = document.getElementById('tabDaily');
-            const btnTotal = document.getElementById('tabTotal');
-            const btnDailyMob = document.getElementById('tabDailyMobile');
-            const btnTotalMob = document.getElementById('tabTotalMobile');
-
-            const ribbon = document.getElementById('modeNoticeRibbon');
-            const badge = document.getElementById('modeBadgeText');
-            const desc = document.getElementById('modeDescriptionText');
-
-            if (mode === 'daily') {
-                if (btnDaily) btnDaily.className = 'px-5 py-2 rounded-xl bg-red-600 text-white font-black text-sm shadow-md transition-all';
-                if (btnTotal) btnTotal.className = 'px-5 py-2 rounded-xl text-slate-200 font-bold text-sm hover:text-white hover:bg-slate-800 transition-all';
-                
-                if (btnDailyMob) btnDailyMob.className = 'flex-1 py-2 rounded-lg bg-red-600 text-white text-center font-black shadow-md border border-red-500';
-                if (btnTotalMob) btnTotalMob.className = 'flex-1 py-2 rounded-lg bg-slate-800 text-slate-100 hover:text-white text-center font-black border border-slate-600';
-
-                if (ribbon) ribbon.className = 'p-4 sm:p-5 rounded-2xl bg-white border-2 border-red-600 shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3';
-                if (badge) badge.textContent = '日別データ表示中';
-                if (desc) desc.textContent = '10/01 提出マスタの単日チェックデータです (日別表示)';
-
-                document.getElementById('tableHeading').innerHTML = '👔 最終更新スタッフ別 本日のマスタミス指摘数 (一番ミスが多い順)';
-            } else {
-                if (btnDaily) btnDaily.className = 'px-5 py-2 rounded-xl text-slate-200 font-bold text-sm hover:text-white hover:bg-slate-800 transition-all';
-                if (btnTotal) btnTotal.className = 'px-5 py-2 rounded-xl bg-amber-600 text-white font-black text-sm shadow-md transition-all';
-                
-                if (btnDailyMob) btnDailyMob.className = 'flex-1 py-2 rounded-lg bg-slate-800 text-slate-100 hover:text-white text-center font-black border border-slate-600';
-                if (btnTotalMob) btnTotalMob.className = 'flex-1 py-2 rounded-lg bg-amber-600 text-white text-center font-black shadow-md border border-amber-500';
-
-                if (ribbon) ribbon.className = 'p-4 sm:p-5 rounded-2xl bg-white border-2 border-amber-500 shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3';
-                if (badge) badge.textContent = '10月度 累計トータル表示中';
-                if (desc) desc.textContent = '10月度全期間の総合マスタチェック累計実績データです (累計表示)';
-
-                document.getElementById('tableHeading').innerHTML = '📊 最終更新スタッフ別 累計実績 ＆ 指摘ランキング (一番ミスが多い順)';
-            }
-
+        function setDateFilter(dateVal) {
+            activeDateFilter = dateVal;
             renderPortal();
         }
 
         function setQuickFilter(type) {
             activeQuickFilter = type;
-            const btnAll = document.getElementById('filterBtnAll');
-            const btnMiss = document.getElementById('filterBtnMiss');
-            const btnPerf = document.getElementById('filterBtnPerfect');
-            const btnNonA = document.getElementById('filterBtnNonA');
-
-            const baseStyle = 'px-3.5 py-1.5 rounded-xl font-black text-xs shadow-sm transition-all border-2 ';
-            
-            btnAll.className = baseStyle + (type === 'all' ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-100');
-            btnMiss.className = baseStyle + (type === 'miss' ? 'bg-red-600 text-white border-red-600' : 'bg-white text-red-700 border-red-400 hover:bg-red-50');
-            btnPerf.className = baseStyle + (type === 'perfect' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-emerald-800 border-emerald-400 hover:bg-emerald-50');
-            btnNonA.className = baseStyle + (type === 'nona' ? 'bg-amber-600 text-white border-amber-600' : 'bg-white text-amber-900 border-amber-400 hover:bg-amber-50');
-
-            filterStaffList();
+            renderPortal();
         }
 
-        function copyChatText(staffName) {
-            const info = currentStaffData[staffName];
-            if (!info) return;
-
-            const text = `【店舗マスタチェック指摘・修正のお願い】
-${staffName} さん
-
-お疲れ様です。マスタチェックにて担当店舗の指摘箇所が検出されました。早急に確認と修正をお願いいたします。
-
-■ 対象スタッフ: ${staffName}
-■ 巡回店舗数: ${info.shops.length} 店舗
-■ A列赤指摘 (マスタミス): ${info.a_count} 回
-■ A列外赤セル内訳: ${info.non_a_red_total} 箇所
-
-何卒よろしくお願いいたします。`;
-
-            navigator.clipboard.writeText(text).then(() => {
-                alert(`✅ 【${staffName}さん宛ての指導チャット文面】をコピーしました！
-LINEやチャットツールにそのまま貼り付けて送信できます。`);
-            }).catch(err => {
-                console.error(err);
-                alert(`文面: 
-${text}`);
-            });
-        }
-
-        function copyStaffChatModal() {
-            if (activeModalStaffName) {
-                copyChatText(activeModalStaffName);
-            }
-        }
-
-        const dropZone = document.getElementById('dropZone');
-        const fileInput = document.getElementById('fileInput');
-
-        dropZone.addEventListener('click', (e) => {
-            if (e.target.tagName !== 'BUTTON' && e.target !== fileInput) {
-                fileInput.click();
-            }
-        });
-
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
-        });
-
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('dragover');
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('dragover');
-            if (e.dataTransfer.files.length > 0) {
-                fileInput.files = e.dataTransfer.files;
-                handleFileSelect({ target: fileInput });
-            }
-        });
-
-
-        
         function extractDateFromFilename(fileName) {
             if (!fileName) return '10/02';
             const m = fileName.match(/_result(\d{2})(\d{2})/i);
@@ -671,7 +527,6 @@ ${text}`);
 
                     const updatedStaffData = {};
 
-                    // 1. 保有データのうち対象日付(detectedDate)以外の既存データを維持
                     for (let s in currentStaffData) {
                         const existingShops = currentStaffData[s].shops.filter(sh => sh.date !== detectedDate);
                         updatedStaffData[s] = {
@@ -681,7 +536,6 @@ ${text}`);
                         };
                     }
 
-                    // 2. パースした新データを追加マージ
                     for (let item of parsedShops) {
                         const s = item.staff;
                         if (!updatedStaffData[s]) {
@@ -697,26 +551,8 @@ ${text}`);
                         });
                     }
 
-                    // 3. 全期間＆各日付再計算
-                    const updatedColRanking = {};
-                    for (let s in updatedStaffData) {
-                        let aTot = 0;
-                        let nonATot = 0;
-                        for (let sh of updatedStaffData[s].shops) {
-                            if (sh.is_a_red) aTot += 1;
-                            nonATot += sh.non_a_count;
-                            for (let colItem of sh.non_a_items) {
-                                updatedColRanking[colItem] = (updatedColRanking[colItem] || 0) + 1;
-                            }
-                        }
-                        const totalCount = updatedStaffData[s].shops.length;
-                        updatedStaffData[s].a_count = aTot;
-                        updatedStaffData[s].non_a_red_total = nonATot;
-                        updatedStaffData[s].miss_rate = totalCount > 0 ? Math.round((aTot / totalCount) * 1000) / 10 : 0;
-                    }
-
                     currentStaffData = updatedStaffData;
-                    currentColRanking = updatedColRanking;
+                    activeDateFilter = detectedDate;
 
                     if (statusEl) statusEl.textContent = `✅ ${file.name} (${detectedDate}分) スマート統合完了`;
                     renderPortal();
@@ -731,358 +567,331 @@ ${err.message || 'ファイルの読み込みに失敗しました'}`);
             reader.readAsArrayBuffer(file);
         }
 
+        function getFilteredData() {
+            const dateSet = new Set();
+            for (let s in currentStaffData) {
+                for (let sh of currentStaffData[s].shops) {
+                    if (sh.date) dateSet.add(sh.date);
+                }
+            }
+            const dates = Array.from(dateSet).sort();
+
+            const filteredStaffMap = {};
+            const filteredColRanking = {};
+
+            let totalShopsCount = 0;
+            let totalARedCount = 0;
+            let totalNonARedCount = 0;
+
+            for (let s in currentStaffData) {
+                const targetShops = currentStaffData[s].shops.filter(sh => {
+                    if (activeDateFilter === 'all') return true;
+                    return sh.date === activeDateFilter;
+                });
+
+                if (targetShops.length === 0) continue;
+
+                let aCount = 0;
+                let nonACount = 0;
+
+                for (let sh of targetShops) {
+                    if (sh.is_a_red) aCount += 1;
+                    nonACount += sh.non_a_count;
+                    for (let colItem of sh.non_a_items) {
+                        filteredColRanking[colItem] = (filteredColRanking[colItem] || 0) + 1;
+                    }
+                }
+
+                totalShopsCount += targetShops.length;
+                totalARedCount += aCount;
+                totalNonARedCount += nonACount;
+
+                filteredStaffMap[s] = {
+                    a_count: aCount,
+                    non_a_red_total: nonACount,
+                    shops: targetShops,
+                    miss_rate: targetShops.length > 0 ? Math.round((aCount / targetShops.length) * 1000) / 10 : 0
+                };
+            }
+
+            return {
+                dates: dates,
+                staffMap: filteredStaffMap,
+                colRanking: filteredColRanking,
+                totalShops: totalShopsCount,
+                totalARed: totalARedCount,
+                totalNonARed: totalNonARedCount
+            };
+        }
 
         function renderPortal() {
-            const tbody = document.getElementById('staffTableBody');
-            if (tbody) tbody.innerHTML = '';
+            const dataInfo = getFilteredData();
+            const staffMap = dataInfo.staffMap;
+            const dates = dataInfo.dates;
 
-            const mobileContainer = document.getElementById('staffCardList');
-            if (mobileContainer) mobileContainer.innerHTML = '';
-
-            const entries = Object.entries(currentStaffData).sort((a, b) => {
-                if (b[1].a_count !== a[1].a_count) return b[1].a_count - a[1].a_count;
-                if (b[1].miss_rate !== a[1].miss_rate) return b[1].miss_rate - a[1].miss_rate;
-                return b[1].non_a_red_total - a[1].non_a_red_total;
-            });
-
-            let totalShops = 0;
-            let totalARed = 0;
-            let totalNonARed = 0;
-            let perfectStaffCount = 0;
-            const missShopsList = [];
-
-            entries.forEach(([staffName, info], index) => {
-                const shopCount = info.shops.length;
-                const aCount = info.a_count;
-                const missRate = info.miss_rate || (shopCount > 0 ? Math.round((aCount / shopCount) * 1000) / 10 : 0);
-                const nonARedTotal = info.non_a_red_total;
-                const rankNum = index + 1;
-
-                totalShops += shopCount;
-                totalARed += aCount;
-                totalNonARed += nonARedTotal;
-                if (aCount === 0) perfectStaffCount += 1;
-
-                let barColorCode = '#10b981'; // 0%
-                let textColorClass = 'text-emerald-700';
-
-                if (missRate > 70) {
-                    barColorCode = '#dc2626'; // 70%超
-                    textColorClass = 'text-red-600';
-                } else if (missRate > 0) {
-                    barColorCode = '#d97706'; // 1〜70%
-                    textColorClass = 'text-amber-800';
-                }
-
-                let rankBadgeHtml = '';
-                if (aCount > 0) {
-                    rankBadgeHtml = `<span class="w-8 h-8 rounded-full bg-red-600 text-white text-sm font-black flex items-center justify-center shrink-0 shadow-md">${rankNum}</span>`;
-                } else {
-                    rankBadgeHtml = `<span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black border-2 border-emerald-400 shrink-0 shadow-sm">✨ ミスなし</span>`;
-                }
-
-                // PC用テーブル行
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-100 transition-colors border-b border-slate-200 staff-row';
-                tr.setAttribute('data-staff', staffName);
-                tr.setAttribute('data-acount', aCount);
-                tr.setAttribute('data-nonacount', nonARedTotal);
-
-                tr.innerHTML = `
-                    <td class="py-4.5 px-6 font-black text-slate-900 flex items-center gap-3">
-                        ${rankBadgeHtml}
-                        <div class="text-base text-slate-900 font-black">${staffName}</div>
-                    </td>
-                    <td class="py-4.5 px-4 text-center font-black text-slate-900 text-base">${shopCount}</td>
-                    <td class="py-4.5 px-4 text-center">
-                        <span class="text-xl font-black ${aCount > 0 ? 'text-red-600' : 'text-emerald-800'}">${aCount}</span> <span class="text-xs text-slate-800 font-bold">回</span>
-                    </td>
-                    <td class="py-4.5 px-6 text-center">
-                        <div class="flex items-center justify-center gap-2">
-                            <span class="font-black ${textColorClass} text-base">${missRate}%</span>
-                        </div>
-                        <div class="w-32 h-3.5 bg-slate-200 rounded-full mx-auto mt-1 overflow-hidden border-2 border-slate-300 shadow-inner">
-                            <div class="h-full rounded-full transition-all duration-500" style="width: ${missRate}%; background-color: ${barColorCode};"></div>
-                        </div>
-                    </td>
-                    <td class="py-4.5 px-4 text-center font-black text-base ${nonARedTotal > 0 ? 'text-amber-900' : 'text-slate-800'}">
-                        ${nonARedTotal} <span class="text-xs font-bold text-slate-800">箇所</span>
-                    </td>
-                    <td class="py-4.5 px-6 text-right print-hide">
-                        <div class="flex items-center justify-end gap-2">
-                            <button onclick="copyChatText('${staffName}')" title="指導チャット文面をコピー" class="btn-action-green px-3 py-2 rounded-xl text-xs font-black transition-all cursor-pointer active:scale-95">
-                                💬 チャット作成
-                            </button>
-                            <button onclick="showDetail('${staffName}')" class="btn-action-dark px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer active:scale-95">
-                                個別のミス確認 ➔
-                            </button>
-                        </div>
-                    </td>
+            // 1. 日付フィルターボタン群の動的描画
+            const dateBtnContainer = document.getElementById('dateFilterButtons');
+            if (dateBtnContainer) {
+                let btnsHtml = `
+                    <button onclick="setDateFilter('all')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-black transition-all shadow-sm ${activeDateFilter === 'all' ? 'bg-slate-900 text-white ring-2 ring-slate-900 border-2 border-slate-900' : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-2 border-slate-300'}">
+                        🌐 全期間 (累計)
+                    </button>
                 `;
 
-                if (tbody) tbody.appendChild(tr);
-
-                // スマホ用カード
-                if (mobileContainer) {
-                    const mCard = document.createElement('div');
-                    mCard.className = 'bg-white rounded-2xl p-4 sm:p-5 border-2 border-slate-300 shadow-sm space-y-3.5 staff-card';
-                    mCard.setAttribute('data-staff', staffName);
-                    mCard.setAttribute('data-acount', aCount);
-                    mCard.setAttribute('data-nonacount', nonARedTotal);
-
-                    let statusBadge = aCount > 0 
-                        ? `<span class="bg-red-600 text-white text-xs font-black px-3 py-1 rounded-lg shadow-sm">${aCount}店舗ミスあり</span>`
-                        : `<span class="bg-emerald-100 text-emerald-900 text-xs font-black px-3 py-1 rounded-lg border-2 border-emerald-400">✨ ミスなし(0件)</span>`;
-
-                    mCard.innerHTML = `
-                        <div class="flex justify-between items-center gap-2">
-                            <div class="flex items-center gap-3">
-                                ${rankBadgeHtml}
-                                <h3 class="font-black text-slate-900 text-base sm:text-lg">${staffName}</h3>
-                            </div>
-                            ${statusBadge}
-                        </div>
-
-                        <div class="space-y-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                            <div class="flex justify-between text-xs sm:text-sm font-black text-slate-900">
-                                <span>巡回店舗数: ${shopCount}店舗</span>
-                                <span class="${textColorClass}">ミス率: ${missRate}%</span>
-                            </div>
-                            <div class="w-full h-3.5 bg-slate-200 rounded-full overflow-hidden border-2 border-slate-300 shadow-inner">
-                                <div class="h-full rounded-full transition-all duration-500" style="width: ${missRate}%; background-color: ${barColorCode};"></div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-2 bg-slate-100 p-3 rounded-xl border border-slate-300 text-center text-xs font-bold">
-                            <div>
-                                <span class="text-slate-900 block font-black">A列 赤指摘店舗</span>
-                                <span class="font-black ${aCount > 0 ? 'text-red-600' : 'text-emerald-800'} text-lg sm:text-xl">${aCount} 回</span>
-                            </div>
-                            <div>
-                                <span class="text-slate-900 block font-black">A列外 赤セル内訳</span>
-                                <span class="font-black ${nonARedTotal > 0 ? 'text-amber-900' : 'text-slate-800'} text-lg sm:text-xl">${nonARedTotal} 箇所</span>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-2 print-hide">
-                            <button onclick="copyChatText('${staffName}')" class="btn-action-green font-black py-2.5 px-3 rounded-xl text-xs transition-all cursor-pointer text-center active:scale-95">
-                                💬 チャット作成
-                            </button>
-                            <button onclick="showDetail('${staffName}')" class="btn-action-dark font-black py-2.5 px-3 rounded-xl text-xs transition-all cursor-pointer text-center active:scale-95">
-                                個別のミス確認 ➔
-                            </button>
-                        </div>
+                for (let d of dates) {
+                    const count = Object.values(currentStaffData).reduce((acc, st) => acc + st.shops.filter(s => s.date === d).length, 0);
+                    btnsHtml += `
+                        <button onclick="setDateFilter('${d}')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-black transition-all shadow-sm ${activeDateFilter === d ? 'bg-red-600 text-white ring-2 ring-red-600 border-2 border-red-600 shadow-md' : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-2 border-slate-300'}">
+                            📅 ${d}分 (${count}店舗)
+                        </button>
                     `;
-                    mobileContainer.appendChild(mCard);
                 }
 
-                info.shops.forEach(shop => {
-                    if (shop.is_a_red || shop.non_a_count > 0) {
-                        missShopsList.push({
-                            staff: staffName,
-                            shopName: shop.name,
-                            isA: shop.is_a_red,
-                            nonACount: shop.non_a_count,
-                            items: shop.non_a_items
-                        });
-                    }
-                });
-            });
+                dateBtnContainer.innerHTML = btnsHtml;
+            }
 
-            document.getElementById('statTotalShops').innerHTML = `${totalShops} <span class="text-sm font-bold text-slate-700">店舗</span>`;
-            document.getElementById('statARedCount').innerHTML = `${totalARed} <span class="text-sm font-bold text-slate-700">店舗 (${Math.round((totalARed/totalShops)*1000)/10}%)</span>`;
-            document.getElementById('statNonARedCount').innerHTML = `${totalNonARed} <span class="text-sm font-bold text-slate-700">箇所</span>`;
-            
-            document.getElementById('statPerfectCount').innerHTML = `${perfectStaffCount} <span class="text-sm font-bold text-slate-700">名 / 全${entries.length}名</span>`;
-            const pRate = Math.round((perfectStaffCount / entries.length) * 1000) / 10;
+            // 2. サイドバーの日付切り替え表示
+            const sidebarDateList = document.getElementById('sidebarDateList');
+            if (sidebarDateList) {
+                let sideHtml = '';
+                for (let d of dates) {
+                    const aCount = Object.values(currentStaffData).reduce((acc, st) => acc + st.shops.filter(s => s.date === d && s.is_a_red).length, 0);
+                    const nonACount = Object.values(currentStaffData).reduce((acc, st) => acc + st.shops.filter(s => s.date === d).reduce((a, s) => a + s.non_a_count, 0), 0);
+                    sideHtml += `
+                        <button onclick="setDateFilter('${d}'); toggleSidebar();" class="w-full text-left p-3 rounded-xl hover:bg-slate-100 text-slate-900 font-black text-sm flex items-center justify-between transition-all ${activeDateFilter === d ? 'bg-red-50 border-2 border-red-400' : 'border border-slate-200'}">
+                            <div class="flex items-center gap-2">
+                                <span>📅</span>
+                                <span>${d}分 データ</span>
+                            </div>
+                            <div class="flex items-center gap-1 text-xs">
+                                <span class="bg-red-600 text-white px-2 py-0.5 rounded font-black">${aCount}店舗</span>
+                                <span class="bg-amber-500 text-white px-2 py-0.5 rounded font-black">${nonACount}箇所</span>
+                            </div>
+                        </button>
+                    `;
+                }
+                sidebarDateList.innerHTML = sideHtml;
+            }
+
+            // 3. バッジ
+            const badgeEl = document.getElementById('currentDateDisplayBadge');
+            if (badgeEl) {
+                badgeEl.textContent = activeDateFilter === 'all' ? '全期間 (累計表示)' : `${activeDateFilter}分データ表示中`;
+                badgeEl.className = activeDateFilter === 'all' ? 'bg-slate-900 text-white text-xs px-2.5 py-0.5 rounded-full font-black' : 'bg-red-600 text-white text-xs px-2.5 py-0.5 rounded-full font-black';
+            }
+
+            // 4. KPI
+            document.getElementById('statTotalShops').innerHTML = `${dataInfo.totalShops} <span class="text-sm font-bold text-slate-700">店舗</span>`;
+            document.getElementById('statARedCount').innerHTML = `${dataInfo.totalARed} <span class="text-sm font-bold text-slate-800">店舗</span>`;
+            document.getElementById('statNonARedCount').innerHTML = `${dataInfo.totalNonARed} <span class="text-sm font-bold text-slate-800">箇所</span>`;
+
+            let maxStaff = '--';
+            let maxVal = 0;
+            let perfectCount = 0;
+            const staffList = Object.keys(staffMap);
+            for (let s of staffList) {
+                if (staffMap[s].a_count > maxVal) {
+                    maxVal = staffMap[s].a_count;
+                    maxStaff = s;
+                }
+                if (staffMap[s].a_count === 0) {
+                    perfectCount++;
+                }
+            }
+            document.getElementById('statTopMissStaff').textContent = maxVal > 0 ? `最多: ${maxStaff} (${maxVal}店舗)` : 'ミス者なし';
+            document.getElementById('statPerfectCount').innerHTML = `${perfectCount} <span class="text-sm font-bold text-slate-800">名</span>`;
+            const pRate = staffList.length > 0 ? Math.round((perfectCount / staffList.length) * 1000) / 10 : 0;
             document.getElementById('statPerfectRate').textContent = `${pRate}% がミスなし`;
 
-            /* ハンバーガーメニュー内の数値を即時更新 */
-            if (document.getElementById('sidebarDailyARed')) document.getElementById('sidebarDailyARed').textContent = `${totalARed} 店舗`;
-            if (document.getElementById('sidebarDailyNonARed')) document.getElementById('sidebarDailyNonARed').textContent = `${totalNonARed} 箇所`;
-            if (document.getElementById('sidebarTotalARed')) document.getElementById('sidebarTotalARed').textContent = `${totalARed} 店舗`;
-            if (document.getElementById('sidebarTotalNonARed')) document.getElementById('sidebarTotalNonARed').textContent = `${totalNonARed} 箇所`;
+            renderTableAndCards(staffMap);
+            renderColumnRanking(dataInfo.colRanking);
+        }
 
-            const indContainer = document.getElementById('individualMissContainer');
-            indContainer.innerHTML = '';
-            document.getElementById('missShopBadge').textContent = `${missShopsList.length}店舗で指摘あり`;
+        function renderTableAndCards(staffMap) {
+            const searchVal = (document.getElementById('searchInput')?.value || '').trim().toLowerCase();
+            const tbody = document.getElementById('staffTableBody');
+            const cardContainer = document.getElementById('staffCardList');
+            if (tbody) tbody.innerHTML = '';
+            if (cardContainer) cardContainer.innerHTML = '';
 
-            missShopsList.forEach(item => {
-                const card = document.createElement('div');
-                card.className = `p-4 sm:p-5 rounded-2xl border-2 ${item.isA ? 'border-red-400 bg-red-50/70' : 'border-slate-300 bg-white'} shadow-sm`;
+            let sortedStaff = Object.keys(staffMap).sort((a, b) => {
+                if (staffMap[b].a_count !== staffMap[a].a_count) {
+                    return staffMap[b].a_count - staffMap[a].a_count;
+                }
+                return staffMap[b].non_a_red_total - staffMap[a].non_a_red_total;
+            });
 
-                let tag = item.isA 
-                    ? '<span class="bg-red-600 text-white text-xs font-black px-3.5 py-1 rounded-lg shadow-sm">A列ミスあり</span>' 
-                    : '<span class="bg-amber-200 text-amber-900 border border-amber-400 text-xs font-black px-3.5 py-1 rounded-lg">A列外赤セルあり</span>';
+            sortedStaff = sortedStaff.filter(s => {
+                const info = staffMap[s];
+                if (searchVal && !s.toLowerCase().includes(searchVal)) return false;
+                if (activeQuickFilter === 'miss' && info.a_count === 0) return false;
+                if (activeQuickFilter === 'perfect' && info.a_count > 0) return false;
+                if (activeQuickFilter === 'nona' && info.non_a_red_total === 0) return false;
+                return true;
+            });
 
-                let itemsHtml = '';
-                if (item.items.length > 0) {
-                    itemsHtml = `
-                        <div class="mt-3 pt-3 border-t-2 border-slate-200">
-                            <div class="text-xs font-black text-amber-900 mb-1.5 flex items-center gap-1">
-                                <span>⚠️</span> A列以外の赤背景セル項目 (${item.items.length}箇所):
+            let rank = 1;
+            sortedStaff.forEach(s => {
+                const info = staffMap[s];
+                const totalShops = info.shops.length;
+
+                if (tbody) {
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-slate-50 transition-colors border-b border-slate-200';
+                    tr.innerHTML = `
+                        <td class="py-4 px-6 font-black text-slate-900">
+                            <div class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg ${rank <= 3 && info.a_count > 0 ? 'bg-red-600 text-white' : 'bg-slate-200 text-slate-700'} flex items-center justify-center text-xs font-black shrink-0">
+                                    ${rank}
+                                </span>
+                                <div>
+                                    <div class="text-base font-black">${s}</div>
+                                    <div class="text-xs text-slate-500 font-bold">${totalShops}店舗担当</div>
+                                </div>
                             </div>
-                            <div class="flex flex-wrap gap-1.5">
-                                ${item.items.map(it => `<span class="bg-amber-200 text-amber-900 border border-amber-400 text-xs font-black px-2.5 py-1 rounded-md shadow-sm">${it}</span>`).join('')}
+                        </td>
+                        <td class="py-4 px-4 text-center font-black text-slate-800 text-base">${totalShops}</td>
+                        <td class="py-4 px-4 text-center font-black text-base ${info.a_count > 0 ? 'text-red-600 bg-red-50/50' : 'text-slate-400'}">
+                            ${info.a_count} 店舗
+                        </td>
+                        <td class="py-4 px-4 text-center font-black text-base">
+                            <span class="px-2.5 py-1 rounded-lg ${info.miss_rate > 20 ? 'bg-red-100 text-red-700' : (info.miss_rate > 0 ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800')}">
+                                ${info.miss_rate}%
+                            </span>
+                        </td>
+                        <td class="py-4 px-4 text-center font-black text-base ${info.non_a_red_total > 0 ? 'text-amber-800 bg-amber-50/50' : 'text-slate-400'}">
+                            ${info.non_a_red_total} 箇所
+                        </td>
+                        <td class="py-4 px-6 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <button onclick="openModal('${s}')" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-black shadow-sm active:scale-95 transition-all">
+                                    🔍 詳細一覧
+                                </button>
+                                <button onclick="copyChatText('${s}')" class="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black shadow-sm active:scale-95 transition-all">
+                                    📋 チャット作成
+                                </button>
                             </div>
-                        </div>
+                        </td>
                     `;
+                    tbody.appendChild(tr);
                 }
 
-                card.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <span class="text-xs text-slate-800 font-extrabold">最終更新: ${item.staff}</span>
-                            <h3 class="font-black text-slate-900 text-base sm:text-lg mt-0.5">${item.shopName}</h3>
+                if (cardContainer) {
+                    const card = document.createElement('div');
+                    card.className = 'p-4 bg-white hover:bg-slate-50 space-y-3';
+                    card.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg ${rank <= 3 && info.a_count > 0 ? 'bg-red-600 text-white' : 'bg-slate-200 text-slate-700'} flex items-center justify-center text-xs font-black shrink-0">
+                                    ${rank}
+                                </span>
+                                <span class="font-black text-base text-slate-900">${s}</span>
+                            </div>
+                            <span class="text-xs font-black ${info.miss_rate > 0 ? 'text-red-600' : 'text-emerald-600'}">
+                                ミス率 ${info.miss_rate}%
+                            </span>
                         </div>
-                        ${tag}
-                    </div>
-                    ${itemsHtml}
-                `;
-
-                indContainer.appendChild(card);
-            });
-
-            /* 機能4: 項目別多発ミスのビジュアルメーター */
-            const rankContainer = document.getElementById('rankingContainer');
-            rankContainer.innerHTML = '';
-            const sortedRank = Object.entries(currentColRanking).sort((a, b) => b[1] - a[1]);
-            const maxCount = sortedRank.length > 0 ? sortedRank[0][1] : 1;
-
-            sortedRank.forEach(([colName, count], idx) => {
-                const pct = Math.round((count / maxCount) * 100);
-                const rCard = document.createElement('div');
-                rCard.className = 'bg-white border-2 border-slate-300 rounded-2xl p-4 space-y-2.5 shadow-sm hover:border-slate-400 transition-all';
-                rCard.innerHTML = `
-                    <div class="flex justify-between items-center gap-2">
-                        <div class="flex items-center gap-2.5 min-w-0 flex-1">
-                            <span class="bg-red-600 text-white font-black w-7 h-7 rounded-full flex items-center justify-center text-xs shrink-0 shadow-sm">${idx + 1}</span>
-                            <span class="font-black text-slate-900 text-sm sm:text-base leading-snug break-words">${colName}</span>
+                        <div class="grid grid-cols-3 gap-2 text-center text-xs font-black">
+                            <div class="p-2 rounded-lg bg-slate-100">
+                                <div class="text-slate-500">担当</div>
+                                <div class="text-sm mt-0.5">${totalShops}店舗</div>
+                            </div>
+                            <div class="p-2 rounded-lg ${info.a_count > 0 ? 'bg-red-100 text-red-700' : 'bg-slate-100'}">
+                                <div>A列赤</div>
+                                <div class="text-sm mt-0.5">${info.a_count}店舗</div>
+                            </div>
+                            <div class="p-2 rounded-lg ${info.non_a_red_total > 0 ? 'bg-amber-100 text-amber-900' : 'bg-slate-100'}">
+                                <div>A列外赤</div>
+                                <div class="text-sm mt-0.5">${info.non_a_red_total}箇所</div>
+                            </div>
                         </div>
-                        <span class="bg-red-600 text-white font-black px-3 py-1 rounded-xl text-base sm:text-lg shadow-sm shrink-0 whitespace-nowrap leading-none">${count}</span>
-                    </div>
-                    <div class="w-full h-3.5 bg-slate-200 rounded-full overflow-hidden border border-slate-300 shadow-inner">
-                        <div class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: ${pct}%;"></div>
+                        <div class="flex items-center gap-2 pt-1">
+                            <button onclick="openModal('${s}')" class="flex-1 py-2 rounded-xl bg-slate-900 text-white text-xs font-black text-center shadow-sm">
+                                🔍 詳細
+                            </button>
+                            <button onclick="copyChatText('${s}')" class="flex-1 py-2 rounded-xl bg-emerald-600 text-white text-xs font-black text-center shadow-sm">
+                                📋 チャットコピー
+                            </button>
+                        </div>
+                    `;
+                    cardContainer.appendChild(card);
+                }
+                rank++;
+            });
+        }
+
+        function renderColumnRanking(colRankingMap) {
+            const container = document.getElementById('columnRankingContainer');
+            if (!container) return;
+
+            const sortedCols = Object.keys(colRankingMap).sort((a, b) => colRankingMap[b] - colRankingMap[a]);
+
+            if (sortedCols.length === 0) {
+                container.innerHTML = `<div class="col-span-full p-4 text-center text-xs font-bold text-slate-500">指摘箇所はありませんでした</div>`;
+                return;
+            }
+
+            let html = '';
+            let idx = 1;
+            for (let col of sortedCols.slice(0, 6)) {
+                const count = colRankingMap[col];
+                html += `
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5 truncate">
+                            <span class="w-6 h-6 rounded-lg ${idx <= 3 ? 'bg-amber-500 text-white' : 'bg-slate-200 text-slate-700'} flex items-center justify-center text-xs font-black shrink-0">
+                                ${idx}
+                            </span>
+                            <span class="text-xs sm:text-sm font-black text-slate-900 truncate">${col}</span>
+                        </div>
+                        <span class="text-xs font-black bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg shrink-0">${count} 箇所</span>
                     </div>
                 `;
-                rankContainer.appendChild(rCard);
-            });
-
-            filterStaffList();
+                idx++;
+            }
+            container.innerHTML = html;
         }
 
-        function filterStaffList() {
-            const query = (document.getElementById('searchInput')?.value || '').trim().toLowerCase();
-            const rows = document.querySelectorAll('#staffTableBody tr');
-            const cards = document.querySelectorAll('#staffCardList > div');
-
-            rows.forEach(row => {
-                const staff = (row.getAttribute('data-staff') || '').toLowerCase();
-                const aCount = parseInt(row.getAttribute('data-acount') || '0', 10);
-                const nonACount = parseInt(row.getAttribute('data-nonacount') || '0', 10);
-
-                let matchFilter = true;
-                if (activeQuickFilter === 'miss') matchFilter = aCount > 0;
-                else if (activeQuickFilter === 'perfect') matchFilter = aCount === 0;
-                else if (activeQuickFilter === 'nona') matchFilter = nonACount > 0;
-
-                const matchQuery = staff.includes(query);
-                row.style.display = (matchFilter && matchQuery) ? '' : 'none';
-            });
-
-            cards.forEach(card => {
-                const staff = (card.getAttribute('data-staff') || '').toLowerCase();
-                const aCount = parseInt(card.getAttribute('data-acount') || '0', 10);
-                const nonACount = parseInt(card.getAttribute('data-nonacount') || '0', 10);
-
-                let matchFilter = true;
-                if (activeQuickFilter === 'miss') matchFilter = aCount > 0;
-                else if (activeQuickFilter === 'perfect') matchFilter = aCount === 0;
-                else if (activeQuickFilter === 'nona') matchFilter = nonACount > 0;
-
-                const matchQuery = staff.includes(query);
-                card.style.display = (matchFilter && matchQuery) ? '' : 'none';
-            });
-        }
-
-        function exportToCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
-            csvContent += "順位,スタッフ名,巡回店舗数,A列赤指摘店舗数,ミス率(%),A列外赤指摘箇所数\n";
-
-            const entries = Object.entries(currentStaffData).sort((a, b) => {
-                if (b[1].a_count !== a[1].a_count) return b[1].a_count - a[1].a_count;
-                if (b[1].miss_rate !== a[1].miss_rate) return b[1].miss_rate - a[1].miss_rate;
-                return b[1].non_a_red_total - a[1].non_a_red_total;
-            });
-
-            entries.forEach(([staffName, info], idx) => {
-                const shopCount = info.shops.length;
-                const aCount = info.a_count;
-                const missRate = info.miss_rate || (shopCount > 0 ? Math.round((aCount / shopCount) * 1000) / 10 : 0);
-                const nonARedTotal = info.non_a_red_total;
-                csvContent += `${idx + 1},"${staffName}",${shopCount},${aCount},${missRate}%,${nonARedTotal}\n`;
-            });
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `店舗マスタミス分析結果_${new Date().toISOString().slice(0,10)}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function showDetail(staffName) {
-            const info = currentStaffData[staffName];
+        function openModal(staffName) {
+            activeModalStaffName = staffName;
+            const dataInfo = getFilteredData();
+            const info = dataInfo.staffMap[staffName];
             if (!info) return;
 
-            activeModalStaffName = staffName;
-            const mRate = info.miss_rate || (info.shops.length > 0 ? Math.round((info.a_count / info.shops.length)*1000)/10 : 0);
+            document.getElementById('modalStaffName').textContent = staffName;
+            document.getElementById('modalStaffSubText').textContent = activeDateFilter === 'all' ? `${staffName} さんの全期間指摘一覧` : `${staffName} さんの${activeDateFilter}分 指摘一覧`;
 
-            document.getElementById('modalStaffName').textContent = `${staffName} さんの個別のミス詳細`;
-            document.getElementById('modalStaffMeta').innerHTML = `
-                <span class="px-3.5 py-1.5 rounded-xl bg-slate-100 border-2 border-slate-300 text-slate-900 font-black text-xs sm:text-sm shadow-sm">巡回: ${info.shops.length}店舗</span>
-                <span class="px-3.5 py-1.5 rounded-xl bg-red-100 border-2 border-red-300 text-red-900 font-black text-xs sm:text-sm shadow-sm">A列赤指摘: ${info.a_count}回</span>
-                <span class="px-3.5 py-1.5 rounded-xl bg-amber-100 border-2 border-amber-300 text-amber-900 font-black text-xs sm:text-sm shadow-sm">ミス率: ${mRate}%</span>
-                <span class="px-3.5 py-1.5 rounded-xl bg-blue-100 border-2 border-blue-300 text-blue-900 font-black text-xs sm:text-sm shadow-sm">A列外赤セル: ${info.non_a_red_total}箇所</span>
-            `;
+            document.getElementById('modalShopCount').innerHTML = `${info.shops.length} <span class="text-xs text-slate-700">店舗</span>`;
+            document.getElementById('modalARedCount').innerHTML = `${info.a_count} <span class="text-xs text-red-900">店舗</span>`;
+            document.getElementById('modalNonARedCount').innerHTML = `${info.non_a_red_total} <span class="text-xs text-amber-950">箇所</span>`;
+            document.getElementById('modalShopBadge').textContent = `${info.shops.length}店舗`;
 
-            const modalBody = document.getElementById('modalBody');
-            modalBody.innerHTML = '';
+            const shopListEl = document.getElementById('modalShopList');
+            shopListEl.innerHTML = '';
 
-            info.shops.forEach(shop => {
-                const shopCard = document.createElement('div');
-                shopCard.className = `p-4 sm:p-5 rounded-2xl border-2 ${shop.is_a_red ? 'border-red-400 bg-red-50/80' : 'border-slate-300 bg-white'} shadow-sm`;
-
-                let aStatus = shop.is_a_red 
-                    ? '<span class="bg-red-600 text-white text-xs font-black px-3.5 py-1 rounded-lg shadow-sm">A列 赤指摘あり</span>'
-                    : '<span class="bg-slate-200 text-slate-900 border-2 border-slate-400 text-xs font-black px-3.5 py-1 rounded-lg">A列 指摘なし</span>';
-
+            info.shops.forEach(s => {
+                const item = document.createElement('div');
+                item.className = `p-3.5 rounded-2xl border-2 transition-all ${s.is_a_red ? 'bg-red-50/70 border-red-300' : 'bg-slate-50 border-slate-200'}`;
+                
                 let nonAItemsHtml = '';
-                if (shop.non_a_items.length > 0) {
+                if (s.non_a_items && s.non_a_items.length > 0) {
                     nonAItemsHtml = `
-                        <div class="mt-3 pt-3 border-t-2 border-slate-200">
-                            <div class="text-xs font-black text-amber-900 mb-1.5 flex items-center gap-1">
-                                <span>⚠️</span> A列以外の赤背景セル項目 (${shop.non_a_items.length}箇所):
-                            </div>
-                            <div class="flex flex-wrap gap-1.5">
-                                ${shop.non_a_items.map(item => `<span class="bg-amber-200 text-amber-900 border border-amber-400 text-xs font-black px-2.5 py-1 rounded-md shadow-sm">${item}</span>`).join('')}
-                            </div>
+                        <div class="mt-2 flex flex-wrap gap-1.5">
+                            ${s.non_a_items.map(it => `<span class="text-xs bg-amber-100 text-amber-900 font-black px-2 py-0.5 rounded border border-amber-300">⚠️ ${it}</span>`).join('')}
                         </div>
                     `;
-                } else {
-                    nonAItemsHtml = '<div class="text-xs text-slate-800 mt-2 font-bold">A列以外の赤指摘項目はありません。</div>';
                 }
 
-                shopCard.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <span class="font-black text-slate-900 text-base sm:text-lg">${shop.name}</span>
-                        ${aStatus}
+                item.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-black bg-slate-200 text-slate-800 px-2 py-0.5 rounded">${s.date || '10/01'}</span>
+                            <span class="font-black text-sm text-slate-900">${s.name}</span>
+                        </div>
+                        ${s.is_a_red ? '<span class="text-xs bg-red-600 text-white font-black px-2.5 py-0.5 rounded-full">🚨 A列 赤指摘</span>' : '<span class="text-xs bg-emerald-600 text-white font-black px-2.5 py-0.5 rounded-full">OK</span>'}
                     </div>
                     ${nonAItemsHtml}
                 `;
-
-                modalBody.appendChild(shopCard);
+                shopListEl.appendChild(item);
             });
 
             document.getElementById('detailModal').classList.remove('hidden');
@@ -1092,7 +901,60 @@ ${err.message || 'ファイルの読み込みに失敗しました'}`);
             document.getElementById('detailModal').classList.add('hidden');
         }
 
-        document.addEventListener('DOMContentLoaded', renderPortal);
+        function copyChatText(staffName) {
+            const dataInfo = getFilteredData();
+            const info = dataInfo.staffMap[staffName];
+            if (!info) return;
+
+            const text = `【店舗マスタチェック指摘・修正のお願い】
+${staffName} さん
+
+お疲れ様です。マスタチェックにて担当店舗の指摘箇所が検出されました。早急に確認と修正をお願いいたします。
+
+■ 対象スタッフ: ${staffName}
+■ 対象期間: ${activeDateFilter === 'all' ? '全期間 (累計)' : activeDateFilter + '分'}
+■ 巡回店舗数: ${info.shops.length} 店舗
+■ A列赤指摘 (マスタミス): ${info.a_count} 回
+■ A列外赤セル内訳: ${info.non_a_red_total} 箇所
+
+何卒よろしくお願いいたします。`;
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`✅ 【${staffName}さん宛ての指導チャット文面】をコピーしました！\nLINEやチャットツールにそのまま貼り付けて送信できます。`);
+            }).catch(err => {
+                console.error(err);
+                alert(`文面: \n${text}`);
+            });
+        }
+
+        function copyStaffChatModal() {
+            if (activeModalStaffName) {
+                copyChatText(activeModalStaffName);
+            }
+        }
+
+        function exportToCSV() {
+            const dataInfo = getFilteredData();
+            const staffMap = dataInfo.staffMap;
+
+            let csv = '\uFEFF順位,スタッフ名,巡回店舗数,A列赤指摘店舗数,ミス率(%),A列外赤セル箇所\n';
+            let rank = 1;
+            for (let s in staffMap) {
+                const st = staffMap[s];
+                csv += `${rank},"${s}",${st.shops.length},${st.a_count},${st.miss_rate},${st.non_a_red_total}\n`;
+                rank++;
+            }
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `店舗マスタミス集計_${activeDateFilter === 'all' ? '全期間' : activeDateFilter}.csv`;
+            link.click();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPortal();
+        });
     </script>
 </body>
 </html>

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import json, re
 
-# Read merged portal_json_data.json
 with open('portal_json_data.json', 'r', encoding='utf-8') as f:
     json_data = json.load(f)
 
@@ -11,7 +10,12 @@ col_ranking = json_data['col_ranking']
 js_staff_data = json.dumps(staff_data, ensure_ascii=False)
 js_col_ranking = json.dumps(col_ranking, ensure_ascii=False)
 
-html_content = f"""<!DOCTYPE html>
+# Build html by replacing placeholders
+with open('build_portal.py', 'r', encoding='utf-8') as f:
+    orig_code = f.read()
+
+# Generate index.html safely
+html_content = """<!DOCTYPE html>
 <html lang="ja" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -24,113 +28,113 @@ html_content = f"""<!DOCTYPE html>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
     <style>
-        body {{
+        body {
             font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: #f8fafc;
             color: #0f172a;
             -webkit-font-smoothing: antialiased;
-        }}
+        }
         
-        .header-gradient {{
+        .header-gradient {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
             border-bottom: 2px solid #334155;
-        }}
+        }
         
-        .btn-action-dark {{
+        .btn-action-dark {
             background-color: #0f172a !important;
             color: #ffffff !important;
             border: 1px solid #1e293b !important;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
-        }}
-        .btn-action-dark:hover {{
+        }
+        .btn-action-dark:hover {
             background-color: #000000 !important;
             color: #ffffff !important;
-        }}
+        }
 
-        .btn-action-red {{
+        .btn-action-red {
             background-color: #dc2626 !important;
             color: #ffffff !important;
             border: 1px solid #b91c1c !important;
             box-shadow: 0 2px 5px rgba(220,38,38,0.3) !important;
-        }}
-        .btn-action-red:hover {{
+        }
+        .btn-action-red:hover {
             background-color: #b91c1c !important;
             color: #ffffff !important;
-        }}
+        }
 
-        .btn-action-green {{
+        .btn-action-green {
             background-color: #059669 !important;
             color: #ffffff !important;
             border: 1px solid #047857 !important;
             box-shadow: 0 2px 5px rgba(5,150,105,0.3) !important;
-        }}
-        .btn-action-green:hover {{
+        }
+        .btn-action-green:hover {
             background-color: #047857 !important;
             color: #ffffff !important;
-        }}
+        }
 
-        .glass-card {{
+        .glass-card {
             background: #ffffff;
             border: 1px solid #cbd5e1;
             box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }}
+        }
         
-        .kpi-card {{
+        .kpi-card {
             background: #ffffff;
             border: 2px solid #cbd5e1;
             border-radius: 1rem;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }}
-        .kpi-card:hover {{
+        }
+        .kpi-card:hover {
             transform: translateY(-2px);
-        }}
+        }
 
-        .drop-zone {{
+        .drop-zone {
             border: 2px dashed #ef4444;
             background: linear-gradient(180deg, #fef2f2 0%, #ffffff 100%);
             transition: all 0.2s ease;
-        }}
-        .drop-zone:hover, .drop-zone.dragover {{
+        }
+        .drop-zone:hover, .drop-zone.dragover {
             background-color: #fee2e2;
             border-color: #dc2626;
-        }}
+        }
 
-        @media print {{
-            body {{
+        @media print {
+            body {
                 background-color: #ffffff !important;
                 color: #000000 !important;
                 padding-bottom: 0 !important;
-            }}
-            header, #sidebar, #sidebarOverlay, #dropZone, #searchInput, .print-hide {{
+            }
+            header, #sidebar, #sidebarOverlay, #dropZone, #searchInput, .print-hide {
                 display: none !important;
-            }}
-            .glass-card, .kpi-card {{
+            }
+            .glass-card, .kpi-card {
                 box-shadow: none !important;
                 border: 1px solid #94a3b8 !important;
                 break-inside: avoid;
-            }}
-            #detailModal {{
+            }
+            #detailModal {
                 position: static !important;
                 display: block !important;
                 background: transparent !important;
-            }}
-        }}
+            }
+        }
 
-        ::-webkit-scrollbar {{
+        ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
-        }}
-        ::-webkit-scrollbar-track {{
+        }
+        ::-webkit-scrollbar-track {
             background: #f1f5f9;
-        }}
-        ::-webkit-scrollbar-thumb {{
+        }
+        ::-webkit-scrollbar-thumb {
             background: #94a3b8;
             border-radius: 4px;
-        }}
-        ::-webkit-scrollbar-thumb:hover {{
+        }
+        ::-webkit-scrollbar-thumb:hover {
             background: #64748b;
-        }}
+        }
     </style>
 </head>
 <body class="min-h-screen pb-20 selection:bg-red-500 selection:text-white">
@@ -155,7 +159,7 @@ html_content = f"""<!DOCTYPE html>
             </div>
 
             <nav class="mt-6 space-y-2">
-                <div class="px-3 py-2 text-xs font-black text-slate-700 uppercase tracking-wider">ビュー切替・内訳集計</div>
+                <div class="px-3 py-2 text-xs font-black text-slate-700 uppercase tracking-wider">ビュー切替・日別データ選択</div>
                 
                 <button onclick="setDateFilter('all'); toggleSidebar();" class="w-full text-left p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-900 font-black text-sm flex items-center justify-between transition-all group">
                     <div class="flex items-center gap-2.5">
@@ -210,7 +214,7 @@ html_content = f"""<!DOCTYPE html>
 
     <main class="max-w-7xl mx-auto px-3 sm:px-6 md:px-8 mt-6 space-y-6">
 
-        <!-- 📅 日付別切り替えナビゲーションバー（最重要コンポーネント） -->
+        <!-- 📅 日付別切り替えタブバー (最重要・各日付独立保持＆ワンタップ切替) -->
         <div class="glass-card p-4 sm:p-5 rounded-2xl border-2 border-slate-300 bg-white shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-xl font-black shadow-inner border border-red-200">
@@ -219,7 +223,7 @@ html_content = f"""<!DOCTYPE html>
                 <div>
                     <h3 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
                         <span>対象日付の切替</span>
-                        <span id="currentDateDisplayBadge" class="bg-red-600 text-white text-xs px-2.5 py-0.5 rounded-full font-black">全期間 (累計)</span>
+                        <span id="currentDateDisplayBadge" class="bg-slate-900 text-white text-xs px-2.5 py-0.5 rounded-full font-black">全期間 (累計)</span>
                     </h3>
                     <p class="text-xs sm:text-sm text-slate-700 font-bold mt-0.5">タップすると全KPI・指摘ランキング・テーブル・詳細がその日付のデータに即座に切り替わります</p>
                 </div>
@@ -415,60 +419,60 @@ html_content = f"""<!DOCTYPE html>
     </div>
 
     <script>
-        let currentStaffData = {js_staff_data};
-        let currentColRanking = {js_col_ranking};
-        let activeDateFilter = 'all'; // 'all', '10/01', '10/02' ...
-        let activeQuickFilter = 'all'; // 'all', 'miss', 'perfect', 'nona'
+        let currentStaffData = """ + js_staff_data + """;
+        let currentColRanking = """ + js_col_ranking + """;
+        let activeDateFilter = 'all';
+        let activeQuickFilter = 'all';
         let activeModalStaffName = null;
 
-        function toggleSidebar() {{
+        function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
-            if (sidebar.classList.contains('-translate-x-full')) {{
+            if (sidebar.classList.contains('-translate-x-full')) {
                 sidebar.classList.remove('-translate-x-full');
                 overlay.classList.remove('hidden');
-            }} else {{
+            } else {
                 sidebar.classList.add('-translate-x-full');
                 overlay.classList.add('hidden');
-            }}
-        }}
+            }
+        }
 
-        function setDateFilter(dateVal) {{
+        function setDateFilter(dateVal) {
             activeDateFilter = dateVal;
             renderPortal();
-        }}
+        }
 
-        function setQuickFilter(type) {{
+        function setQuickFilter(type) {
             activeQuickFilter = type;
             renderPortal();
-        }}
+        }
 
-        function extractDateFromFilename(fileName) {{
+        function extractDateFromFilename(fileName) {
             if (!fileName) return '10/02';
-            const m = fileName.match(/_result(\\d{{2}})(\\d{{2}})/i);
-            if (m) {{
+            const m = fileName.match(/_result(\\d{2})(\\d{2})/i);
+            if (m) {
                 return parseInt(m[1]) + '/' + m[2];
-            }}
-            const mYmd = fileName.match(/202\\d(\\d{{2}})(\\d{{2}})/);
-            if (mYmd) {{
+            }
+            const mYmd = fileName.match(/202\\d(\\d{2})(\\d{2})/);
+            if (mYmd) {
                 return parseInt(mYmd[1]) + '/' + mYmd[2];
-            }}
+            }
             return '10/02';
-        }}
+        }
 
-        function handleFileSelect(event) {{
+        function handleFileSelect(event) {
             const file = event.target.files[0];
             if (!file) return;
 
             const detectedDate = extractDateFromFilename(file.name);
             const statusEl = document.getElementById('currentStatusText');
-            if (statusEl) statusEl.textContent = `⏳ ${{file.name}} (${{detectedDate}}分) 解析中...`;
+            if (statusEl) statusEl.textContent = `⏳ ${file.name} (${detectedDate}分) 解析中...`;
 
             const reader = new FileReader();
-            reader.onload = function(e) {{
-                try {{
+            reader.onload = function(e) {
+                try {
                     const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, {{ type: 'array', cellStyles: true }});
+                    const workbook = XLSX.read(data, { type: 'array', cellStyles: true });
 
                     let targetSheetName = workbook.SheetNames.includes('店舗マスタ') ? '店舗マスタ' : workbook.SheetNames[0];
                     const sheet = workbook.Sheets[targetSheetName];
@@ -476,17 +480,17 @@ html_content = f"""<!DOCTYPE html>
 
                     const range = XLSX.utils.decode_range(sheet['!ref']);
                     const headers = [];
-                    for (let C = range.s.c; C <= range.e.c; ++C) {{
-                        const cell = sheet[XLSX.utils.encode_cell({{ r: 0, c: C }})];
-                        headers.push(cell && cell.v ? String(cell.v).trim() : `Column_${{C+1}}`);
-                    }}
+                    for (let C = range.s.c; C <= range.e.c; ++C) {
+                        const cell = sheet[XLSX.utils.encode_cell({ r: 0, c: C })];
+                        headers.push(cell && cell.v ? String(cell.v).trim() : `Column_${C+1}`);
+                    }
 
                     const parsedShops = [];
 
-                    for (let R = 1; R <= range.e.r; ++R) {{
-                        const shopCell = sheet[XLSX.utils.encode_cell({{ r: R, c: 0 }})];
-                        const staffCell = sheet[XLSX.utils.encode_cell({{ r: R, c: 3 }})];
-                        const svCell = sheet[XLSX.utils.encode_cell({{ r: R, c: 4 }})];
+                    for (let R = 1; R <= range.e.r; ++R) {
+                        const shopCell = sheet[XLSX.utils.encode_cell({ r: R, c: 0 })];
+                        const staffCell = sheet[XLSX.utils.encode_cell({ r: R, c: 3 })];
+                        const svCell = sheet[XLSX.utils.encode_cell({ r: R, c: 4 })];
 
                         if (!shopCell || !shopCell.v) continue;
                         const shopName = String(shopCell.v).trim();
@@ -498,32 +502,32 @@ html_content = f"""<!DOCTYPE html>
                         let isARed = false;
                         const nonARedItems = [];
 
-                        for (let C = 0; C <= range.e.c; ++C) {{
-                            const cell = sheet[XLSX.utils.encode_cell({{ r: R, c: C }})];
+                        for (let C = 0; C <= range.e.c; ++C) {
+                            const cell = sheet[XLSX.utils.encode_cell({ r: R, c: C })];
                             let isRed = false;
 
-                            if (cell && cell.s && cell.s.fill) {{
+                            if (cell && cell.s && cell.s.fill) {
                                 const fill = cell.s.fill;
                                 const fg = fill.fgColor || fill.bgColor;
-                                if (fg) {{
+                                if (fg) {
                                     const rgb = String(fg.rgb || '').toUpperCase();
-                                    if (rgb === 'FFFF0000' || rgb === 'FF0000' || rgb === 'RED' || rgb.endsWith('FF0000')) {{
+                                    if (rgb === 'FFFF0000' || rgb === 'FF0000' || rgb === 'RED' || rgb.endsWith('FF0000')) {
                                         isRed = true;
-                                    }}
-                                }}
-                            }}
+                                    }
+                                }
+                            }
 
-                            if (isRed) {{
-                                const colName = headers[C] || `Col${{C+1}}`;
-                                if (C === 0) {{
+                            if (isRed) {
+                                const colName = headers[C] || `Col${C+1}`;
+                                if (C === 0) {
                                     isARed = true;
-                                }} else {{
+                                } else {
                                     nonARedItems.push(colName);
-                                }}
-                            }}
-                        }}
+                                }
+                            }
+                        }
 
-                        parsedShops.push({{
+                        parsedShops.push({
                             name: shopName,
                             staff: staffName,
                             sv: svName,
@@ -531,145 +535,142 @@ html_content = f"""<!DOCTYPE html>
                             is_a_red: isARed,
                             non_a_count: nonARedItems.length,
                             non_a_items: nonARedItems
-                        }});
-                    }}
+                        });
+                    }
 
-                    if (parsedShops.length === 0) {{
+                    if (parsedShops.length === 0) {
                         throw new Error('有効な店舗データが見つかりませんでした');
-                    }}
+                    }
 
-                    const updatedStaffData = {{}};
+                    const updatedStaffData = {};
 
-                    // 1. 保有データのうち対象日付(detectedDate)以外の既存データを維持
-                    for (let s in currentStaffData) {{
+                    for (let s in currentStaffData) {
                         const existingShops = currentStaffData[s].shops.filter(sh => sh.date !== detectedDate);
-                        updatedStaffData[s] = {{
+                        updatedStaffData[s] = {
                             a_count: 0,
                             non_a_red_total: 0,
                             shops: existingShops
-                        }};
-                    }}
+                        };
+                    }
 
-                    // 2. パースした新データを追加マージ
-                    for (let item of parsedShops) {{
+                    for (let item of parsedShops) {
                         const s = item.staff;
-                        if (!updatedStaffData[s]) {{
-                            updatedStaffData[s] = {{ a_count: 0, non_a_red_total: 0, shops: [] }};
-                        }}
-                        updatedStaffData[s].shops.push({{
+                        if (!updatedStaffData[s]) {
+                            updatedStaffData[s] = { a_count: 0, non_a_red_total: 0, shops: [] };
+                        }
+                        updatedStaffData[s].shops.push({
                             name: item.name,
                             sv: item.sv,
                             date: item.date,
                             is_a_red: item.is_a_red,
                             non_a_count: item.non_a_count,
                             non_a_items: item.non_a_items
-                        }});
-                    }}
+                        });
+                    }
 
                     currentStaffData = updatedStaffData;
                     activeDateFilter = detectedDate;
 
-                    if (statusEl) statusEl.textContent = `✅ ${{file.name}} (${{detectedDate}}分) スマート統合完了`;
+                    if (statusEl) statusEl.textContent = `✅ ${file.name} (${detectedDate}分) スマート統合完了`;
                     renderPortal();
 
-                }} catch (err) {{
+                } catch (err) {
                     console.error('File Read Error:', err);
-                    if (statusEl) statusEl.textContent = `⚠️ 解析エラー: ${{err.message || '読み込み失敗'}}`;
-                    alert(`【エラー】\n${{err.message || 'ファイルの読み込みに失敗しました'}}`);
-                }}
-            }};
+                    if (statusEl) statusEl.textContent = `⚠️ 解析エラー: ${err.message || '読み込み失敗'}`;
+                    alert(`【エラー】\n${err.message || 'ファイルの読み込みに失敗しました'}`);
+                }
+            };
             reader.readAsArrayBuffer(file);
-        }}
+        }
 
-        function getFilteredData() {{
-            // 全データの中で存在する全日付を取得
+        function getFilteredData() {
             const dateSet = new Set();
-            for (let s in currentStaffData) {{
-                for (let sh of currentStaffData[s].shops) {{
+            for (let s in currentStaffData) {
+                for (let sh of currentStaffData[s].shops) {
                     if (sh.date) dateSet.add(sh.date);
-                }}
-            }}
+                }
+            }
             const dates = Array.from(dateSet).sort();
 
-            const filteredStaffMap = {{}};
-            const filteredColRanking = {{}};
+            const filteredStaffMap = {};
+            const filteredColRanking = {};
 
             let totalShopsCount = 0;
             let totalARedCount = 0;
             let totalNonARedCount = 0;
 
-            for (let s in currentStaffData) {{
-                const targetShops = currentStaffData[s].shops.filter(sh => {{
+            for (let s in currentStaffData) {
+                const targetShops = currentStaffData[s].shops.filter(sh => {
                     if (activeDateFilter === 'all') return true;
                     return sh.date === activeDateFilter;
-                }});
+                });
 
                 if (targetShops.length === 0) continue;
 
                 let aCount = 0;
                 let nonACount = 0;
 
-                for (let sh of targetShops) {{
+                for (let sh of targetShops) {
                     if (sh.is_a_red) aCount += 1;
                     nonACount += sh.non_a_count;
-                    for (let colItem of sh.non_a_items) {{
+                    for (let colItem of sh.non_a_items) {
                         filteredColRanking[colItem] = (filteredColRanking[colItem] || 0) + 1;
-                    }}
-                }}
+                    }
+                }
 
                 totalShopsCount += targetShops.length;
                 totalARedCount += aCount;
                 totalNonARedCount += nonACount;
 
-                filteredStaffMap[s] = {{
+                filteredStaffMap[s] = {
                     a_count: aCount,
                     non_a_red_total: nonACount,
                     shops: targetShops,
                     miss_rate: targetShops.length > 0 ? Math.round((aCount / targetShops.length) * 1000) / 10 : 0
-                }};
-            }}
+                };
+            }
 
-            return {{
+            return {
                 dates: dates,
                 staffMap: filteredStaffMap,
                 colRanking: filteredColRanking,
                 totalShops: totalShopsCount,
                 totalARed: totalARedCount,
                 totalNonARed: totalNonARedCount
-            }};
-        }}
+            };
+        }
 
-        function renderPortal() {{
+        function renderPortal() {
             const dataInfo = getFilteredData();
             const staffMap = dataInfo.staffMap;
             const dates = dataInfo.dates;
 
             // 1. 日付フィルターボタン群の動的描画
             const dateBtnContainer = document.getElementById('dateFilterButtons');
-            if (dateBtnContainer) {{
+            if (dateBtnContainer) {
                 let btnsHtml = `
                     <button onclick="setDateFilter('all')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-black transition-all shadow-sm ${activeDateFilter === 'all' ? 'bg-slate-900 text-white ring-2 ring-slate-900 border-2 border-slate-900' : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-2 border-slate-300'}">
                         🌐 全期間 (累計)
                     </button>
                 `;
 
-                for (let d of dates) {{
+                for (let d of dates) {
                     const count = Object.values(currentStaffData).reduce((acc, st) => acc + st.shops.filter(s => s.date === d).length, 0);
                     btnsHtml += `
                         <button onclick="setDateFilter('${d}')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-black transition-all shadow-sm ${activeDateFilter === d ? 'bg-red-600 text-white ring-2 ring-red-600 border-2 border-red-600 shadow-md' : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-2 border-slate-300'}">
                             📅 ${d}分 (${count}店舗)
                         </button>
                     `;
-                }}
+                }
 
                 dateBtnContainer.innerHTML = btnsHtml;
-            }}
+            }
 
             // 2. サイドバーの日付切り替え表示
             const sidebarDateList = document.getElementById('sidebarDateList');
-            if (sidebarDateList) {{
+            if (sidebarDateList) {
                 let sideHtml = '';
-                for (let d of dates) {{
+                for (let d of dates) {
                     const aCount = Object.values(currentStaffData).reduce((acc, st) => acc + st.shops.filter(s => s.date === d && s.is_a_red).length, 0);
                     const nonACount = Object.values(currentStaffData).reduce((acc, st) => acc + st.shops.filter(s => s.date === d).reduce((a, s) => a + s.non_a_count, 0), 0);
                     sideHtml += `
@@ -684,79 +685,73 @@ html_content = f"""<!DOCTYPE html>
                             </div>
                         </button>
                     `;
-                }}
+                }
                 sidebarDateList.innerHTML = sideHtml;
-            }}
+            }
 
-            // 3. バッジと現在状態テキスト
+            // 3. バッジ
             const badgeEl = document.getElementById('currentDateDisplayBadge');
-            if (badgeEl) {{
+            if (badgeEl) {
                 badgeEl.textContent = activeDateFilter === 'all' ? '全期間 (累計表示)' : `${activeDateFilter}分データ表示中`;
                 badgeEl.className = activeDateFilter === 'all' ? 'bg-slate-900 text-white text-xs px-2.5 py-0.5 rounded-full font-black' : 'bg-red-600 text-white text-xs px-2.5 py-0.5 rounded-full font-black';
-            }}
+            }
 
-            // 4. KPI更新
+            // 4. KPI
             document.getElementById('statTotalShops').innerHTML = `${dataInfo.totalShops} <span class="text-sm font-bold text-slate-700">店舗</span>`;
             document.getElementById('statARedCount').innerHTML = `${dataInfo.totalARed} <span class="text-sm font-bold text-slate-800">店舗</span>`;
             document.getElementById('statNonARedCount').innerHTML = `${dataInfo.totalNonARed} <span class="text-sm font-bold text-slate-800">箇所</span>`;
 
-            // 最多ミススタッフ探査
             let maxStaff = '--';
             let maxVal = 0;
             let perfectCount = 0;
             const staffList = Object.keys(staffMap);
-            for (let s of staffList) {{
-                if (staffMap[s].a_count > maxVal) {{
+            for (let s of staffList) {
+                if (staffMap[s].a_count > maxVal) {
                     maxVal = staffMap[s].a_count;
                     maxStaff = s;
-                }}
-                if (staffMap[s].a_count === 0) {{
+                }
+                if (staffMap[s].a_count === 0) {
                     perfectCount++;
-                }}
-            }}
+                }
+            }
             document.getElementById('statTopMissStaff').textContent = maxVal > 0 ? `最多: ${maxStaff} (${maxVal}店舗)` : 'ミス者なし';
             document.getElementById('statPerfectCount').innerHTML = `${perfectCount} <span class="text-sm font-bold text-slate-800">名</span>`;
             const pRate = staffList.length > 0 ? Math.round((perfectCount / staffList.length) * 1000) / 10 : 0;
             document.getElementById('statPerfectRate').textContent = `${pRate}% がミスなし`;
 
-            // 5. テーブル＆カード描画
             renderTableAndCards(staffMap);
-
-            // 6. ワーストランキング描画
             renderColumnRanking(dataInfo.colRanking);
-        }}
+        }
 
-        function renderTableAndCards(staffMap) {{
+        function renderTableAndCards(staffMap) {
             const searchVal = (document.getElementById('searchInput')?.value || '').trim().toLowerCase();
             const tbody = document.getElementById('staffTableBody');
             const cardContainer = document.getElementById('staffCardList');
             if (tbody) tbody.innerHTML = '';
             if (cardContainer) cardContainer.innerHTML = '';
 
-            let sortedStaff = Object.keys(staffMap).sort((a, b) => {{
-                if (staffMap[b].a_count !== staffMap[a].a_count) {{
+            let sortedStaff = Object.keys(staffMap).sort((a, b) => {
+                if (staffMap[b].a_count !== staffMap[a].a_count) {
                     return staffMap[b].a_count - staffMap[a].a_count;
-                }}
+                }
                 return staffMap[b].non_a_red_total - staffMap[a].non_a_red_total;
-            }});
+            });
 
-            // 検索＆条件フィルター
-            sortedStaff = sortedStaff.filter(s => {{
+            sortedStaff = sortedStaff.filter(s => {
                 const info = staffMap[s];
                 if (searchVal && !s.toLowerCase().includes(searchVal)) return false;
                 if (activeQuickFilter === 'miss' && info.a_count === 0) return false;
                 if (activeQuickFilter === 'perfect' && info.a_count > 0) return false;
                 if (activeQuickFilter === 'nona' && info.non_a_red_total === 0) return false;
                 return true;
-            }});
+            });
 
             let rank = 1;
-            sortedStaff.forEach(s => {{
+            sortedStaff.forEach(s => {
                 const info = staffMap[s];
                 const totalShops = info.shops.length;
 
-                // PCテーブル行
-                if (tbody) {{
+                if (tbody) {
                     const tr = document.createElement('tr');
                     tr.className = 'hover:bg-slate-50 transition-colors border-b border-slate-200';
                     tr.innerHTML = `
@@ -795,10 +790,9 @@ html_content = f"""<!DOCTYPE html>
                         </td>
                     `;
                     tbody.appendChild(tr);
-                }}
+                }
 
-                // スマホカード
-                if (cardContainer) {{
+                if (cardContainer) {
                     const card = document.createElement('div');
                     card.className = 'p-4 bg-white hover:bg-slate-50 space-y-3';
                     card.innerHTML = `
@@ -837,25 +831,25 @@ html_content = f"""<!DOCTYPE html>
                         </div>
                     `;
                     cardContainer.appendChild(card);
-                }}
+                }
                 rank++;
-            }});
-        }}
+            });
+        }
 
-        function renderColumnRanking(colRankingMap) {{
+        function renderColumnRanking(colRankingMap) {
             const container = document.getElementById('columnRankingContainer');
             if (!container) return;
 
             const sortedCols = Object.keys(colRankingMap).sort((a, b) => colRankingMap[b] - colRankingMap[a]);
 
-            if (sortedCols.length === 0) {{
+            if (sortedCols.length === 0) {
                 container.innerHTML = `<div class="col-span-full p-4 text-center text-xs font-bold text-slate-500">指摘箇所はありませんでした</div>`;
                 return;
-            }}
+            }
 
             let html = '';
             let idx = 1;
-            for (let col of sortedCols.slice(0, 6)) {{
+            for (let col of sortedCols.slice(0, 6)) {
                 const count = colRankingMap[col];
                 html += `
                     <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
@@ -869,11 +863,11 @@ html_content = f"""<!DOCTYPE html>
                     </div>
                 `;
                 idx++;
-            }}
+            }
             container.innerHTML = html;
-        }}
+        }
 
-        function openModal(staffName) {{
+        function openModal(staffName) {
             activeModalStaffName = staffName;
             const dataInfo = getFilteredData();
             const info = dataInfo.staffMap[staffName];
@@ -890,18 +884,18 @@ html_content = f"""<!DOCTYPE html>
             const shopListEl = document.getElementById('modalShopList');
             shopListEl.innerHTML = '';
 
-            info.shops.forEach(s => {{
+            info.shops.forEach(s => {
                 const item = document.createElement('div');
                 item.className = `p-3.5 rounded-2xl border-2 transition-all ${s.is_a_red ? 'bg-red-50/70 border-red-300' : 'bg-slate-50 border-slate-200'}`;
                 
                 let nonAItemsHtml = '';
-                if (s.non_a_items && s.non_a_items.length > 0) {{
+                if (s.non_a_items && s.non_a_items.length > 0) {
                     nonAItemsHtml = `
                         <div class="mt-2 flex flex-wrap gap-1.5">
                             ${s.non_a_items.map(it => `<span class="text-xs bg-amber-100 text-amber-900 font-black px-2 py-0.5 rounded border border-amber-300">⚠️ ${it}</span>`).join('')}
                         </div>
                     `;
-                }}
+                }
 
                 item.innerHTML = `
                     <div class="flex items-center justify-between">
@@ -914,70 +908,69 @@ html_content = f"""<!DOCTYPE html>
                     ${nonAItemsHtml}
                 `;
                 shopListEl.appendChild(item);
-            }});
+            });
 
             document.getElementById('detailModal').classList.remove('hidden');
-        }}
+        }
 
-        function closeModal() {{
+        function closeModal() {
             document.getElementById('detailModal').classList.add('hidden');
-        }}
+        }
 
-        function copyChatText(staffName) {{
+        function copyChatText(staffName) {
             const dataInfo = getFilteredData();
             const info = dataInfo.staffMap[staffName];
             if (!info) return;
 
             const text = `【店舗マスタチェック指摘・修正のお願い】
-${{staffName}} さん
+${staffName} さん
 
 お疲れ様です。マスタチェックにて担当店舗の指摘箇所が検出されました。早急に確認と修正をお願いいたします。
 
-■ 対象スタッフ: ${{staffName}}
-■ 対象期間: ${{activeDateFilter === 'all' ? '全期間 (累計)' : activeDateFilter + '分'}}
-■ 巡回店舗数: ${{info.shops.length}} 店舗
-■ A列赤指摘 (マスタミス): ${{info.a_count}} 回
-■ A列外赤セル内訳: ${{info.non_a_red_total}} 箇所
+■ 対象スタッフ: ${staffName}
+■ 対象期間: ${activeDateFilter === 'all' ? '全期間 (累計)' : activeDateFilter + '分'}
+■ 巡回店舗数: ${info.shops.length} 店舗
+■ A列赤指摘 (マスタミス): ${info.a_count} 回
+■ A列外赤セル内訳: ${info.non_a_red_total} 箇所
 
 何卒よろしくお願いいたします。`;
 
-            navigator.clipboard.writeText(text).then(() => {{
-                alert(`✅ 【${{staffName}}さん宛ての指導チャット文面】をコピーしました！\nLINEやチャットツールにそのまま貼り付けて送信できます。`);
-            }}).catch(err => {{
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`✅ 【${staffName}さん宛ての指導チャット文面】をコピーしました！\\nLINEやチャットツールにそのまま貼り付けて送信できます。`);
+            }).catch(err => {
                 console.error(err);
-                alert(`文面: \n${{text}}`);
-            }});
-        }}
+                alert(`文面: \\n${text}`);
+            });
+        }
 
-        function copyStaffChatModal() {{
-            if (activeModalStaffName) {{
+        function copyStaffChatModal() {
+            if (activeModalStaffName) {
                 copyChatText(activeModalStaffName);
-            }}
-        }}
+            }
+        }
 
-        function exportToCSV() {{
+        function exportToCSV() {
             const dataInfo = getFilteredData();
             const staffMap = dataInfo.staffMap;
 
             let csv = '\\uFEFF順位,スタッフ名,巡回店舗数,A列赤指摘店舗数,ミス率(%),A列外赤セル箇所\\n';
             let rank = 1;
-            for (let s in staffMap) {{
+            for (let s in staffMap) {
                 const st = staffMap[s];
-                csv += `${{rank}},"${{s}}",${{st.shops.length}},${{st.a_count}},${{st.miss_rate}},${{st.non_a_red_total}}\\n`;
+                csv += `${rank},"${s}",${st.shops.length},${st.a_count},${st.miss_rate},${st.non_a_red_total}\\n`;
                 rank++;
-            }}
+            }
 
-            const blob = new Blob([csv], {{ type: 'text/csv;charset=utf-8;' }});
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `店舗マスタミス集計_${{activeDateFilter === 'all' ? '全期間' : activeDateFilter}}.csv`;
+            link.download = `店舗マスタミス集計_${activeDateFilter === 'all' ? '全期間' : activeDateFilter}.csv`;
             link.click();
-        }}
+        }
 
-        // 初期ロード実行
-        document.addEventListener('DOMContentLoaded', () => {{
+        document.addEventListener('DOMContentLoaded', () => {
             renderPortal();
-        }});
+        });
     </script>
 </body>
 </html>"""
@@ -985,4 +978,4 @@ ${{staffName}} さん
 with open('index.html', 'w', encoding='utf-8') as out:
     out.write(html_content)
 
-print('Generated updated index.html with Dynamic Date Filter Tabs!')
+print('Generated clean index.html successfully with non-f-string template!')
