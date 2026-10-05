@@ -689,16 +689,32 @@ ${err.message || 'ファイルの読み込みに失敗しました'}`);
             let maxVal = 0;
             let perfectCount = 0;
             const staffList = Object.keys(staffMap);
-            for (let s of staffList) {
-                if (staffMap[s].a_count > maxVal) {
-                    maxVal = staffMap[s].a_count;
-                    maxStaff = s;
+
+            if (activeDateFilter === 'all') {
+                // 【全期間 累計時】: A列外の赤セル累積箇所数が最も多いスタッフを探す
+                for (let s of staffList) {
+                    if (staffMap[s].non_a_red_total > maxVal) {
+                        maxVal = staffMap[s].non_a_red_total;
+                        maxStaff = s;
+                    }
+                    if (staffMap[s].a_count === 0 && staffMap[s].non_a_red_total === 0) {
+                        perfectCount++;
+                    }
                 }
-                if (staffMap[s].a_count === 0) {
-                    perfectCount++;
+                document.getElementById('statTopMissStaff').textContent = maxVal > 0 ? `最多(A外赤): ${maxStaff} (${maxVal}箇所)` : '指摘なし';
+            } else {
+                // 【日別時】: A列赤指摘店舗が最も多いスタッフ
+                for (let s of staffList) {
+                    if (staffMap[s].a_count > maxVal) {
+                        maxVal = staffMap[s].a_count;
+                        maxStaff = s;
+                    }
+                    if (staffMap[s].a_count === 0) {
+                        perfectCount++;
+                    }
                 }
+                document.getElementById('statTopMissStaff').textContent = maxVal > 0 ? `最多: ${maxStaff} (${maxVal}店舗)` : 'ミス者なし';
             }
-            document.getElementById('statTopMissStaff').textContent = maxVal > 0 ? `最多: ${maxStaff} (${maxVal}店舗)` : 'ミス者なし';
             document.getElementById('statPerfectCount').innerHTML = `${perfectCount} <span class="text-sm font-bold text-slate-800">名</span>`;
             const pRate = staffList.length > 0 ? Math.round((perfectCount / staffList.length) * 1000) / 10 : 0;
             document.getElementById('statPerfectRate').textContent = `${pRate}% がミスなし`;
