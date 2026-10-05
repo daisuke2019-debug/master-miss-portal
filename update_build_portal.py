@@ -2,7 +2,7 @@
 with open('build_portal.py', 'r', encoding='utf-8') as f:
     code = f.read()
 
-js_smart_merge = """
+js_code = """
         function extractDateFromFilename(fileName) {{
             if (!fileName) return '10/02';
             const m = fileName.match(/_result(\\d{{2}})(\\d{{2}})/i);
@@ -100,7 +100,7 @@ js_smart_merge = """
 
                     const updatedStaffData = {{}};
 
-                    // 1. 保有データのうち、対象日付(detectedDate)以外の既存データを維持
+                    // 1. 保有データのうち対象日付(detectedDate)以外の既存データを維持
                     for (let s in currentStaffData) {{
                         const existingShops = currentStaffData[s].shops.filter(sh => sh.date !== detectedDate);
                         updatedStaffData[s] = {{
@@ -126,7 +126,7 @@ js_smart_merge = """
                         }});
                     }}
 
-                    // 3. 再計算
+                    // 3. 全期間＆各日付再計算
                     const updatedColRanking = {{}};
                     for (let s in updatedStaffData) {{
                         let aTot = 0;
@@ -160,11 +160,13 @@ js_smart_merge = """
         }}
 """
 
-# Replace handleFileSelect in code
-import re
-code = re.sub(r'function extractDateFromFilename.*?\n\s*function handleFileSelect\(event\).*?\}\n\s*\}\n\s*\}\;', js_smart_merge, code, flags=re.DOTALL)
+idx_start = code.find('function extractDateFromFilename')
+if idx_start != -1:
+    idx_end = code.find('function renderPortal()', idx_start)
+    if idx_end != -1:
+        code = code[:idx_start] + js_code + '\n\n        ' + code[idx_end:]
 
 with open('build_portal.py', 'w', encoding='utf-8') as f:
     f.write(code)
 
-print('Updated build_portal.py with Smart Merge JS!')
+print('Successfully embedded Smart Merge JS into build_portal.py!')
