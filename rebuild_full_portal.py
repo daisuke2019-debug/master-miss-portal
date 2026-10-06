@@ -721,7 +721,8 @@ html_content = """<!DOCTYPE html>
             const dates = dataInfo.dates;
 
             
-            // 1. 日付フィルターUIのスマート描画 (直近3日クイックタブ + ドロップダウンセレクト)
+            
+            // 1. 日付フィルターUIのシームレス描画 (直近タブ + 連動ドロップダウン)
             const dateBtnContainer = document.getElementById('dateFilterButtons');
             if (dateBtnContainer) {
                 let btnsHtml = '';
@@ -763,16 +764,14 @@ html_content = """<!DOCTYPE html>
                     }
                 }
 
-                // 📅 過去日付ドロップダウンセレクト (全1ヶ月分対応)
-                const isCustomSelected = dates.includes(activeDateFilter) && activeDateFilter !== dates[dates.length - 1] && activeDateFilter !== dates[dates.length - 2];
-
+                // 📅 シームレス日付ドロップダウンセレクト
                 btnsHtml += `
                     <div class="relative inline-block">
-                        <select onchange="setDateFilter(this.value)" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black bg-white text-slate-900 border-2 border-slate-400 focus:outline-none focus:ring-2 focus:ring-red-600 shadow-sm cursor-pointer ${isCustomSelected ? 'bg-amber-100 border-amber-500 text-amber-950 font-black' : ''}">
-                            <option value="" disabled ${!isCustomSelected && activeDateFilter !== 'all' && activeDateFilter !== dates[dates.length - 1] && activeDateFilter !== dates[dates.length - 2] ? '' : ''}>📅 他の日付を選択 (${dates.length}日分)...</option>
+                        <select id="mainDateSelectDropdown" onchange="setDateFilter(this.value)" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black text-slate-900 border-2 border-slate-400 focus:outline-none focus:ring-2 focus:ring-red-600 shadow-sm cursor-pointer ${activeDateFilter !== 'all' ? 'bg-red-50 border-red-500 text-red-950 font-black' : 'bg-white'}">
+                            <option value="all" ${activeDateFilter === 'all' ? 'selected' : ''}>🌐 全期間 (累計) 表示</option>
                             ${dates.map(d => {
                                 const cnt = Object.values(currentStaffData).reduce((acc, st) => acc + st.shops.filter(s => s.date === d).length, 0);
-                                return `<option value="${d}" ${activeDateFilter === d ? 'selected' : ''}>📅 ${d}分 (${cnt}店舗)</option>`;
+                                return `<option value="${d}" ${activeDateFilter === d ? 'selected' : ''}>📅 ${d}分データ (${cnt}店舗)</option>`;
                             }).join('')}
                         </select>
                     </div>
@@ -780,6 +779,7 @@ html_content = """<!DOCTYPE html>
 
                 dateBtnContainer.innerHTML = btnsHtml;
             }
+
 
 
             // 2. サイドバーの日付切り替え表示
@@ -888,16 +888,13 @@ html_content = """<!DOCTYPE html>
                     tr.className = 'hover:bg-slate-50 transition-colors border-b border-slate-200';
                     tr.innerHTML = `
 
-                        <td class="py-4 px-6 font-black text-slate-900">
+                                                <td class="py-4 px-6 font-black text-slate-900">
                             <div class="flex items-center gap-3">
                                 <span class="w-7 h-7 rounded-lg ${rank <= 3 && info.a_count > 0 ? 'bg-red-600 text-white' : 'bg-slate-200 text-slate-700'} flex items-center justify-center text-xs font-black shrink-0">
                                     ${rank}
                                 </span>
                                 <div>
-                                    <div class="text-base font-black flex items-center gap-2">
-                                        <span>${s}</span>
-                                        ${info.trendType === 'down' ? `<span class="text-xs bg-emerald-100 text-emerald-800 font-black px-2 py-0.5 rounded-full border border-emerald-300">🟢 ↓ ${info.trendVal} (改善)</span>` : (info.trendType === 'up' ? `<span class="text-xs bg-red-100 text-red-700 font-black px-2 py-0.5 rounded-full border border-red-300">🔴 ↑ +${info.trendVal} (要確認)</span>` : '')}
-                                    </div>
+                                    <div class="text-base font-black">${s}</div>
                                     <div class="text-xs text-slate-500 font-bold">${totalShops}店舗巡回</div>
                                 </div>
                             </div>
