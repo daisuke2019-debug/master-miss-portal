@@ -245,7 +245,7 @@ html_content = """<!DOCTYPE html>
                     <h2 class="text-base sm:text-xl font-black text-slate-900">毎朝のマスタチェックExcelファイル（.xlsx）を流し込んで自動統合</h2>
                     <p id="currentStatusText" class="text-xs sm:text-sm text-slate-800 mt-1 font-bold">タップ または ファイルをドラッグ＆ドロップで新しい日付データを追記・スマート更新</p>
                 </div>
-                <button type="button" class="btn-action-red font-black text-sm sm:text-base px-8 py-3 rounded-xl shadow-md mt-1 cursor-pointer active:scale-95 transition-all">
+                <button type="button" onclick="document.getElementById('fileInput').click()" class="btn-action-red font-black text-sm sm:text-base px-8 py-3 rounded-xl shadow-md mt-1 cursor-pointer active:scale-95 transition-all">
                     Excelファイルを選択してデータ追加
                 </button>
             </div>
@@ -984,9 +984,40 @@ ${staffName} さん
             link.click();
         }
 
+        
+        // DropZone Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+
+            if (dropZone && fileInput) {
+                dropZone.addEventListener('click', (e) => {
+                    if (e.target.tagName !== 'BUTTON' && e.target !== fileInput) {
+                        fileInput.click();
+                    }
+                });
+
+                dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    dropZone.classList.add('dragover');
+                });
+
+                dropZone.addEventListener('dragleave', () => {
+                    dropZone.classList.remove('dragover');
+                });
+
+                dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    dropZone.classList.remove('dragover');
+                    if (e.dataTransfer && e.dataTransfer.files.length > 0) {
+                        fileInput.files = e.dataTransfer.files;
+                        handleFileSelect({ target: fileInput });
+                    }
+                });
+            }
             renderPortal();
         });
+
     </script>
 </body>
 </html>"""
