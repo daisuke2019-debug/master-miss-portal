@@ -569,6 +569,9 @@ html_content = """<!DOCTYPE html>
                     }
 
                     currentStaffData = updatedStaffData;
+                    try {
+                        localStorage.setItem('master_miss_portal_staff_data', JSON.stringify(currentStaffData));
+                    } catch(e) { console.error('LocalStorage save error:', e); }
                     activeDateFilter = detectedDate;
 
                     if (statusEl) statusEl.textContent = `✅ ${file.name} (${detectedDate}分) スマート統合完了`;
