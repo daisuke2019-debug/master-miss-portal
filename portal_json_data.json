@@ -1,8 +1,8 @@
 {
   "staff_data": {
     "下村　公人": {
-      "a_count": 6,
-      "non_a_red_total": 13,
+      "a_count": 7,
+      "non_a_red_total": 15,
       "shops": [
         {
           "name": "高知北",
@@ -166,9 +166,48 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "松山平田",
+          "staff": "下村　公人",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "松山西",
+          "staff": "下村　公人",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": true,
+          "non_a_count": 2,
+          "non_a_items": [
+            "Ambassadorリスト確認",
+            "Galaxy Ambassadorについて"
+          ]
+        },
+        {
+          "name": "松山空港通",
+          "staff": "下村　公人",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "フジグラン松山",
+          "staff": "下村　公人",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 37.5
+      "miss_rate": 35.0
     },
     "吉田　明香": {
       "a_count": 5,
@@ -295,9 +334,27 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "中津",
+          "staff": "吉田　明香",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "宇佐",
+          "staff": "吉田　明香",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 41.7
+      "miss_rate": 35.7
     },
     "笹原　彩佳": {
       "a_count": 1,
@@ -430,9 +487,36 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "皆生Ｒ４３１",
+          "staff": "笹原　彩佳",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "せら",
+          "staff": "笹原　彩佳",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "境港",
+          "staff": "笹原　彩佳",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 7.1
+      "miss_rate": 5.9
     },
     "山崎　紗季": {
       "a_count": 1,
@@ -567,13 +651,40 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "浜町アーケード",
+          "staff": "山崎　紗季",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "長崎浜町",
+          "staff": "山崎　紗季",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "長崎大波止",
+          "staff": "山崎　紗季",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 7.1
+      "miss_rate": 5.9
     },
     "小川　菜緒子": {
-      "a_count": 1,
-      "non_a_red_total": 2,
+      "a_count": 3,
+      "non_a_red_total": 10,
       "shops": [
         {
           "name": "福山みどり町",
@@ -703,9 +814,55 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "出雲市駅南",
+          "staff": "小川　菜緒子",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "ゆめタウン出雲",
+          "staff": "小川　菜緒子",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "イオンモール出雲",
+          "staff": "小川　菜緒子",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": true,
+          "non_a_count": 4,
+          "non_a_items": [
+            "自社動向",
+            "他社動向",
+            "自社VOC F",
+            "自社VOC G"
+          ]
+        },
+        {
+          "name": "ゆめタウン斐川",
+          "staff": "小川　菜緒子",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": true,
+          "non_a_count": 4,
+          "non_a_items": [
+            "自社動向",
+            "他社動向",
+            "自社VOC F",
+            "自社VOC G"
+          ]
         }
       ],
-      "miss_rate": 7.1
+      "miss_rate": 16.7
     },
     "小野　あかね": {
       "a_count": 0,
@@ -824,6 +981,33 @@
           "staff": "小野　あかね",
           "sv": "2026-10-06 00:00:00",
           "date": "10/06",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "サニーサイドモール小倉",
+          "staff": "小野　あかね",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "行橋",
+          "staff": "小野　あかね",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "行橋駅前",
+          "staff": "小野　あかね",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
@@ -972,13 +1156,58 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "沖浜",
+          "staff": "秦　貴凡",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "新浜",
+          "staff": "秦　貴凡",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "小松島",
+          "staff": "秦　貴凡",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "小松島大林",
+          "staff": "秦　貴凡",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "阿南",
+          "staff": "秦　貴凡",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 35.7
+      "miss_rate": 26.3
     },
     "垂水　翔平": {
-      "a_count": 1,
-      "non_a_red_total": 3,
+      "a_count": 2,
+      "non_a_red_total": 4,
       "shops": [
         {
           "name": "はえばる",
@@ -1073,13 +1302,33 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "浦添パルコシティ",
+          "staff": "垂水　翔平",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 1,
+          "non_a_items": [
+            "SRP施策についてのフリーコメント"
+          ]
+        },
+        {
+          "name": "おもろまち",
+          "staff": "垂水　翔平",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": true,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 10.0
+      "miss_rate": 16.7
     },
     "清原　由梨": {
-      "a_count": 0,
-      "non_a_red_total": 0,
+      "a_count": 3,
+      "non_a_red_total": 13,
       "shops": [
         {
           "name": "岡山南",
@@ -1206,9 +1455,52 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "美作",
+          "staff": "清原　由梨",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": true,
+          "non_a_count": 5,
+          "non_a_items": [
+            "自社動向",
+            "他社動向",
+            "自社VOC F",
+            "自社VOC G",
+            "Ambassadorリスト確認"
+          ]
+        },
+        {
+          "name": "東紅陽台",
+          "staff": "清原　由梨",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": true,
+          "non_a_count": 4,
+          "non_a_items": [
+            "自社動向",
+            "他社動向",
+            "自社VOC F",
+            "自社VOC G"
+          ]
+        },
+        {
+          "name": "玉野メルカ",
+          "staff": "清原　由梨",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": true,
+          "non_a_count": 4,
+          "non_a_items": [
+            "自社動向",
+            "他社動向",
+            "自社VOC F",
+            "自社VOC G"
+          ]
         }
       ],
-      "miss_rate": 0.0
+      "miss_rate": 17.6
     },
     "浅田　鈴美": {
       "a_count": 0,
@@ -1348,6 +1640,42 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "枕崎",
+          "staff": "浅田　鈴美",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "指宿",
+          "staff": "浅田　鈴美",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "加世田",
+          "staff": "浅田　鈴美",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "川辺",
+          "staff": "浅田　鈴美",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
       "miss_rate": 0.0
@@ -1418,8 +1746,8 @@
       "miss_rate": 33.3
     },
     "本田　宏一": {
-      "a_count": 0,
-      "non_a_red_total": 0,
+      "a_count": 3,
+      "non_a_red_total": 12,
       "shops": [
         {
           "name": "中尾",
@@ -1456,9 +1784,51 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "熊本インター",
+          "staff": "本田　宏一",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": true,
+          "non_a_count": 4,
+          "non_a_items": [
+            "自社動向",
+            "他社動向",
+            "自社VOC F",
+            "自社VOC G"
+          ]
+        },
+        {
+          "name": "下通",
+          "staff": "本田　宏一",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": true,
+          "non_a_count": 4,
+          "non_a_items": [
+            "自社動向",
+            "他社動向",
+            "自社VOC F",
+            "自社VOC G"
+          ]
+        },
+        {
+          "name": "坪井",
+          "staff": "本田　宏一",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": true,
+          "non_a_count": 4,
+          "non_a_items": [
+            "自社動向",
+            "他社動向",
+            "自社VOC F",
+            "自社VOC G"
+          ]
         }
       ],
-      "miss_rate": 0.0
+      "miss_rate": 42.9
     },
     "櫻井　蓮": {
       "a_count": 5,
@@ -1616,9 +1986,45 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "光岡",
+          "staff": "櫻井　蓮",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "イオンモール福津",
+          "staff": "櫻井　蓮",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "福間",
+          "staff": "櫻井　蓮",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "西新",
+          "staff": "櫻井　蓮",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 33.3
+      "miss_rate": 26.3
     },
     "横田　裕亮": {
       "a_count": 0,
@@ -1657,6 +2063,15 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "則松",
+          "staff": "宮原　大輔",
+          "sv": "2026-10-07 00:00:00",
+          "date": "10/07",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
       "miss_rate": 0.0
@@ -1664,34 +2079,37 @@
   },
   "col_ranking": {
     "A57_バックシート": 1,
-    "Galaxy Ambassadorについて": 1,
+    "Galaxy Ambassadorについて": 2,
     "Galaxy_販売コンテスト認知確認": 2,
     "Galaxy_販売コンテスト星取表(実績管理表)": 1,
     "S26_MNP POP": 6,
     "FFF8_インセンティブ施策認知確認": 7,
     "FFF8_インセンティブ施策認知についてのフリーコメント": 6,
-    "SRP施策についてのフリーコメント": 2,
+    "SRP施策についてのフリーコメント": 3,
     "店舗タイプ": 3,
     "FFF8_MNP割引施策についてのフリーコメント": 1,
     "Z8シリーズ_MNP割引施策POPについて": 1,
     "S26_MNP POP_展示関連について": 1,
-    "自社VOC F": 2,
-    "自社VOC G": 2,
+    "自社VOC F": 10,
+    "自社VOC G": 10,
     "S26Ultra_Sペンツール": 2,
     "「MDが展示」集計用_S26_MNP POP": 4,
     "S26_デモ機": 1,
-    "Ambassadorリスト確認": 3,
+    "Ambassadorリスト確認": 5,
     "備考欄": 1,
     "Z8シリーズ_MNP割引施策POP": 2,
     "S26MNP割引施策認知確認": 1,
     "SRP認知確認": 1,
     "TR内容": 1,
-    "1巡目 S+ Galaxy Coachの活用回数": 1
+    "1巡目 S+ Galaxy Coachの活用回数": 1,
+    "自社動向": 8,
+    "他社動向": 8
   },
   "available_dates": [
     "10/01",
     "10/02",
     "10/05",
-    "10/06"
+    "10/06",
+    "10/07"
   ]
 }
