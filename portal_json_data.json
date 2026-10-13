@@ -241,9 +241,45 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "高知インター",
+          "staff": "下村　公人",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "伊野",
+          "staff": "下村　公人",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "佐川",
+          "staff": "下村　公人",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "土佐",
+          "staff": "下村　公人",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 29.2
+      "miss_rate": 25.0
     },
     "吉田　明香": {
       "a_count": 5,
@@ -406,9 +442,45 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "パークプレイス大分",
+          "staff": "吉田　明香",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "三重",
+          "staff": "吉田　明香",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "竹田",
+          "staff": "吉田　明香",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "阿蘇一の宮",
+          "staff": "吉田　明香",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 31.2
+      "miss_rate": 25.0
     },
     "笹原　彩佳": {
       "a_count": 1,
@@ -595,9 +667,45 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "因島",
+          "staff": "笹原　彩佳",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "フジグラン三原",
+          "staff": "笹原　彩佳",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "三原宮浦",
+          "staff": "笹原　彩佳",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "松永",
+          "staff": "笹原　彩佳",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 5.0
+      "miss_rate": 4.2
     },
     "山崎　紗季": {
       "a_count": 1,
@@ -795,9 +903,36 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "佐々",
+          "staff": "山崎　紗季",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "西海",
+          "staff": "山崎　紗季",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "長崎住吉",
+          "staff": "山崎　紗季",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 4.8
+      "miss_rate": 4.2
     },
     "小川　菜緒子": {
       "a_count": 3,
@@ -1004,9 +1139,45 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "祇園新道",
+          "staff": "小川　菜緒子",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "広島光町",
+          "staff": "小川　菜緒子",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "五日市城山",
+          "staff": "小川　菜緒子",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "西広島",
+          "staff": "小川　菜緒子",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 14.3
+      "miss_rate": 12.0
     },
     "小野　あかね": {
       "a_count": 0,
@@ -1179,6 +1350,42 @@
           "staff": "小野　あかね",
           "sv": "2026-10-08 00:00:00",
           "date": "10/08",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "ゆめタウン長府",
+          "staff": "小野　あかね",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "おのだサンパーク",
+          "staff": "小野　あかね",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "宇部",
+          "staff": "小野　あかね",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "フジグラン宇部",
+          "staff": "小野　あかね",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
@@ -1417,9 +1624,45 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "丸亀",
+          "staff": "秦　貴凡",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "高松香西",
+          "staff": "秦　貴凡",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "ゆめタウン高松",
+          "staff": "秦　貴凡",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "川島",
+          "staff": "秦　貴凡",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 20.8
+      "miss_rate": 17.9
     },
     "垂水　翔平": {
       "a_count": 2,
@@ -1556,9 +1799,27 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "もとぶ",
+          "staff": "垂水　翔平",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "名護",
+          "staff": "垂水　翔平",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 14.3
+      "miss_rate": 12.5
     },
     "清原　由梨": {
       "a_count": 3,
@@ -1768,9 +2029,36 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "アリオ倉敷",
+          "staff": "清原　由梨",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "津山林田",
+          "staff": "清原　由梨",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "倉敷インター",
+          "staff": "清原　由梨",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 14.3
+      "miss_rate": 12.5
     },
     "浅田　鈴美": {
       "a_count": 0,
@@ -1982,6 +2270,33 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "中山バイパス",
+          "staff": "浅田　鈴美",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "隼人国分",
+          "staff": "浅田　鈴美",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "吉野",
+          "staff": "浅田　鈴美",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
       "miss_rate": 0.0
@@ -2083,9 +2398,45 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "東合川バイパス",
+          "staff": "大内　真奈美",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "大牟田大正町",
+          "staff": "大内　真奈美",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "イオンモール大牟田",
+          "staff": "大内　真奈美",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "大川",
+          "staff": "大内　真奈美",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 20.0
+      "miss_rate": 14.3
     },
     "本田　宏一": {
       "a_count": 3,
@@ -2400,9 +2751,36 @@
           "is_a_red": false,
           "non_a_count": 0,
           "non_a_items": []
+        },
+        {
+          "name": "伊万里",
+          "staff": "櫻井　蓮",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "唐津和多田",
+          "staff": "櫻井　蓮",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
+        },
+        {
+          "name": "唐津",
+          "staff": "櫻井　蓮",
+          "sv": "2026-10-09 00:00:00",
+          "date": "10/09",
+          "is_a_red": false,
+          "non_a_count": 0,
+          "non_a_items": []
         }
       ],
-      "miss_rate": 22.7
+      "miss_rate": 20.0
     },
     "横田　裕亮": {
       "a_count": 0,
@@ -2505,6 +2883,7 @@
     "10/05",
     "10/06",
     "10/07",
-    "10/08"
+    "10/08",
+    "10/09"
   ]
 }
