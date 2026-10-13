@@ -1,0 +1,6 @@
+# 本業データ（実名・店舗・代理店情報）は公開しない。手元でのみ使用する
+*.txt
+*.xlsx
+*.csv
+portal_json_data.json
+tmp_*
